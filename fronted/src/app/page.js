@@ -1,9 +1,12 @@
+import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
-    <div className="">
+    <div >
 
-      <h1 className="text-white text-5xl"> Kunal </h1>
+    <Footer/>
+
+
     </div>
   );
 }
