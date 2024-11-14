@@ -12,6 +12,7 @@ module.exports = {
         // foreground: "var(--foreground)",
         // footerBgColor:"40BFFF"
         customFooterColor: '#bcddfe',
+        fontCustomColor:"#22262a"
       },
     },
   },
