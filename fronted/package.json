@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint"
   },
+  "author": "kunalrisaanva12@gmail.com , vishaltilve111@gmail.com",
   "dependencies": {
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",

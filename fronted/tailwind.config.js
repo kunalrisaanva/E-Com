@@ -14,6 +14,10 @@ module.exports = {
         customFooterColor: '#bcddfe',
         fontCustomColor:"#22262a"
       },
+      backgroundImage: {
+        'hero-pattern': "url('/public/images/Promotion Image.png')",
+        'footer-texture': "url('/img/footer-texture.png')",
+      }
     },
   },
   plugins: [],
