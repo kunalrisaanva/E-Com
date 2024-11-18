@@ -11,8 +11,11 @@ module.exports = {
         // background: "var(--background)",
         // foreground: "var(--foreground)",
         // footerBgColor:"40BFFF"
+        productFontColorBlue:"#33A0FF",
+        productFontColorgray:"#262626",
         customFooterColor: '#bcddfe',
-        fontCustomColor:"#22262a"
+        fontCustomColor:"#22262a",
+        imageBgColor:"#40BFFF"
       },
       backgroundImage: {
         'hero-pattern': "url('/public/images/Promotion Image.png')",
