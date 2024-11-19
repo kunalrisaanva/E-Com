@@ -7,7 +7,7 @@ import BrandsLogo from "/public/images/Brands.png";
 
 const Footer = () => {
   return (
-    <footer className="h-[680px] bg-customFooterColor text-fontCustomColor mt-[75px]">
+    <footer className="h-[665px] bg-customFooterColor text-fontCustomColor mt-[75px]">
       {/* upper section  */}
 
       <div className="flex  pl-[134px] pt-[149px] ">

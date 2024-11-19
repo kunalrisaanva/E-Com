@@ -8,7 +8,7 @@ const Header = () => {
     const language=["ENG","HIN"]
     const currency=["USD","IND"]
   return (
-    <div className='flex font-semibold bg-white p-6 justify-between '>
+    <div className='flex font-normal bg-white pt-[27px] px-[104px] justify-between items-center mb-[26px]'>
         <div className='flex justify-around '>
             <div className='mr-2'>
 
@@ -49,7 +49,7 @@ const Header = () => {
           </select> 
          </div>
         </div>
-        <div className=' flex justify-between'>
+        <div className=' flex justify-between font-normal'>
             <div  className=' flex mr-2'>
                 <Button >
 

@@ -20,14 +20,14 @@ export default function Home() {
 
         {/* <div className="mt-[3rem]" > */}
 
-        <div className="bg-[url('/images/PromotionImage.png')] bg-cover bg-center h-[653px] w-full">
+        <div className="bg-[url('/images/PromotionImage.png')] bg-no-repeat bg-contain bg-center h-[653px] w-full">
           <h1 className="text-white text-[64px] font-bold pt-[258px] pl-[100px]">
             Super Flash Sale <br /> 50% off
           </h1>
 
           {/* */}
-          <div className="flex">
-            <div className="pl-[105px] pt-[43px]">
+          <div className="flex pt-[110px]">
+            <div className="pl-[105px] ">
               <div className="bg-[url('/images/imageProduct.png')] bg-cover bg-center h-[358px] w-[417px]">
                 <h4 className="text-black text-[20px] pt-[29px] font-semibold pl-[52px] tracking-[0.5px] leading-[150%]">
                   FS - QUILTED MAXI <span className="block">CROSS BAG</span>
@@ -44,7 +44,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="pt-[43px]">
+            <div className="">
               <div className="bg-[url('/images/imageProduct2.png')] bg-cover bg-center h-[358px] w-[417px]">
                 <h4 className="text-black text-[20px] pt-[29px] font-semibold pl-[52px] tracking-[0.5px] leading-[150%]">
                   FS - QUILTED MAXI <span className="block">CROSS BAG</span>
@@ -61,7 +61,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="pt-[43px]">
+            <div className="">
               <div className="bg-[url('/images/imageProduct3.png')] bg-cover bg-center h-[358px] w-[417px]">
                 <h4 className="text-black text-[20px] pt-[29px] font-semibold pl-[52px] tracking-[0.5px] leading-[150%]">
                   FS - QUILTED MAXI <span className="block">CROSS BAG</span>
@@ -93,9 +93,9 @@ export default function Home() {
       </div>
 
       <div>
-        <h4 className="text-[35px] font-semibold text-center">BEST SELLER</h4>
+        <h4 className="text-[35px] font-semibold pt-[63px] text-center">BEST SELLER</h4>
 
-        <ul className="pt-[20px] flex text-[22px] text-black text-center items-center justify-center gap-10">
+        <ul className="pt-[20px] flex text-[22px] text-black text-center items-center justify-center gap-[70px]">
           <li>
             <a
               href=""
@@ -255,6 +255,9 @@ export default function Home() {
           <h1 className="text-[55px] font-medium text-white ">
             Adidas Men Running Sneakers
           </h1>
+          <p className="text-white text-[24px] pt-[23px]">
+          Performance and design. Taken right to the edge.
+          </p>
         </div>
         <Image
           className=""
@@ -398,7 +401,7 @@ export default function Home() {
             />
           </div>
           <div className="pl-[24px]">
-            <h4 className="text-[22px] font-light">
+            <h4 className="text-[22px] font-light  leading-[1.2]">
               Blue Swade Nike <br />
               Sneakers
             </h4>
@@ -409,12 +412,15 @@ export default function Home() {
               width={86}
               alt="rating"
             />
+            <div className="pt-[17px]">
             <span className="text-[#FF4858] font-medium text-[20px] pt-[17px]">
               $499
             </span>
-            <span className="text-[#5D656B] font-medium text-[20px] pt-[17px] pl-[4px]">
+            <span className="text-[#C1C8CE] font-medium text-[20px] pt-[17px] pl-[4px]">
               $499
             </span>
+            </div>
+            
           </div>
         </div>
 
@@ -428,7 +434,7 @@ export default function Home() {
             />
           </div>
           <div className="pl-[24px]">
-            <h4 className="text-[22px] font-light">
+            <h4 className="text-[22px] font-light  leading-[1.2]">
               Blue Swade Nike <br />
               Sneakers
             </h4>
@@ -439,14 +445,19 @@ export default function Home() {
               width={86}
               alt="rating"
             />
+            <div className="pt-[17px]">
             <span className="text-[#FF4858] font-medium text-[20px] pt-[17px]">
               $499
             </span>
-            <span className="text-[#5D656B] font-medium text-[20px] pt-[17px] pl-[4px]">
+            <span className="text-[#C1C8CE] font-medium text-[20px] pt-[17px] pl-[4px]">
               $499
             </span>
+            </div>
+            
           </div>
         </div>
+
+
 
         <div className="flex">
           <div>
@@ -458,7 +469,7 @@ export default function Home() {
             />
           </div>
           <div className="pl-[24px]">
-            <h4 className="text-[22px] font-light">
+            <h4 className="text-[22px] font-light  leading-[1.2]">
               Blue Swade Nike <br />
               Sneakers
             </h4>
@@ -469,24 +480,52 @@ export default function Home() {
               width={86}
               alt="rating"
             />
+            <div className="pt-[17px]">
             <span className="text-[#FF4858] font-medium text-[20px] pt-[17px]">
               $499
             </span>
-            <span className="text-[#5D656B] font-medium text-[20px] pt-[17px] pl-[4px]">
+            <span className="text-[#C1C8CE] font-medium text-[20px] pt-[17px] pl-[4px]">
               $499
             </span>
+            </div>
+            
           </div>
         </div>
+
+
+       
+
+       
       </div>
-
 
       {/* search box */}
 
-      <div className="flex pt-[110px]">
-        <div className="mx-auto bg-black ">
-        <input className="border-2 h-[64px]  w-[635px]" type="text" />
-
+      {/* <div className="flex pt-[110px] items-center justify-center">
+        <div className="flex w-[635px] relative">
+          <input
+            className="h-[64px] w-full pl-4 pr-[80px] rounded-sm border-[2px] border-[#40BFFF]"
+            type="text"
+            placeholder="Search query"
+          />
+          <button className="absolute w-[127px] right-0 top-0 h-full px-4 bg-[#40BFFF] text-white rounded-sm font-semibold text-[20px]">
+            Search
+          </button>
         </div>
+      </div> */}
+
+
+      <div className="flex pt-[110px]   items-center justify-center">
+
+        <div className="flex w-[635px] ">
+        <input
+            className="rounded-l-md h-[64px] w-full pl-4 pr-[80px] rounded-sm border-[2px] border-[#40BFFF]"
+            type="text"
+            placeholder="Search query"
+          />
+
+          <button className="rounded-r-md w-[127px] text-white bg-[#40BFFF] font-semibold text-[20px]">Search</button>
+        </div>
+
       </div>
 
       <Footer />
