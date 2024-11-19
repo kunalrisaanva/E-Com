@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon src/index.js"
+    "dev": "nodemon -r dotenv/config --experimental-json-modules src/index.js"
   },
   "keywords": [
     "backend",
@@ -16,6 +16,7 @@
   "license": "ISC",
   "description": "backend of E-com",
   "dependencies": {
+    "dotenv": "^16.4.5",
     "fastify": "^5.1.0",
     "mongoose": "^8.8.1",
     "prettier": "^3.3.3",

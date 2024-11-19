@@ -12,7 +12,8 @@ fastify.get('/', async function handler (request, reply) {
   })
   
 
-// Run the server!
+
+// export the server  fastify 
 
 export { fastify }
 
