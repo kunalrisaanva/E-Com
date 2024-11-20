@@ -1,12 +1,12 @@
 import dotenv from "dotenv";
 import { connectDb } from "./db/connectDb.js";
 import { fastify } from "./app.js";
-import mongoose from "mongoose";
+
 
 // Load environment variables
 dotenv.config();
 
-console.log(process.env.PORT);
+// console.log(process.env.PORT);
 
 // db connection
 

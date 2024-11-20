@@ -9,12 +9,14 @@ import FigmaLogo from "/public/images/figma-1-logo 1.png";
 import KronosLogo from "/public/images/kronos-logo-1-1 1.png";
 import Reacangle from "/public/images/Rectangle 1 copy 25.png";
 import Rating from "/public/images/rate.png";
+import Navbar from "@/components/Navbar";
 // import Footer from "./components/Footer";
 
 export default function Home() {
   return (
     <>
       <Header />
+      <Navbar/>
       <div className="mb-[15rem]">
         {/* landing page image  */}
 
@@ -136,7 +138,9 @@ export default function Home() {
               </div>
             </h4>
           </div>
-
+          {
+          //  Array(4).fill(null).map((_,index))
+          }
           <div className="bg-[url('/images/image_Product.png')] bg-cover bg-center h-[272px] w-[299px]">
             <h4 className="text-black text-[20px] pt-[29px] font-semibold pl-[52px] tracking-[0.5px] leading-[150%]">
               FS - QUILTED MAXI <span className="block">CROSS BAG</span>
