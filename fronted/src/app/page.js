@@ -9,6 +9,7 @@ import FigmaLogo from "/public/images/figma-1-logo 1.png";
 import KronosLogo from "/public/images/kronos-logo-1-1 1.png";
 import Reacangle from "/public/images/Rectangle 1 copy 25.png";
 import Rating from "/public/images/rate.png";
+import ImageProduct from "../../public/images/image_Product.png";
 import Navbar from "@/components/Navbar";
 // import Footer from "./components/Footer";
 
@@ -16,8 +17,8 @@ export default function Home() {
   return (
     <>
       <Header />
-      <Navbar/>
-      <div className="mb-[15rem]">
+      <Navbar />
+      <div className="mb-[15rem] pt-[30px]">
         {/* landing page image  */}
 
         {/* <div className="mt-[3rem]" > */}
@@ -123,8 +124,8 @@ export default function Home() {
         </ul>
         {/* products */}
 
-        <div className="px-[83px] pt-[23px] flex flex-wrap gap-8">
-          <div className="bg-[url('/images/image_Product.png')] bg-cover bg-center h-[272px] w-[299px] ">
+        <div className="px-[83px] pt-[23px] flex flex-wrap gap-8 ">
+          {/* <div className="bg-[url('/images/image_Product.png')] bg-cover bg-center h-[272px] w-[299px] ">
             <h4 className="text-black text-[20px] pt-[29px] font-semibold pl-[52px] tracking-[0.5px] leading-[150%]">
               FS - QUILTED MAXI <span className="block">CROSS BAG</span>
               <div className="flex pt-[180px]">
@@ -137,11 +138,49 @@ export default function Home() {
                 </span>
               </div>
             </h4>
+          </div> */}
+
+          <div className="  h-[385px] w-[298px] border-[#fcfcfc] border-b-4 border-l-4 border-r-4 rounded-md">
+          {/* border-l-4 border-r-4 */}
+              <Image
+                src={ImageProduct}
+                width={299}
+                height={272}
+                alt="prodcut-image"
+              />
+           
+            {/* bg-[#F8F5F5] */}
+            <div className="px-[45px] pt-[14px]   ">
+              <h1 className="text-[18px] font-bold text-[#223263] text-center">
+                Nike Air Max 270 React
+              </h1>
+              <Image
+                className="mx-auto pt-[6px]"
+                src={Rating}
+                width={123}
+                height={15}
+                alt="rating-image"
+              />
+
+              <div className="flex items-center pt-[6px]">
+                <h3 className="text-imageBgColor text-[18px] font-bold ">
+                  $299,43
+                </h3>
+                <h3 className="text-textLighGrayColor text-[14px] pl-[13px]">
+                  $534,33
+                </h3>
+                <h3 className="text-textRedColor text-[14px] font-bold pl-[8px]">
+                  24% off
+                </h3>
+              </div>
+            </div>
           </div>
+
+          
           {
-          //  Array(4).fill(null).map((_,index))
+            //  Array(4).fill(null).map((_,index))
           }
-          <div className="bg-[url('/images/image_Product.png')] bg-cover bg-center h-[272px] w-[299px]">
+          {/* <div className="bg-[url('/images/image_Product.png')] bg-cover bg-center h-[272px] w-[299px]">
             <h4 className="text-black text-[20px] pt-[29px] font-semibold pl-[52px] tracking-[0.5px] leading-[150%]">
               FS - QUILTED MAXI <span className="block">CROSS BAG</span>
               <div className="flex pt-[180px]">
@@ -154,9 +193,9 @@ export default function Home() {
                 </span>
               </div>
             </h4>
-          </div>
+          </div> */}
 
-          <div className="bg-[url('/images/image_Product.png')] bg-cover bg-center h-[272px] w-[299px]">
+          {/* <div className="bg-[url('/images/image_Product.png')] bg-cover bg-center h-[272px] w-[299px]">
             <h4 className="text-black text-[20px] pt-[29px] font-semibold pl-[52px] tracking-[0.5px] leading-[150%]">
               FS - QUILTED MAXI <span className="block">CROSS BAG</span>
               <div className="flex pt-[180px]">
@@ -169,9 +208,9 @@ export default function Home() {
                 </span>
               </div>
             </h4>
-          </div>
+          </div> */}
 
-          <div className="bg-[url('/images/image_Product.png')] bg-cover bg-center h-[272px] w-[299px]">
+          {/* <div className="bg-[url('/images/image_Product.png')] bg-cover bg-center h-[272px] w-[299px]">
             <h4 className="text-black text-[20px] pt-[29px] font-semibold pl-[52px] tracking-[0.5px] leading-[150%]">
               FS - QUILTED MAXI <span className="block">CROSS BAG</span>
               <div className="flex pt-[180px]">
@@ -184,9 +223,9 @@ export default function Home() {
                 </span>
               </div>
             </h4>
-          </div>
+          </div> */}
 
-          <div className="bg-[url('/images/image_Product.png')] bg-cover bg-center h-[272px] w-[299px]">
+          {/* <div className="bg-[url('/images/image_Product.png')] bg-cover bg-center h-[272px] w-[299px]">
             <h4 className="text-black text-[20px] pt-[29px] font-semibold pl-[52px] tracking-[0.5px] leading-[150%]">
               FS - QUILTED MAXI <span className="block">CROSS BAG</span>
               <div className="flex pt-[180px]">
@@ -199,9 +238,9 @@ export default function Home() {
                 </span>
               </div>
             </h4>
-          </div>
+          </div> */}
 
-          <div className="bg-[url('/images/image_Product.png')] bg-cover bg-center h-[272px] w-[299px]">
+          {/* <div className="bg-[url('/images/image_Product.png')] bg-cover bg-center h-[272px] w-[299px]">
             <h4 className="text-black text-[20px] pt-[29px] font-semibold pl-[52px] tracking-[0.5px] leading-[150%]">
               FS - QUILTED MAXI <span className="block">CROSS BAG</span>
               <div className="flex pt-[180px]">
@@ -214,9 +253,9 @@ export default function Home() {
                 </span>
               </div>
             </h4>
-          </div>
+          </div> */}
 
-          <div className="bg-[url('/images/image_Product.png')] bg-cover bg-center h-[272px] w-[299px]">
+          {/* <div className="bg-[url('/images/image_Product.png')] bg-cover bg-center h-[272px] w-[299px]">
             <h4 className="text-black text-[20px] pt-[29px] font-semibold pl-[52px] tracking-[0.5px] leading-[150%]">
               FS - QUILTED MAXI <span className="block">CROSS BAG</span>
               <div className="flex pt-[180px]">
@@ -229,9 +268,9 @@ export default function Home() {
                 </span>
               </div>
             </h4>
-          </div>
+          </div> */}
 
-          <div className="bg-[url('/images/image_Product.png')] bg-cover bg-center h-[272px] w-[299px]">
+          {/* <div className="bg-[url('/images/image_Product.png')] bg-cover bg-center h-[272px] w-[299px]">
             <h4 className="text-black text-[20px] pt-[29px] font-semibold pl-[52px] tracking-[0.5px] leading-[150%]">
               FS - QUILTED MAXI <span className="block">CROSS BAG</span>
               <div className="flex pt-[180px]">
@@ -244,7 +283,7 @@ export default function Home() {
                 </span>
               </div>
             </h4>
-          </div>
+          </div> */}
         </div>
       </div>
 
@@ -254,9 +293,7 @@ export default function Home() {
         </h4>
       </div>
 
-     
       {/* blue image code */}
-
 
       <div className="bg-imageBgColor h-[600px] w-auto flex relative overflow-visible ">
         <div className="pt-[162px] pl-[80px] z-10">
@@ -309,7 +346,6 @@ export default function Home() {
         <h4 className="text-[34px] font-semibold mx-auto">LATEST NEWS</h4>
       </div>
 
-      
       <div className="flex items-start gap-4 pt-[71px] pl-[141px]">
         {/* Image Section */}
         <Image
