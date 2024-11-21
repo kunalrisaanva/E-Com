@@ -124,167 +124,49 @@ export default function Home() {
         </ul>
         {/* products */}
 
-        <div className="px-[83px] pt-[23px] flex flex-wrap gap-8 ">
-          {/* <div className="bg-[url('/images/image_Product.png')] bg-cover bg-center h-[272px] w-[299px] ">
-            <h4 className="text-black text-[20px] pt-[29px] font-semibold pl-[52px] tracking-[0.5px] leading-[150%]">
-              FS - QUILTED MAXI <span className="block">CROSS BAG</span>
-              <div className="flex pt-[180px]">
-                <span className="text-[18px]">$534,33</span>
-                <span className="text-[18px] pl-[8px] text-[#FB7181]">
-                  24% Off
-                </span>
-                <span className="text-[20px] font-bold pl-[28px] pt-[2px] text-[#40BFFF]">
-                  $299,43
-                </span>
-              </div>
-            </h4>
-          </div> */}
+        <div className="grid grid-cols-4 gap-4 px-[83px] pt-[23px] gap-y-8">
+      {Array(8).fill().map((_, index) => (
+        <div
+          key={index}
+          className="h-[388px] w-[301px] border-[#F6F7F8] border-b-4 border-l-4 border-r-4 rounded-md"
+        >
+          {/* Image Section */}
+          <Image
+            src={ImageProduct}
+            width={299}
+            height={272.5}
+            alt="product-image"
+          />
 
-          <div className="  h-[385px] w-[298px] border-[#fcfcfc] border-b-4 border-l-4 border-r-4 rounded-md">
-          {/* border-l-4 border-r-4 */}
-              <Image
-                src={ImageProduct}
-                width={299}
-                height={272}
-                alt="prodcut-image"
-              />
-           
-            {/* bg-[#F8F5F5] */}
-            <div className="px-[45px] pt-[14px]   ">
-              <h1 className="text-[18px] font-bold text-[#223263] text-center">
-                Nike Air Max 270 React
-              </h1>
-              <Image
-                className="mx-auto pt-[6px]"
-                src={Rating}
-                width={123}
-                height={15}
-                alt="rating-image"
-              />
-
-              <div className="flex items-center pt-[6px]">
-                <h3 className="text-imageBgColor text-[18px] font-bold ">
-                  $299,43
-                </h3>
-                <h3 className="text-textLighGrayColor text-[14px] pl-[13px]">
-                  $534,33
-                </h3>
+          {/* Details Section */}
+          <div className="pt-[14px]">
+            <h1 className="text-[18px] font-bold text-[#223263] text-center">
+              Nike Air Max 270 React
+            </h1>
+            <Image
+              className="mx-auto pt-[6px]"
+              src={Rating}
+              width={123}
+              height={15}
+              alt="rating-image"
+            />
+            <div className="flex items-center pt-[6px] justify-center">
+              <h3 className="text-imageBgColor text-[18px] font-bold ">
+                $299.43
+              </h3>
+              <div className="flex justify-center pl-[13px] items-center">
+                <h3 className="text-textLighGrayColor text-[14px]">$534.33</h3>
                 <h3 className="text-textRedColor text-[14px] font-bold pl-[8px]">
                   24% off
                 </h3>
               </div>
             </div>
           </div>
-
-          
-          {
-            //  Array(4).fill(null).map((_,index))
-          }
-          {/* <div className="bg-[url('/images/image_Product.png')] bg-cover bg-center h-[272px] w-[299px]">
-            <h4 className="text-black text-[20px] pt-[29px] font-semibold pl-[52px] tracking-[0.5px] leading-[150%]">
-              FS - QUILTED MAXI <span className="block">CROSS BAG</span>
-              <div className="flex pt-[180px]">
-                <span className="text-[18px]">$534,33</span>
-                <span className="text-[18px] pl-[8px] text-[#FB7181]">
-                  24% Off
-                </span>
-                <span className="text-[20px] font-bold pl-[28px] pt-[2px] text-[#40BFFF]">
-                  $299,43
-                </span>
-              </div>
-            </h4>
-          </div> */}
-
-          {/* <div className="bg-[url('/images/image_Product.png')] bg-cover bg-center h-[272px] w-[299px]">
-            <h4 className="text-black text-[20px] pt-[29px] font-semibold pl-[52px] tracking-[0.5px] leading-[150%]">
-              FS - QUILTED MAXI <span className="block">CROSS BAG</span>
-              <div className="flex pt-[180px]">
-                <span className="text-[18px]">$534,33</span>
-                <span className="text-[18px] pl-[8px] text-[#FB7181]">
-                  24% Off
-                </span>
-                <span className="text-[20px] font-bold pl-[28px] pt-[2px] text-[#40BFFF]">
-                  $299,43
-                </span>
-              </div>
-            </h4>
-          </div> */}
-
-          {/* <div className="bg-[url('/images/image_Product.png')] bg-cover bg-center h-[272px] w-[299px]">
-            <h4 className="text-black text-[20px] pt-[29px] font-semibold pl-[52px] tracking-[0.5px] leading-[150%]">
-              FS - QUILTED MAXI <span className="block">CROSS BAG</span>
-              <div className="flex pt-[180px]">
-                <span className="text-[18px]">$534,33</span>
-                <span className="text-[18px] pl-[8px] text-[#FB7181]">
-                  24% Off
-                </span>
-                <span className="text-[20px] font-bold pl-[28px] pt-[2px] text-[#40BFFF]">
-                  $299,43
-                </span>
-              </div>
-            </h4>
-          </div> */}
-
-          {/* <div className="bg-[url('/images/image_Product.png')] bg-cover bg-center h-[272px] w-[299px]">
-            <h4 className="text-black text-[20px] pt-[29px] font-semibold pl-[52px] tracking-[0.5px] leading-[150%]">
-              FS - QUILTED MAXI <span className="block">CROSS BAG</span>
-              <div className="flex pt-[180px]">
-                <span className="text-[18px]">$534,33</span>
-                <span className="text-[18px] pl-[8px] text-[#FB7181]">
-                  24% Off
-                </span>
-                <span className="text-[20px] font-bold pl-[28px] pt-[2px] text-[#40BFFF]">
-                  $299,43
-                </span>
-              </div>
-            </h4>
-          </div> */}
-
-          {/* <div className="bg-[url('/images/image_Product.png')] bg-cover bg-center h-[272px] w-[299px]">
-            <h4 className="text-black text-[20px] pt-[29px] font-semibold pl-[52px] tracking-[0.5px] leading-[150%]">
-              FS - QUILTED MAXI <span className="block">CROSS BAG</span>
-              <div className="flex pt-[180px]">
-                <span className="text-[18px]">$534,33</span>
-                <span className="text-[18px] pl-[8px] text-[#FB7181]">
-                  24% Off
-                </span>
-                <span className="text-[20px] font-bold pl-[28px] pt-[2px] text-[#40BFFF]">
-                  $299,43
-                </span>
-              </div>
-            </h4>
-          </div> */}
-
-          {/* <div className="bg-[url('/images/image_Product.png')] bg-cover bg-center h-[272px] w-[299px]">
-            <h4 className="text-black text-[20px] pt-[29px] font-semibold pl-[52px] tracking-[0.5px] leading-[150%]">
-              FS - QUILTED MAXI <span className="block">CROSS BAG</span>
-              <div className="flex pt-[180px]">
-                <span className="text-[18px]">$534,33</span>
-                <span className="text-[18px] pl-[8px] text-[#FB7181]">
-                  24% Off
-                </span>
-                <span className="text-[20px] font-bold pl-[28px] pt-[2px] text-[#40BFFF]">
-                  $299,43
-                </span>
-              </div>
-            </h4>
-          </div> */}
-
-          {/* <div className="bg-[url('/images/image_Product.png')] bg-cover bg-center h-[272px] w-[299px]">
-            <h4 className="text-black text-[20px] pt-[29px] font-semibold pl-[52px] tracking-[0.5px] leading-[150%]">
-              FS - QUILTED MAXI <span className="block">CROSS BAG</span>
-              <div className="flex pt-[180px]">
-                <span className="text-[18px]">$534,33</span>
-                <span className="text-[18px] pl-[8px] text-[#FB7181]">
-                  24% Off
-                </span>
-                <span className="text-[20px] font-bold pl-[28px] pt-[2px] text-[#40BFFF]">
-                  $299,43
-                </span>
-              </div>
-            </h4>
-          </div> */}
         </div>
+      ))}
+    </div>
+
+       
       </div>
 
       <div className="w-64 mx-auto text-center p-4">
