@@ -1,41 +1,35 @@
 import mongoose from "mongoose";
 
-
-
 const productShcema = new mongoose.Schema({
-    
-    productName:{
-        type:String,
-        required:[true,"product name is required"],
-        trim:true
-    },
+  productName: {
+    type: String,
+    required: [true, "product name is required"],
+    trim: true,
+  },
 
-    productImageUrl:{
-        type:String,
-        required:[true,"product image url is required"]
-    },
+  productImageUrl: {
+    type: String,
+    required: [true, "product image url is required"],
+  },
 
-    productOf:{
-        type:Number,
-        // required:[true,"produc"]
-    },
+  productOf: {
+    type: Number,
+    // required:[true,"produc"]
+  },
 
-    productPreviousPrice:{
-        type:Number
-    },
+  productPreviousPrice: {
+    type: Number,
+  },
 
-    productCurrentPrice:{
-        type:Number,
-        required:[true,"product Current Price is required"]
-    },
+  productCurrentPrice: {
+    type: Number,
+    required: [true, "product Current Price is required"],
+  },
 
-    category:{
-        type:String,
-        required:true
-    }
+  category: {
+    type: String,
+    required: true,
+  },
+});
 
-})
-
-
-
-export const Product = mongoose.model("Product",productShcema); 
+export const Product = mongoose.model("Product", productShcema);
