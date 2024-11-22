@@ -19,7 +19,7 @@ const Footer = () => {
             </span>
           </div>
 
-          <div className=" flex pt-[16px]  pt-[16px]">
+          <div className=" flex pt-[16px]">
             <p className=" text-wrap text-[12px] w-[221px] h-[75px] ">
               Lorem Ipsum is simply dummy text of the printing and typesetting
               industry. Lorem Ipsum has been the standard dummy text ever.Since
