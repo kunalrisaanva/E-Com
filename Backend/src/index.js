@@ -2,7 +2,6 @@ import dotenv from "dotenv";
 import { connectDb } from "./db/connectDb.js";
 import { fastify } from "./app.js";
 
-
 // Load environment variables
 dotenv.config();
 
@@ -23,7 +22,6 @@ connectDb()
       });
   })
   .catch((err) => {
-    console.error('Error connecting to the database:', err);
+    console.error("Error connecting to the database:", err);
     process.exit(1); // Exit the process if DB connection fails
   });
-

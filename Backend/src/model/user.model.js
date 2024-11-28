@@ -56,4 +56,4 @@ userShcema.methods.comparePassword = async function(password) {
 }
 
 
-export {User}
+export { User }

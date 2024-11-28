@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon -r dotenv/config --experimental-json-modules src/index.js"
+    "dev": "nodemon -r dotenv/config --experimental-json-modules src/index.js",
+    "format": "prettier --write ."
   },
   "keywords": [
     "backend",
@@ -16,11 +17,13 @@
   "license": "ISC",
   "description": "backend of E-com",
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "cookie-parser": "^1.4.7",
     "dotenv": "^16.4.5",
     "fastify": "^5.1.0",
     "mongoose": "^8.8.1",
     "node-cache": "^5.1.2",
+    "nodemailer": "^6.9.16",
     "prettier": "^3.3.3",
     "zod": "^3.23.8"
   }
