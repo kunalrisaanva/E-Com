@@ -16,8 +16,7 @@ import Navbar from "@/components/Navbar";
 export default function Home() {
   return (
     <>
-      <Header />
-      <Navbar />
+     
       <div className="mb-[15rem] pt-[30px]">
         {/* landing page image  */}
 
@@ -124,7 +123,7 @@ export default function Home() {
         </ul>
         {/* products */}
 
-        <div className="grid grid-cols-4 gap-4 px-[83px] pt-[23px] gap-y-8">
+        <div className="grid grid-cols-4 gap-4 px-[83px] pt-[23px] gap-y-[34px]">
       {Array(8).fill().map((_, index) => (
         <div
           key={index}
@@ -433,7 +432,7 @@ export default function Home() {
         </div>
       </div>
 
-      <Footer />
+      
     </>
   );
 }

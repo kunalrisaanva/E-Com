@@ -6,13 +6,16 @@ const Navbar = () => {
   return (
     <div className="flex justify-between px-[104px] items-center">
       <div className=" flex items-center">
+        <Link href='/'>
+        
         <Image
           src={"/favicon.ico"}
           alt="E-com"
           width={44}
           height={44}
           className=""
-        />
+          />
+          </Link>
 
         <h1 className="text-[18px] text-[#22262A] font-extrabold pl-[7.11px]">
           E-comm
@@ -20,7 +23,7 @@ const Navbar = () => {
       </div>
       <div className="flex w-[815.49px] h-[36px] font-medium">
         <div className=" text-[24px]  pr-24 hover:text-customBlu text-productFontColorBlue">
-          <Link href="#" className="">
+          <Link href="/" className="">
             HOME
           </Link>
         </div>
