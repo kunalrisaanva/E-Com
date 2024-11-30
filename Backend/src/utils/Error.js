@@ -1,10 +1,9 @@
-const errorResponse = (message, statusCode ,errors = []  ) => {
-    return {
-      success: false,
-      message,
-      errors,
-    };
+const errorResponse = (message, statusCode, errors = []) => {
+  return {
+    success: false,
+    message,
+    errors,
   };
-  
+};
 
-  export {errorResponse}
+export { errorResponse };
