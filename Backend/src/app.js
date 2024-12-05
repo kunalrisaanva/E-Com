@@ -1,5 +1,6 @@
 import Fastify from "fastify";
 import cookiesParser from "cookie-parser";
+import fastifyCors from "@fastify/cors"
 import NodeCache from "node-cache";
 import { productRoutes } from "./routes/product.routes.js";
 import { registerRoutes } from "./routes/index.js";
@@ -7,6 +8,15 @@ import { registerRoutes } from "./routes/index.js";
 const fastify = Fastify({
   logger: true,
 });
+
+//cors implimentation 
+
+await fastify.register(fastifyCors, {
+  origin: '*', // Allow all origins
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed methods
+  allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
+});
+
 
 // Add cache instance to Fastify
 const cache = new NodeCache({ stdTTL: 3600 });
