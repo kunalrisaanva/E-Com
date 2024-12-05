@@ -3,6 +3,7 @@ import { Search as SearchIcom } from "@mui/icons-material";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { Button } from "@mui/material";
+import Link from "next/link";
 
 const Header = () => {
   const language = ["ENG", "HIN"];
@@ -47,17 +48,23 @@ const Header = () => {
       </div>
       <div className=" flex justify-between font-normal ">
         <div className=" flex">
+          <Link href='profile'>
           <Button>
             <PermIdentityIcon style={{ color: "black" }} />
             <h1 className="text-[20px] text-textgrayColor">my profile</h1>
           </Button>
+          </Link>
+          
         </div>
         <div className=" flex ">
+          <Link href="cart">
           <Button>
             <ShoppingCartIcon style={{ color: "black" }} />
 
             <h1 className="text-[20px] text-textgrayColor">Items $0.00</h1>
           </Button>
+          </Link>
+         
         </div>
         <div className="flex items-center">
           <Button>

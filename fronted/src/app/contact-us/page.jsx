@@ -13,16 +13,7 @@ const page = () => {
   return (
     <>
       <div className="flex-col ">
-        <div className="flex absolute left-[_0.03%] right-[0%] top-[15.12%] bottom-[88.46%] justify-center bg-[#F6F7F8] opacity-[0.5] ">
-          <div className=" text-2xl  text-black  hover:text-customBlue left-[_0.03%] right-[0%] top-[15.12%] bottom-[88.46%]">
-            <Link href="#" className="">
-              Home
-            </Link>
-          </div>
-          <div className=" text-2xl  hover:text-customBlue pl-3  left-[_0.03%] right-[0%] top-[15.12%] bottom-[88.46%] h-[715.62px]  ">
-            <Link href="#">Contact Us</Link>
-          </div>
-        </div>
+        
         <div className="flex absolute left-[6.8%] right-[7.33%] top-[24.2%] bottom-[11.1%] mt-3 bg-[#FFFFFF] shadow-[0px 2px 4px ]">
           <div className=" flex bg-[#40BFFF] w-[50%] h-[100%]">
             <Image
