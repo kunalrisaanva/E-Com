@@ -1,23 +1,29 @@
-// routes/products.js
-
 import { asyncHandler } from "../utils/AsynchHandler.js";
 import { createProductRequestSchema } from "../schema/productRequestSchema.js";
 import {
-  homeScreeProduct,
   createProduct,
+  homeScreeProduct,
   getAllProduct,
 } from "../controller/productController.js";
+import { upload } from "../middleware/multer.js";
+
 
 async function productRoutes(fastify, options) {
+  // Home screen route
   fastify.get("/home-screen", asyncHandler(homeScreeProduct));
-  // fastify.post('/users', asyncHandler(createUser));
+
+  // Create product route with file handling
   fastify.post(
     "/create",
-    { schema: createProductRequestSchema },
+    {
+      schema: createProductRequestSchema, // Optional schema validation for other fields
+      preValidation: upload.single("productImageUrl"),
+    },
     asyncHandler(createProduct)
   );
+
+  // Get all products route
   fastify.get("/all", asyncHandler(getAllProduct));
-  // fastify.post("test",{schema})
 }
 
 export { productRoutes };
