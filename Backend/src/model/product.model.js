@@ -13,16 +13,16 @@ const productShcema = new mongoose.Schema({
   },
 
   productOf: {
-    type: Number,
+    type: String,
     // required:[true,"produc"]
   },
 
   productPreviousPrice: {
-    type: Number,
+    type: String,
   },
 
   productCurrentPrice: {
-    type: Number,
+    type: String,
     required: [true, "product Current Price is required"],
   },
 
