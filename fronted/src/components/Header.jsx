@@ -51,23 +51,24 @@ const Header = () => {
           <Link href='profile'>
           <Button>
             <PermIdentityIcon style={{ color: "black" }} />
-            <h1 className="text-[20px] text-textgrayColor">my profile</h1>
+            <h1 className="text-[20px] text-textgrayColor pl-[6.53px]">my profile</h1>
           </Button>
           </Link>
           
         </div>
-        <div className=" flex ">
+        <div className=" flex items-center">
           <Link href="cart">
           <Button>
-            <ShoppingCartIcon style={{ color: "black" }} />
+            <ShoppingCartIcon style={{ color: "black" }} className="mx-[20.53px]" />
 
-            <h1 className="text-[20px] text-textgrayColor">Items $0.00</h1>
+            <h1 className="text-[20px] text-textgrayColor ">Items </h1>
           </Button>
           </Link>
          
         </div>
-        <div className="flex items-center">
+        <div className="flex ">
           <Button>
+            <h1 className="text-[20px] text-textgrayColor ">$0.00</h1>
             <SearchIcom style={{ color: "black" }} />
           </Button>
         </div>
