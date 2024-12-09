@@ -1,8 +1,15 @@
+"use client"
+
+import { usePathname }  from "next/navigation";
 import Link from "next/link";
 import React from "react";
 import Image from "next/image";
 
 const Navbar = () => {
+
+  const pathname = usePathname();
+
+
   return (
     <div className="flex justify-between px-[104px] items-center">
       <div className=" flex items-center">
@@ -25,7 +32,10 @@ const Navbar = () => {
           <Link
             href="/"
             id="dropdownHoverButton"
-            className=""
+            // className={`${ pathName === "/" ? : `text-productFontColorBlue` }`}
+            className={`${
+              pathname === '/' ? 'text-productFontColorBlue' : 'text-black'
+            } `}
             data-dropdown-toggle="dropdownHover"
             data-dropdown-trigger="hover"
           >
@@ -54,16 +64,24 @@ const Navbar = () => {
           </div>
         </div>
         <div className=" text-2xl pr-24  hover:text-customBlue">
-          <Link href="#"> BEGS</Link>
+          <Link href="/begs"   className={`${
+              pathname === '/begs' ? 'text-productFontColorBlue' : 'text-black'
+            } `}> BEGS</Link>
         </div>
         <div className=" text-2xl  pr-24  hover:text-customBlue">
-          <Link href="sneaker">SNEAKERS</Link>
+          <Link href="sneaker"   className={`${
+              pathname === '/sneaker' ? 'text-productFontColorBlue' : 'text-black'
+            } `}>SNEAKERS</Link>
         </div>
         <div className="text-2xl  pr-24  hover:text-customBlue">
-          <Link href="belt">BELT</Link>
+          <Link href="belt" className={`${
+              pathname === '/belt' ? 'text-productFontColorBlue' : 'text-black'
+            } `}>BELT</Link>
         </div>
         <div className=" text-2xl  hover:text-customBlue  ">
-          <Link href="contact-us">CONTACT</Link>
+          <Link href="contact-us" className={`${
+              pathname === '/contact-us' ? 'text-productFontColorBlue' : 'text-black'
+            } `}  >CONTACT</Link>
         </div>
       </div>
     </div>
