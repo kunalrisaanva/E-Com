@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import UpperLine from "@/components/UpperLine.";
 import Image from "next/image";
 import NikeShoes from "../../../public/images/imageProduct3.png";
@@ -7,7 +8,17 @@ import ProductImage from "../../../public/images/image_Product.png";
 import ProductPicture from "../../../public/images/Product Picture.png";
 import FaceBookPicture from "../../../public/images/facebook (1).png";
 import TwitterPicture from "../../../public/images/twitter.png";
+import HeartPicture from "../../../public/images/hearts.png";
+import CartPicture from "../../../public/images/cart_2.png";
+
 const page = () => {
+  const [ammount, setAmmount] = useState(0);
+
+  const minusAmmount = () => {
+      setAmmount(ammount-1);
+      if(ammount === 0) setAmmount(0)
+  }
+
   return (
     <>
       <UpperLine />
@@ -16,9 +27,13 @@ const page = () => {
         <div className=" ">
           <Image src={NikeShoes} width={375} height={271} alt="product-image" />
           <div className="pt-[134.33px]">
-          <Image src={ProductPicture} height={86.25} width={388.75} alt="product-images"/>
+            <Image
+              src={ProductPicture}
+              height={86.25}
+              width={388.75}
+              alt="product-images"
+            />
           </div>
-          
         </div>
 
         <div className="pl-[53px]">
@@ -81,73 +96,94 @@ const page = () => {
           </div>
 
           <div className="pt-[21.27px]">
-            
             <span className="text-[16px] text-[#262626]">size</span>
-            
-            
-            </div>
-             {/* line */}
+          </div>
+          {/* line */}
           <div className="w-[499.49px] h-[2.13px] bg-[#F6F7F8] mt-[21.27px]"></div>
           {/* line end */}
 
-          <div className="bg-[#F6F7F8] w-[123.28px] h-[48.91px] mt-[20px] flex items-center justify-center gap-8">
-            <button className="text-productFontColorBlue">-</button>
-            <span>2</span>
-            <button className="text-productFontColorBlue">+</button>
+          <div className=" mt-[20px] flex items-center justify-between">
+            <div className="bg-[#F6F7F8] w-[123.28px] h-[48.91px] flex items-center justify-center gap-8 rounded-sm">
+              <button onClick = {minusAmmount} className="text-productFontColorBlue">-</button>
+              <span >{ammount}</span>
+              <button onClick={() => setAmmount(ammount+1)} className="text-productFontColorBlue">+</button>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <button className="flex gap-4 items-center justify-center h-[48.91px] w-[159.41px] bg-[#33A0FF] bg-opacity-[10%]">
+                <Image
+                  src={CartPicture}
+                  alt="cart-picture"
+                  height={17.01}
+                  width={16.95}
+                />
+                <span className="text-[18px] text-[#33A0FF]">Add To Cart</span>
+              </button>
+
+              <button className="flex gap-4 items-center justify-center h-[48.91px] w-[48.89px] bg-[#33A0FF] bg-opacity-[10%]">
+                <Image
+                  src={HeartPicture}
+                  alt="cart-picture"
+                  height={17.01}
+                  width={16.95}
+                />
+              </button>
+            </div>
           </div>
 
           {/* line */}
           <div className="w-[499.49px] h-[2.13px] bg-[#F6F7F8] mt-[22.27px]"></div>
           {/* line end */}
-<div className="mt-[20.02px]">
-
-          <div className="flex bg-[#385C8E] h-[48.91px] w-[244.43px] text-center text-white">
-           <Image className="bg-white" src={FaceBookPicture} alt="fblogo" width={8.13} height={16.09}/>
-           <a href="" className="">Share on Facebook</a> 
+          <div className="mt-[20.02px]">
+            <div className="flex bg-[#385C8E] h-[48.91px] w-[244.43px] text-center text-white">
+              <Image
+                className="bg-white"
+                src={FaceBookPicture}
+                alt="fblogo"
+                width={8.13}
+                height={16.09}
+              />
+              <a href="#" className="">
+                Share on Facebook
+              </a>
+            </div>
           </div>
-          
-</div>
 
-
-
-{/* product info and review section  */}
-
-
-
+          {/* product info and review section  */}
         </div>
         <div className="pl-[31.88px] ">
-            <span className="text-[#C1C8CE]">BEST SELLER</span>
-            <div className="border-[#F6F7F8] border-b-4 border-l-4 border-r-4 rounded-md h-[371.1px] w-[286.94px] mt-[34.98px]">
+          <span className="text-[#C1C8CE]">BEST SELLER</span>
+          <div className="border-[#F6F7F8] border-b-4 border-l-4 border-r-4 rounded-md h-[371.1px] w-[286.94px] mt-[34.98px]">
             <Image
-            src={ProductImage}
-            width={283.75}
-            height={239.68}
-            alt="product-image"
-          />
-
-          {/* Details Section */}
-          <div className="pt-[14px]">
-        <div className="">
-           
-            <Image
-              className="mx-auto pt-[52.59px]"
-              src={Rating}
-              width={76.95}
-              height={10.63}
-              alt="rating-image"
+              src={ProductImage}
+              width={283.75}
+              height={239.68}
+              alt="product-image"
             />
-            <div className="flex items-center pt-[6px] justify-center">
-             
-              <div className="flex justify-center pl-[13px] items-center">
-                <h3 className="text-textLighGrayColor text-[14px]">$534.33</h3>
-                <h3 className="text-textRedColor text-[14px] font-bold pl-[8px]">
-                  24% off
-                </h3>
+
+            {/* Details Section */}
+            <div className="pt-[14px]">
+              <div className="">
+                <Image
+                  className="mx-auto pt-[52.59px]"
+                  src={Rating}
+                  width={76.95}
+                  height={10.63}
+                  alt="rating-image"
+                />
+                <div className="flex items-center pt-[6px] justify-center">
+                  <div className="flex justify-center pl-[13px] items-center">
+                    <h3 className="text-textLighGrayColor text-[14px]">
+                      $534.33
+                    </h3>
+                    <h3 className="text-textRedColor text-[14px] font-bold pl-[8px]">
+                      24% off
+                    </h3>
+                  </div>
+                </div>
               </div>
             </div>
-            </div>
           </div>
-        </div>
         </div>
       </div>
       <div className="bg-[#FAFAFB] h-[382.8px] w-[924.58px] mt-[48.91px] ml-[125px] rounded-md">
@@ -156,66 +192,86 @@ const page = () => {
           <span className="text-[#262626]">Reviews 0</span>
           <span className="text-[#262626]">Another tab</span>
         </div>
-         {/* line */}
-         <div className="w-[924.58] h-[4.25px] bg-[#E5E8EA] mt-[27.58px] mb-[21.08px]">
+        {/* line */}
+        <div className="w-[924.58] h-[4.25px] bg-[#E5E8EA] mt-[27.58px] mb-[21.08px]">
           <div className="bg-[#2E90E5] w-[150.91px] h-[4.25px] ml-[32.94px]"></div>
           {/* <div className="w-[150.91]"></div> */}
-         </div>
-          {/* line end */}
-          <div className="text-[#9098B1] text-[12px] pl-[30.95px]">air max are always very comfortable fit, clean and just perfect in every way. just the box was too small and <br />scrunched the sneakers up a little bit, not sure if the box was always this small but the 90s are and will always be one <br />of my favorites.</div>
+        </div>
+        {/* line end */}
+        <div className="text-[#9098B1] text-[12px] pl-[30.95px]">
+          air max are always very comfortable fit, clean and just perfect in
+          every way. just the box was too small and <br />
+          scrunched the sneakers up a little bit, not sure if the box was always
+          this small but the 90s are and will always be one <br />
+          of my favorites.
+        </div>
 
-          <div className="text-[#9098B1] text-[12px] pl-[30.95px] mt-[15px]">air max are always very comfortable fit, clean and just perfect in every way. just the box was too small and <br />scrunched the sneakers up a little bit, not sure if the box was always this small but the 90s are and will always be one <br />of my favorites.</div>
+        <div className="text-[#9098B1] text-[12px] pl-[30.95px] mt-[15px]">
+          air max are always very comfortable fit, clean and just perfect in
+          every way. just the box was too small and <br />
+          scrunched the sneakers up a little bit, not sure if the box was always
+          this small but the 90s are and will always be one <br />
+          of my favorites.
+        </div>
 
-          <div className="text-[#9098B1] text-[12px] pl-[30.95px] mt-[15px]">air max are always very comfortable fit, clean and just perfect in every way. just the box was too small and <br />scrunched the sneakers up a little bit, not sure if the box was always this small but the 90s are and will always be one <br />of my favorites.</div>
-          
-         
+        <div className="text-[#9098B1] text-[12px] pl-[30.95px] mt-[15px]">
+          air max are always very comfortable fit, clean and just perfect in
+          every way. just the box was too small and <br />
+          scrunched the sneakers up a little bit, not sure if the box was always
+          this small but the 90s are and will always be one <br />
+          of my favorites.
+        </div>
       </div>
       <div className="flex mt-[77.51px]">
-        <h4 className="mx-auto text-[35px] text-[#22262A] font-semibold">RELATED PRODUCTS</h4>
-       
+        <h4 className="mx-auto text-[35px] text-[#22262A] font-semibold">
+          RELATED PRODUCTS
+        </h4>
       </div>
       <div className="flex gap-[33px]  pt-[83.86px] pl-[109px] ">
-      {Array(4).fill().map((_, index) => (
-        <div
-          key={index}
-          className="h-[388px] w-[301px] border-[#F6F7F8] border-b-4 border-l-4 border-r-4 rounded-md"
-        >
-          {/* Image Section */}
-          <Image
-            src={ProductImage}
-            width={299}
-            height={272.5}
-            alt="product-image"
-          />
+        {Array(4)
+          .fill()
+          .map((_, index) => (
+            <div
+              key={index}
+              className="h-[388px] w-[301px] border-[#F6F7F8] border-b-4 border-l-4 border-r-4 rounded-md"
+            >
+              {/* Image Section */}
+              <Image
+                src={ProductImage}
+                width={299}
+                height={272.5}
+                alt="product-image"
+              />
 
-          {/* Details Section */}
-          <div className="pt-[14px]">
-            <h1 className="text-[18px] font-bold text-[#223263] text-center">
-              Nike Air Max 270 React
-            </h1>
-            <Image
-              className="mx-auto pt-[6px]"
-              src={Rating}
-              width={123}
-              height={15}
-              alt="rating-image"
-            />
-            <div className="flex items-center pt-[6px] justify-center">
-              <h3 className="text-imageBgColor text-[18px] font-bold ">
-                $299.43
-              </h3>
-              <div className="flex justify-center pl-[13px] items-center">
-                <h3 className="text-textLighGrayColor text-[14px]">$534.33</h3>
-                <h3 className="text-textRedColor text-[14px] font-bold pl-[8px]">
-                  24% off
-                </h3>
+              {/* Details Section */}
+              <div className="pt-[14px]">
+                <h1 className="text-[18px] font-bold text-[#223263] text-center">
+                  Nike Air Max 270 React
+                </h1>
+                <Image
+                  className="mx-auto pt-[6px]"
+                  src={Rating}
+                  width={123}
+                  height={15}
+                  alt="rating-image"
+                />
+                <div className="flex items-center pt-[6px] justify-center">
+                  <h3 className="text-imageBgColor text-[18px] font-bold ">
+                    $299.43
+                  </h3>
+                  <div className="flex justify-center pl-[13px] items-center">
+                    <h3 className="text-textLighGrayColor text-[14px]">
+                      $534.33
+                    </h3>
+                    <h3 className="text-textRedColor text-[14px] font-bold pl-[8px]">
+                      24% off
+                    </h3>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-      ))}
-    </div>
-
+          ))}
+      </div>
     </>
   );
 };

@@ -11,7 +11,10 @@ import Reacangle from "/public/images/Rectangle 1 copy 25.png";
 import Rating from "/public/images/rate.png";
 import ImageProduct from "../../public/images/image_Product.png";
 import Navbar from "@/components/Navbar";
+import Link from "next/link";
 // import Footer from "./components/Footer";
+
+
 
 export default function Home() {
   return (
@@ -125,6 +128,7 @@ export default function Home() {
 
         <div className="grid grid-cols-4 gap-4 px-[83px] pt-[23px] gap-y-[34px]">
       {Array(8).fill().map((_, index) => (
+        <Link key={index} href="/product-info">
         <div
           key={index}
           className="h-[388px] w-[301px] border-[#F6F7F8] border-b-4 border-l-4 border-r-4 rounded-md"
@@ -162,6 +166,7 @@ export default function Home() {
             </div>
           </div>
         </div>
+      </Link>
       ))}
     </div>
 

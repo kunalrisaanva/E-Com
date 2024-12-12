@@ -12,7 +12,7 @@ const Navbar = () => {
 
   return (
     <div className="flex justify-between px-[104px] items-center">
-      <div className=" flex items-center">
+      <div className=" flex items-center ">
         <Link href="/">
           <Image
             src={"/favicon.ico"}
@@ -28,40 +28,47 @@ const Navbar = () => {
         </h1>
       </div>
       <div className="flex w-[815.49px] h-[36px] font-medium">
-        <div className=" text-[24px]  pr-24 hover:text-customBlu text-productFontColorBlue">
-          <Link
-            href="/"
-            id="dropdownHoverButton"
-            // className={`${ pathName === "/" ? : `text-productFontColorBlue` }`}
-            className={`${
-              pathname === '/' ? 'text-productFontColorBlue' : 'text-black'
-            } `}
-            data-dropdown-toggle="dropdownHover"
-            data-dropdown-trigger="hover"
-          >
-            HOME
-          </Link>
+        <div className=" text-[24px]  pr-24 hover:text-customBlu text-productFontColorBlue relative group">
+        <Link
+    href="/"
+    id="dropdownHoverButton"
+    className={`${
+      pathname === '/' ? 'text-productFontColorBlue' : 'text-black'
+    } group-hover:text-productFontColorBlue`}
+    data-dropdown-toggle="dropdownHover"
+    data-dropdown-trigger="hover"
+  >
+    HOME
+  </Link>
+
+        
 
           {/* drop down menu  */}
-
           <div
-            id="dropdownHover"
-            className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
-          >
-            <ul
-              className="py-2 text-sm text-gray-700 dark:text-gray-200"
-              aria-labelledby="dropdownHoverButton"
-            >
-              <li>
-                <a
-                  href="#"
-                  className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                >
-                  Dashboard
-                </a>
-              </li>
-            </ul>
-          </div>
+    className="absolute hidden group-hover:block bg-white shadow-md rounded-md mt-2 py-2 w-40"
+  >
+    <Link
+      href="/option1"
+      className="block px-4 py-2 text-black hover:bg-gray-100"
+    >
+      Option 1
+    </Link>
+    <Link
+      href="/option2"
+      className="block px-4 py-2 text-black hover:bg-gray-100"
+    >
+      Option 2
+    </Link>
+    <Link
+      href="/option3"
+      className="block px-4 py-2 text-black hover:bg-gray-100"
+    >
+      Option 3
+    </Link>
+  </div>
+
+
+      
         </div>
         <div className=" text-2xl pr-24  hover:text-customBlue">
           <Link href="/begs"   className={`${

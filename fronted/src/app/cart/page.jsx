@@ -1,10 +1,20 @@
-import React from "react";
+"use client"
+import React, {useState} from "react";
 import UpperLine from "@/components/UpperLine.";
 import ProductImage from "../../../public/images/Product Image.png";
 import ProductImage2 from "../../../public/images/image Product copy.png";
 import DelImgae from "../../../public/images/del.png";
 import Image from "next/image";
 const page = () => {
+
+  const [ammount, setAmmount] = useState(0);
+
+  const minusAmmount = () => {
+      setAmmount(ammount-1);
+      if(ammount === 0) setAmmount(0)
+  }
+
+
   return (
     <>
       <UpperLine />
@@ -45,9 +55,11 @@ const page = () => {
           </div>
           <div>
             <div className="bg-[#F6F7F8] w-[123.28px] h-[48.91px]  flex items-center justify-center gap-8 ml-[126.68px]">
-              <button className="text-productFontColorBlue">-</button>
-              <span>2</span>
-              <button className="text-productFontColorBlue">+</button>
+            <button onClick={minusAmmount} className="text-productFontColorBlue">-</button>
+              <span>{ammount}</span>
+              <button onClick={() => setAmmount(ammount+1)} className="text-productFontColorBlue">+</button>
+
+
             </div>
           </div>
           <span className='ml-[74.08px]'>$999</span>
@@ -77,9 +89,9 @@ const page = () => {
           </div>
           <div>
             <div className="bg-[#F6F7F8] w-[123.28px] h-[48.91px]  flex items-center justify-center gap-8 ml-[126.68px]">
-              <button className="text-productFontColorBlue">-</button>
-              <span>2</span>
-              <button className="text-productFontColorBlue">+</button>
+              <button onClick={minusAmmount} className="text-productFontColorBlue">-</button>
+              <span>{ammount}</span>
+              <button onClick={() => setAmmount(ammount+1)} className="text-productFontColorBlue">+</button>
             </div>
           </div>
           <span className='ml-[74.08px]'>$999</span>
