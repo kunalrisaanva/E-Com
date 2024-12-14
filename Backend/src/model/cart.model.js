@@ -1,11 +1,36 @@
-import mongoose, { model } from "mongoose";
+import mongoose from "mongoose";
 
-const cartSchema = new mongoose.Schema({
-        
-    productName:{
-        type:String
-    },
-})
+const cartShcema = new mongoose.Schema({
+  
+  productName: {
+    type: String,
+    required: [true, "product name is required"],
+    trim: true,
+  },
 
+  productImageUrl: {
+    type: String,
+    required: [true, "product image url is required"],
+  },
 
-const Cart = model("Cart",cartSchema)
+  productOf: {
+    type: String,
+    // required:[true,"produc"]
+  },
+
+  productPreviousPrice: {
+    type: String,
+  },
+
+  productCurrentPrice: {
+    type: String,
+    required: [true, "product Current Price is required"],
+  },
+
+  category: {
+    type: String,
+    required: true,
+  },
+});
+
+export const Cart = mongoose.model("Product", cartShcema);
