@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
 const productShcema = new mongoose.Schema({
+  
   productName: {
     type: String,
     required: [true, "product name is required"],
@@ -35,7 +36,14 @@ const productShcema = new mongoose.Schema({
     type:String,
     enum:["in stock","out of stock"],
     required:true
+  },
+
+  qty:{
+    type:String,
+     required:true
   }
+
+
 });
 
 export const Product = mongoose.model("Product", productShcema);
