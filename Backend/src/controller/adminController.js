@@ -4,23 +4,18 @@ import { successResponse } from "../utils/Response.js";
 import { isValidObjectId } from "mongoose";
 import { errorResponse } from "../utils/Error.js";
 
+const adminAccess = async () => {
+  const { userId } = req.query;
 
-const adminAccess = async() => {
+  if (!isValidObjectId(userId)) {
+    errorResponse();
+  }
 
-   const { userId } = req.query;
+  const userData = await User.findByIdAndUpdate(userId, {
+    isAdmin: true,
+  });
 
-   if(!isValidObjectId(userId)){
-    errorResponse()
-   }
+  successResponse();
+};
 
-   const userData = await User.findByIdAndUpdate(userId,{
-      isAdmin:true
-   });
-
-   successResponse()
-    
-}
-
-
-
-export { adminAccess }
+export { adminAccess };

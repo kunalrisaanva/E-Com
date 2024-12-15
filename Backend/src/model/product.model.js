@@ -30,6 +30,12 @@ const productShcema = new mongoose.Schema({
     type: String,
     required: true,
   },
+
+  availability:{
+    type:String,
+    enum:["in stock","out of stock"],
+    required:true
+  }
 });
 
 export const Product = mongoose.model("Product", productShcema);

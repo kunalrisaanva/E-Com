@@ -1,22 +1,32 @@
 import Fastify from "fastify";
 import cookiesParser from "cookie-parser";
-import fastifyCors from "@fastify/cors"
+import fastifyCors from "@fastify/cors";
 import NodeCache from "node-cache";
 import { productRoutes } from "./routes/product.routes.js";
+import path from "node:path";
+import fs from "node:fs/promises";
+
+// import pump from "pump"
 import { registerRoutes } from "./routes/index.js";
+// import multer from "fastify-multer"
+import fastifyMultipart from "@fastify/multipart";
 
 const fastify = Fastify({
   logger: true,
 });
 
-//cors implimentation 
-
-await fastify.register(fastifyCors, {
-  origin: '*', // Allow all origins
-  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed methods
-  allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
+fastify.register(fastifyMultipart, {
+  addToBody: true, // Add files to the request body
+  // limits: { fileSize: 5 * 1024 * 1024 }, // Optional: Set file size limit (e.g., 5MB)
 });
 
+//cors implimentation
+
+await fastify.register(fastifyCors, {
+  origin: "*", // Allow all origins
+  methods: ["GET", "POST", "PUT", "DELETE"], // Allowed methods
+  allowedHeaders: ["Content-Type", "Authorization"], // Allowed headers
+});
 
 // Add cache instance to Fastify
 const cache = new NodeCache({ stdTTL: 3600 });

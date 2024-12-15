@@ -4,13 +4,13 @@ import {
   createProduct,
   homeScreeProduct,
   getAllProduct,
+  getSingleProductDetails,
 } from "../controller/productController.js";
 import { upload } from "../middleware/multer.js";
 
-
 async function productRoutes(fastify, options) {
   // Home screen route
-  fastify.get("/home-screen", asyncHandler(homeScreeProduct));
+  fastify.get("/home-screen/products", asyncHandler(homeScreeProduct));
 
   // Create product route with file handling
   fastify.post(
@@ -24,6 +24,7 @@ async function productRoutes(fastify, options) {
 
   // Get all products route
   fastify.get("/all", asyncHandler(getAllProduct));
+  fastify.get("/product/:_id", asyncHandler(getSingleProductDetails));
 }
 
 export { productRoutes };
