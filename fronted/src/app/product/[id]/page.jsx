@@ -1,18 +1,65 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState , use ,useEffect} from "react";
 import UpperLine from "@/components/UpperLine.";
 import Image from "next/image";
-import NikeShoes from "../../../public/images/imageProduct3.png";
-import Rating from "../../../public/images/rate.png";
-import ProductImage from "../../../public/images/image_Product.png";
-import ProductPicture from "../../../public/images/Product Picture.png";
-import FaceBookPicture from "../../../public/images/facebook (1).png";
-import TwitterPicture from "../../../public/images/twitter.png";
-import HeartPicture from "../../../public/images/hearts.png";
-import CartPicture from "../../../public/images/cart_2.png";
+import NikeShoes from "../../../../public/images/imageProduct3.png";
+import Rating from "../../../../public/images/rate.png";
+import ProductImage from "../../../../public/images/image_Product.png";
+import ProductPicture from "../../../../public/images/Product Picture.png";
+import FaceBookPicture from "../../../../public/images/facebook (1).png";
+import TwitterPicture from "../../../../public/images/twitter.png";
+import HeartPicture from "../../../../public/images/hearts.png";
+import CartPicture from "../../../../public/images/cart_2.png";
+import { useRouter } from "next/router";
 
-const page = () => {
+
+
+
+
+const page =   ({params}) => {
+
+//   const router = useRouter();
+const { id } = use(params)
+//   const { id } = router.query;
+  // console.log("id-----",id);
+
+  // const data = await getProductData(id);
+
+
   const [ammount, setAmmount] = useState(0);
+  const [products, setProducts] = useState([]);
+  const [error, setError] = useState(null);
+
+  // Fetch data on component mount
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:3333/api/v1/products/product/${id}`
+        );
+        const result = await response.json();
+        // console.log('result -----',result);
+
+        if (result.success) {
+          setProducts(result.data); // Set the fetched product data
+        } else {
+          setError("Error fetching data");
+        }
+      } catch (err) {
+        setError("Error fetching data");
+      }
+    };
+
+    fetchData();
+  }, []); // Empty dependency array to run once when the component mounts
+
+  // console.log('products-----',products);
+
+  if (error) return <div>{error}</div>;
+
+  // const imageUrl = products.productImageUrl || NikeShoes // Fallback image if empty
+
+
 
   const minusAmmount = () => {
       setAmmount(ammount-1);
@@ -24,8 +71,8 @@ const page = () => {
       <UpperLine />
 
       <div className="pl-[125px] mt-[42px] flex">
-        <div className=" ">
-          <Image src={NikeShoes} width={375} height={271} alt="product-image" />
+        <div >
+          <Image src={products?.productImageUrl} width={375} height={271} alt="product-image" />
           <div className="pt-[134.33px]">
             <Image
               src={ProductPicture}
@@ -38,7 +85,7 @@ const page = () => {
 
         <div className="pl-[53px]">
           <h2 className="text-[24px] font-medium text-[#22262A]">
-            Nike Airmax 270 React
+            {products.productName}
           </h2>
 
           <div className="flex items-center pt-[10px]">
@@ -56,18 +103,19 @@ const page = () => {
           {/* line end */}
           <div className="pt-[17px]">
             <span className="text-[20px] font-bold  text-[#40BFFF]">
-              $299,43
+              {products.productCurrentPrice}
             </span>
-            <span className="text-[14px] text-[#9098B1] pl-[9px]">$534,33</span>
+            <span className="text-[14px] text-[#9098B1] pl-[9px]">{products.productPreviousPrice}</span>
             <span className="text-[14px] font-bold pl-[8px] text-[#FB7181]">
-              24% Off
+              {products.productOf}
             </span>
           </div>
 
           <div>
             <div className="pt-[17.82px]">
               <span>Availability:</span>
-              <span className="pl-[69.72px]">In stock</span>
+              {/* todo in stack dynamcialy */}
+              <span className="pl-[69.72px]">In stock</span> 
             </div>
 
             <div className="pt-[15.95px]">

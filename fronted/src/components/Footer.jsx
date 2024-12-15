@@ -7,10 +7,10 @@ import BrandsLogo from "/public/images/Brands.png";
 
 const Footer = () => {
   return (
-    <footer className="h-[665px] bg-customFooterColor text-fontCustomColor mt-[75px]">
+    <footer className="h-[680px] w-full bg-customFooterColor text-fontCustomColor mt-[75px]">
       {/* upper section  */}
 
-      <div className="flex  pl-[134px] pt-[149px] ">
+      <div className="flex  px-[134px] pt-[149px] justify-between ">
         <div className="">
           <div className="flex items-center">
             <Image src={EcomLogo} alt="Footer-image" width={39} height={39} />
@@ -28,7 +28,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className=" pl-[399px] ">
+        <div className="  ">
           <span className="font-semibold ">Follow Us</span>
           <p className="text-wrap text-[12px] pt-[19px]  w-[198px] ">
             Since the 1500s, when an unknown printer took a galley of type and
@@ -49,7 +49,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className=" pl-[259px] ">
+        <div className="  ">
           <span className="font-semibold ">Contact Us</span>
           <p className="text-wrap text-[14px] pt-[19px]  w-[148px] h-[63px]">
             E-Comm , 4578 Marmora Road, Glasgow D04 89GR
@@ -59,8 +59,8 @@ const Footer = () => {
 
       {/* middle section  */}
 
-      <div className="flex">
-        <div className="pl-[134px] pt-[80px]">
+      <div className="flex px-[134px] items-center justify-between">
+        <div className=" pt-[80px]">
           <h3 className="text-[18px]">Infomation</h3>
 
           <ul className=" items-center pt-[29px] text-[14px]">
@@ -71,7 +71,7 @@ const Footer = () => {
           </ul>
         </div>
 
-        <div className="pl-[134px] pt-[80px]">
+        <div className="pt-[80px]">
           <h3 className="text-[18px]">Service</h3>
 
           <ul className=" items-center pt-[29px] text-[14px]">
@@ -82,7 +82,7 @@ const Footer = () => {
           </ul>
         </div>
 
-        <div className="pl-[134px] pt-[80px]">
+        <div className="pt-[80px]">
           <h3 className="text-[18px]">My Account</h3>
 
           <ul className=" items-center pt-[29px] text-[14px]">
@@ -93,7 +93,7 @@ const Footer = () => {
           </ul>
         </div>
 
-        <div className="pl-[134px] pt-[80px]">
+        <div className=" pt-[80px]">
           <h3 className="text-[18px]">Our Offers</h3>
 
           <ul className=" items-center pt-[29px] text-[14px]">

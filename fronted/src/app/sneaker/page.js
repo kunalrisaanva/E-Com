@@ -21,7 +21,7 @@ async function getProductData() {
 const page = async() => {
 
   const data = await getProductData();
-  // console.log(data);
+  console.log(data);
   // const [products, setProducts] = useState([]);
   // const [error, setError] = useState(null);
 
@@ -115,7 +115,7 @@ const page = async() => {
 
           <div className="h-[123px] w-[270px] bg-[#F6F7F8] mt-[30px]">
             <h3 className="text-[18px] text-[#22262A] font-medium pt-[19px] pl-[20px]">
-              {" "}
+              
               COLOR
             </h3>
             <div className="flex gap-4 justify-center pt-[21px]  ">
@@ -218,7 +218,7 @@ const page = async() => {
                   {/* { Details Section */} 
                   <div className="pt-[14px]">
                     <h1 className="text-[18px] font-bold text-[#223263] text-center">
-                      Nike Air Max 270 React
+                      {product.productName}
                     </h1>
                     <Image
                       className="mx-auto pt-[6px]"

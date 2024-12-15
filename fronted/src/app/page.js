@@ -1,7 +1,7 @@
 import Header from "../components/Header";
 import Footer from "@/components/Footer";
 import Image from "next/image";
-import PromotionImage from "/public/images/PromotionImage.png";
+// import PromotionImage from "/public/images/PromotionImage.png";
 import Shoes from "/public/images/shoes.png";
 import WhyUs from "/public/images/WHY US.png";
 import NikeLogo from "/public/images/Nike_logo_emblem_logotype 1.png";
@@ -10,13 +10,25 @@ import KronosLogo from "/public/images/kronos-logo-1-1 1.png";
 import Reacangle from "/public/images/Rectangle 1 copy 25.png";
 import Rating from "/public/images/rate.png";
 import ImageProduct from "../../public/images/image_Product.png";
-import Navbar from "@/components/Navbar";
+// import Navbar from "@/components/Navbar";
 import Link from "next/link";
 // import Footer from "./components/Footer";
 
 
+async function getProductData() {
+  const res = await fetch('http://localhost:3333/api/v1/products/home-screen/products');
+  if (!res.ok) {
+    return <p className="text-black"> No product available </p>
+  }
+  return res.json();
+}
 
-export default function Home() {
+
+export default async function Home  () {
+
+  const data = await getProductData();
+  // console.log("data------",data);
+
   return (
     <>
      
@@ -126,52 +138,63 @@ export default function Home() {
         </ul>
         {/* products */}
 
+          {/* <Link href={`/product`}>  */}
         <div className="grid grid-cols-4 gap-4 px-[83px] pt-[23px] gap-y-[34px]">
-      {Array(8).fill().map((_, index) => (
-        <Link key={index} href="/product-info">
-        <div
-          key={index}
-          className="h-[388px] w-[301px] border-[#F6F7F8] border-b-4 border-l-4 border-r-4 rounded-md"
-        >
-          {/* Image Section */}
-          <Image
-            src={ImageProduct}
-            width={299}
-            height={272.5}
-            alt="product-image"
-          />
+        {data.data?.length === 0 ? (
+              <p className="text=black">No products available</p>
+            ) : (
+              
+              data?.data?.map((product, index) => (
+                <Link href={`/product/${product._id}`} key={index}>
+                <div
+                  key={index}
+                  className="h-[388px] w-[301px] border-[#F6F7F8] border-b-4 border-l-4 border-r-4 rounded-md"
+                >
+                  {/* Image Section */}
+                   <Image
+                    src={product.productImageUrl}
+                    width={299}
+                    height={272.5}
+                    alt="product-image"
+                  /> 
 
-          {/* Details Section */}
-          <div className="pt-[14px]">
-            <h1 className="text-[18px] font-bold text-[#223263] text-center">
-              Nike Air Max 270 React
-            </h1>
-            <Image
-              className="mx-auto pt-[6px]"
-              src={Rating}
-              width={123}
-              height={15}
-              alt="rating-image"
-            />
-            <div className="flex items-center pt-[6px] justify-center">
-              <h3 className="text-imageBgColor text-[18px] font-bold ">
-                $299.43
-              </h3>
-              <div className="flex justify-center pl-[13px] items-center">
-                <h3 className="text-textLighGrayColor text-[14px]">$534.33</h3>
-                <h3 className="text-textRedColor text-[14px] font-bold pl-[8px]">
-                  24% off
-                </h3>
-              </div>
-            </div>
-          </div>
+                  {/* { Details Section */} 
+                  <div className="pt-[14px]">
+                    <h1 className="text-[18px] font-bold text-[#223263] text-center">
+                      {product.productName}
+                    </h1>
+                    <Image
+                      className="mx-auto pt-[6px]"
+                      src={Rating}
+                      width={123}
+                      height={15}
+                      alt="rating-image"
+                    />
+                    <div className="flex items-center pt-[6px] justify-center">
+                      <h3 className="text-imageBgColor text-[18px] font-bold ">
+                        {product.productCurrentPrice}
+                      </h3>
+                      <div className="flex justify-center pl-[13px] items-center">
+                        <h3 className="text-textLighGrayColor text-[14px]">
+                        {product.productPreviousPrice}
+                        </h3>
+                        <h3 className="text-textRedColor text-[14px] font-bold pl-[8px]">
+                        {product.productOf}
+                        </h3>
+                      </div>
+                    </div>
+                  </div>
+                </div> 
+                </Link>
+              ))
+              
+            )}
         </div>
-      </Link>
-      ))}
-    </div>
 
        
+      {/* </Link> */}
       </div>
+
 
       <div className="w-64 mx-auto text-center p-4">
         <h4 className="text-[20px] my-[4rem] cursor-pointer font-semibold text-productFontColorBlue underline underline-offset-8 ">
@@ -441,3 +464,7 @@ export default function Home() {
     </>
   );
 }
+
+
+
+/*    */
