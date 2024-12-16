@@ -14,24 +14,22 @@ import ImageProduct from "../../public/images/image_Product.png";
 import Link from "next/link";
 // import Footer from "./components/Footer";
 
-
 async function getProductData() {
-  const res = await fetch('http://localhost:3333/api/v1/products/home-screen/products');
+  const res = await fetch(
+    "http://localhost:3333/api/v1/products/home-screen/products"
+  );
   if (!res.ok) {
-    return <p className="text-black"> No product available </p>
+    return <p className="text-black"> No product available </p>;
   }
   return res.json();
 }
 
-
-export default async function Home  () {
-
+export default async function Home() {
   const data = await getProductData();
   // console.log("data------",data);
 
   return (
     <>
-     
       <div className="mb-[15rem] pt-[30px]">
         {/* landing page image  */}
 
@@ -138,27 +136,26 @@ export default async function Home  () {
         </ul>
         {/* products */}
 
-          {/* <Link href={`/product`}>  */}
+        {/* <Link href={`/product`}>  */}
         <div className="grid grid-cols-4 gap-4 px-[83px] pt-[23px] gap-y-[34px]">
-        {data.data?.length === 0 ? (
-              <p className="text=black">No products available</p>
-            ) : (
-              
-              data?.data?.map((product, index) => (
-                <Link href={`/product/${product._id}`} key={index}>
+          {data.data?.length === 0 ? (
+            <p className="text=black">No products available</p>
+          ) : (
+            data?.data?.map((product, index) => (
+              <Link href={`/product/${product._id}`} key={index}>
                 <div
                   key={index}
                   className="h-[388px] w-[301px] border-[#F6F7F8] border-b-4 border-l-4 border-r-4 rounded-md"
                 >
                   {/* Image Section */}
-                   <Image
+                  <Image
                     src={product.productImageUrl}
                     width={299}
                     height={272.5}
                     alt="product-image"
-                  /> 
+                  />
 
-                  {/* { Details Section */} 
+                  {/* { Details Section */}
                   <div className="pt-[14px]">
                     <h1 className="text-[18px] font-bold text-[#223263] text-center">
                       {product.productName}
@@ -176,25 +173,22 @@ export default async function Home  () {
                       </h3>
                       <div className="flex justify-center pl-[13px] items-center">
                         <h3 className="text-textLighGrayColor text-[14px]">
-                        {product.productPreviousPrice}
+                          {product.productPreviousPrice}
                         </h3>
                         <h3 className="text-textRedColor text-[14px] font-bold pl-[8px]">
-                        {product.productOf}
+                          {product.productOf}
                         </h3>
                       </div>
                     </div>
                   </div>
-                </div> 
-                </Link>
-              ))
-              
-            )}
+                </div>
+              </Link>
+            ))
+          )}
         </div>
 
-       
-      {/* </Link> */}
+        {/* </Link> */}
       </div>
-
 
       <div className="w-64 mx-auto text-center p-4">
         <h4 className="text-[20px] my-[4rem] cursor-pointer font-semibold text-productFontColorBlue underline underline-offset-8 ">
@@ -222,7 +216,7 @@ export default async function Home  () {
         />
       </div>
 
-      <div className=" pt-[97px] flex">
+      {/* <div className=" pt-[97px] flex">
         <Image
           className="mx-auto"
           src={WhyUs}
@@ -233,7 +227,7 @@ export default async function Home  () {
       </div>
 
       <div className="flex items-center pl-[231px]">
-        {/* <h3 className="mx-auto text-[27px] font-medium">FREE SHIPPING</h3> */}
+        <h3 className="mx-auto text-[27px] font-medium">FREE SHIPPING</h3>
         <p className=" text-black">
           Lorem Ipsum is simply <br />
           dummy text of the <br /> printing and typesetting
@@ -250,80 +244,112 @@ export default async function Home  () {
           printing and typesetting <br />
           industry.
         </p>
+      </div> */}
+
+      <div className="w-full max-w-6xl flex mx-auto gap-10 my-20 justify-center">
+        <div className="flex flex-col justify-center items-center">
+          <Image src="/fast-delivery.png" width={100} height={100} />
+          <h3 className="py-1 font-semibold text-xl">FREE SHIPPING</h3>
+          <p className="text-center pt-3">
+            Lorem Ipsum is simply dummy text of the printing and typesetting
+            industry.
+          </p>
+        </div>
+        <div className="flex flex-col justify-center items-center">
+          <Image src="/refund.png" width={100} height={100} />
+          <h3 className="py-1 font-semibold text-xl">100% REFUND</h3>
+          <p className="text-center pt-3">
+            Lorem Ipsum is simply dummy text of the printing and typesetting
+            industry.
+          </p>
+        </div>
+        <div className="flex flex-col justify-center items-center">
+          <Image src="/customer-service.png" width={100} height={100} />
+          <h3 className="py-1 font-semibold text-xl">SUPPORT 24/7</h3>
+          <p className="text-center pt-3">
+            Lorem Ipsum is simply dummy text of the printing and typesetting
+            industry.
+          </p>
+        </div>
       </div>
-      <div className="flex pt-[121px]">
+      <div className="flex my-10">
         <h4 className="text-[34px] font-semibold mx-auto">LATEST NEWS</h4>
       </div>
 
-      <div className="flex items-start gap-4 pt-[71px] pl-[141px]">
+      <div className="flex justify-center gap-20 mt-10">
         {/* Image Section */}
-        <Image
-          className="object-contain pt-[18px]"
-          alt="product-image"
-          src={NikeLogo}
-          height={52}
-          width={144}
-        />
+        <div className="flex items-center justify-center gap-5">
+          <Image
+            className="object-contain pt-[18px]"
+            alt="product-image"
+            src={NikeLogo}
+            height={52}
+            width={144}
+          />
 
-        {/* Text Content Section */}
-        <div className="">
-          <span className="text-[18px] text-[#C1C8CE] font-medium">
-            01 Jan, 2015
-          </span>
-          <h4 className="font-semibold text-[22px] pt-[2px]">
-            Fashion Industry
-          </h4>
-          <p className="pt-[2px]">
-            Lorem Ipsum is simply <br /> dummy text of the <br /> printing and
-            typesetting <br />
-            industry.
-          </p>
+          {/* Text Content Section */}
+          <div className="">
+            <span className="text-[18px] text-[#C1C8CE] font-medium">
+              01 Jan, 2015
+            </span>
+            <h4 className="font-semibold text-[22px] pt-[2px]">
+              Fashion Industry
+            </h4>
+            <p className="pt-[2px]">
+              Lorem Ipsum is simply <br /> dummy text of the <br /> printing and
+              typesetting <br />
+              industry.
+            </p>
+          </div>
         </div>
 
-        <Image
-          className="object-contain pt-[18px]"
-          alt="product-image"
-          src={FigmaLogo}
-          height={52}
-          width={144}
-        />
+        <div className="flex items-center justify-center gap-5">
+          <Image
+            className="object-contain pt-[18px]"
+            alt="product-image"
+            src={FigmaLogo}
+            height={52}
+            width={144}
+          />
 
-        {/* Text Content Section */}
-        <div className="">
-          <span className="text-[18px] text-[#C1C8CE] font-medium">
-            01 Jan, 2015
-          </span>
-          <h4 className="font-semibold text-[22px] pt-[2px]">
-            Fashion Industry
-          </h4>
-          <p className="pt-[2px]">
-            Lorem Ipsum is simply <br /> dummy text of the <br /> printing and
-            typesetting <br />
-            industry.
-          </p>
+          {/* Text Content Section */}
+          <div className="">
+            <span className="text-[18px] text-[#C1C8CE] font-medium">
+              01 Jan, 2015
+            </span>
+            <h4 className="font-semibold text-[22px] pt-[2px]">
+              Fashion Industry
+            </h4>
+            <p className="pt-[2px]">
+              Lorem Ipsum is simply <br /> dummy text of the <br /> printing and
+              typesetting <br />
+              industry.
+            </p>
+          </div>
         </div>
+        <div className="flex items-center justify-center gap-5">
+          <Image
+            className="object-contain pt-[18px]"
+            alt="product-image"
+            src={KronosLogo}
+            height={52}
+            width={144}
+          />
 
-        <Image
-          className="object-contain pt-[18px]"
-          alt="product-image"
-          src={KronosLogo}
-          height={52}
-          width={144}
-        />
-
-        {/* Text Content Section */}
-        <div className="">
-          <span className="text-[18px] text-[#C1C8CE] font-medium">
-            01 Jan, 2015
-          </span>
-          <h4 className="font-semibold text-[22px] pt-[2px]">
-            Fashion Industry
-          </h4>
-          <p className="pt-[2px]">
-            Lorem Ipsum is simply <br /> dummy text of the <br /> printing and
-            typesetting <br />
-            industry.
-          </p>
+          {/* Text Content Section */}
+          <div className="">
+            <span className="text-[18px] text-[#C1C8CE] font-medium">
+              01 Jan, 2015
+            </span>
+            <h4 className="font-semibold text-[22px] pt-[2px]">
+              Fashion Industry
+            </h4>
+            <p className="pt-[2px]">
+              Lorem Ipsum is simply <br /> dummy text of the <br /> printing and
+              typesetting <br />
+              industry.
+            </p>
+          </div>
         </div>
       </div>
 
@@ -459,12 +485,8 @@ export default async function Home  () {
           </button>
         </div>
       </div>
-
-      
     </>
   );
 }
-
-
 
 /*    */
