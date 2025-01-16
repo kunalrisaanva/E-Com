@@ -1,19 +1,21 @@
 "use client"
-import React, {useState} from "react";
+import React, { useState } from "react";
 import UpperLine from "@/components/UpperLine.";
-import ProductImage from "../../../public/images/Product Image.png";
-import ProductImage2 from "../../../public/images/image Product copy.png";
 import DelImgae from "../../../public/images/del.png";
 import Image from "next/image";
-const page = () => {
+import { useSelector } from "react-redux";
 
+const Page = () => {
   const [ammount, setAmmount] = useState(0);
 
-  const minusAmmount = () => {
-      setAmmount(ammount-1);
-      if(ammount === 0) setAmmount(0)
-  }
+  // cart products
+  const cartItems = useSelector(state => state.cart.items);
+  console.log('cartItems', cartItems);
 
+  const minusAmmount = () => {
+    setAmmount(ammount - 1);
+    if (ammount === 0) setAmmount(0);
+  };
 
   return (
     <>
@@ -35,89 +37,88 @@ const page = () => {
         <div className="w-[1256.11px] h-[2.13px] bg-[#F6F7F8] mt-[23px] ml-[104px]"></div>
         {/* line end */}
 
-        <div className="mt-[62.63px] flex items-center text-[18px] text-darkText ">
-          <div className="flex items-center ">
-            <div className="pl-[104px]">
-              <Image src={DelImgae} width={23.62} height={22} alt="del-image" />
+        {cartItems.length === 0 ? (
+          <div>No products in the cart...</div>
+        ) : (
+          cartItems.map((cartProduct, index) => (
+            <div key={index} className="mt-[62.63px] flex items-center text-[18px] text-darkText">
+              <div className="flex items-center">
+                <div className="pl-[104px]">
+                  <Image src={DelImgae} width={23.62} height={22} alt="del-image" />
+                </div>
+                <div className="pl-[71.41px]">
+                  <Image
+                    src={cartProduct.productImageUrl}
+                    alt="product image"
+                    width={137.85}
+                    height={94}
+                  />
+                </div>
+                <span className="pl-[28.7px] text-darkText text-[18px]">
+                  {cartProduct.productName}
+                </span>
+                <span className="pl-[322.38px]">${cartProduct.productPreviousPrice}</span>
+              </div>
+              <div>
+                <div className="bg-[#F6F7F8] w-[123.28px] h-[48.91px] flex items-center justify-center gap-8 ml-[126.68px]">
+                  <button onClick={minusAmmount} className="text-productFontColorBlue">-</button>
+                  <span>{ammount}</span>
+                  <button onClick={() => setAmmount(ammount + 1)} className="text-productFontColorBlue">+</button>
+                </div>
+              </div>
+              <span className="ml-[74.08px]">${cartProduct.productCurrentPrice}</span>
             </div>
-            <div className="pl-[71.41px]">
-              <Image
-                src={ProductImage}
-                alt="product image"
-                width={137.85}
-                height={94}
-              />
-            </div>
-            <span className="pl-[28.7px] text-darkText text-[18px]">
-              Nike Airmax 270 react
-            </span>
-            <span className="pl-[322.38px]">$999</span>
-          </div>
-          <div>
-            <div className="bg-[#F6F7F8] w-[123.28px] h-[48.91px]  flex items-center justify-center gap-8 ml-[126.68px]">
-            <button onClick={minusAmmount} className="text-productFontColorBlue">-</button>
-              <span>{ammount}</span>
-              <button onClick={() => setAmmount(ammount+1)} className="text-productFontColorBlue">+</button>
+          ))
+        )}
 
-
-            </div>
-          </div>
-          <span className='ml-[74.08px]'>$999</span>
-        </div>
-
-         {/* line */}
-         <div className="w-[1256.11px] h-[2.13px] bg-[#F6F7F8] mt-[23px] ml-[104px]"></div>
-        {/* line end */}
-
-        <div className="mt-[62.63px] flex items-center text-[18px] text-darkText ">
-          <div className="flex items-center ">
-            <div className="pl-[104px]">
-              <Image src={DelImgae} width={23.62} height={22} alt="del-image" />
-            </div>
-            <div className="pl-[71.41px]">
-              <Image
-                src={ProductImage2}
-                alt="product image"
-                width={137.85}
-                height={94}
-              />
-            </div>
-            <span className="pl-[28.7px] text-darkText text-[18px]">
-              Nike Airmax 270 react
-            </span>
-            <span className="pl-[322.38px]">$999</span>
-          </div>
-          <div>
-            <div className="bg-[#F6F7F8] w-[123.28px] h-[48.91px]  flex items-center justify-center gap-8 ml-[126.68px]">
-              <button onClick={minusAmmount} className="text-productFontColorBlue">-</button>
-              <span>{ammount}</span>
-              <button onClick={() => setAmmount(ammount+1)} className="text-productFontColorBlue">+</button>
-            </div>
-          </div>
-          <span className='ml-[74.08px]'>$999</span>
-        </div>
-      </div>
-       {/* line */}
-       <div className="w-[1256.11px] h-[2.13px] bg-[#F6F7F8] mt-[23px] ml-[104px]"></div>
-        {/* line end */}
-
-        {/* voucher redeem code */}
+        {/* additional elements like lines and voucher redeem code */}
 
         <div className="w-[369px] h-[60px] border-2 border-[#F1F3F4] mt-[90px] ml-[134.48px] flex items-center rounded ">
-          <div>
+<div>
 
-          <input type="text"  placeholder="Voucher code" className="text-[#262626] text-[16px] text-center "/>
-          </div>
-          <div>
-          <button className="bg-[#33A0FF] w-[118px] h-[60px] ml-[118px] text-white text-[18px] font-medium">
-          Redeem
-          </button>
+<input type="text"  placeholder="Voucher code" className="text-[#262626] text-[16px] text-center "/>
+</div>
+<div>
+<button className="bg-[#33A0FF] w-[118px] h-[60px] ml-[118px] text-white text-[18px] font-medium">
+Redeem
+</button>
 
-          </div>
+</div>
 
-        </div>
+</div>
+      </div>
     </>
   );
 };
 
-export default page;
+export default Page;
+
+
+category
+: 
+"shoes"
+productCurrentPrice
+: 
+"$299.43"
+productImageUrl
+: 
+"https://storage.googleapis.com/fir-ef23f.appspot.com/dc9e6b63-238d-45ac-9a5c-ca2e447dc3db-/Users/kunal/Desktop/data/e-com/backend/uploads"
+productName
+: 
+"Nike Air Max 260 React"
+productOf
+: 
+"24% off"
+productPreviousPrice
+: 
+"534.33"
+quantity
+: 
+1
+__v
+: 
+0
+_id
+: 
+"675b28f50fa7b4faff25eed9"
+
