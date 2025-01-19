@@ -12,18 +12,32 @@ import HeartPicture from "../../../../public/images/hearts.png";
 import CartPicture from "../../../../public/images/cart_2.png";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../../redux/cartSlice";
+import { useParams } from "next/navigation";
+// import { usePathname } from "next/navigation";
+// import Link from "next/link";
+import { useRouter } from 'next/navigation'
 
-const ProductPage = ({ params }) => {
-  const { id } = params;
+const ProductPage = () => {
+  const { id } = useParams();
   const dispatch = useDispatch();
   const [amount, setAmount] = useState(0);
   const [products, setProducts] = useState({});
   const [error, setError] = useState(null);
+  // const navigate = usePathname();
+  const router = useRouter()
+
+  const addToCartHandler = (products) =>{
+    dispatch(addToCart(products));
+    // Link("/cart")
+    // router.push("/cart")
+  }
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`http://localhost:3333/api/v1/products/product/${id}`);
+        const response = await fetch(
+          `http://localhost:3333/api/v1/products/product/${id}`
+        );
         const result = await response.json();
         if (result.success) {
           setProducts(result.data);
@@ -49,7 +63,7 @@ const ProductPage = ({ params }) => {
       <div className="pl-[125px] mt-[42px] flex">
         <div>
           <Image
-            src={products?.productImageUrl || NikeShoes}
+            src={products?.productImageUrl}
             width={375}
             height={271}
             alt="product-image"
@@ -69,7 +83,9 @@ const ProductPage = ({ params }) => {
           </h2>
           <div className="flex items-center pt-[10px]">
             <Image src={Rating} height={10.63} width={76.95} alt="rating" />
-            <span className="text-[#C1C8CE] text-[16px] px-[16px]">0 reviews</span>
+            <span className="text-[#C1C8CE] text-[16px] px-[16px]">
+              0 reviews
+            </span>
             <h4 className="text-[#33A0FF] text-[16px]">Submit a review</h4>
           </div>
           <div className="w-[499.49px] h-[2.13px] bg-[#F6F7F8] mt-[18.53px]"></div>
@@ -99,7 +115,9 @@ const ProductPage = ({ params }) => {
           </div>
           <div className="w-[499.49px] h-[2.13px] bg-[#F6F7F8] mt-[22.76px]"></div>
           <div className="flex items-center">
-            <span className="text-[16px] text-[#262626] pt-[24.46px]">Select Color:</span>
+            <span className="text-[16px] text-[#262626] pt-[24.46px]">
+              Select Color:
+            </span>
             <div className="flex gap-4 pl-[24px] pt-[21px]">
               <button className="w-[20.76px] h-[21.27px] bg-[#006CFF] rounded-full border-2 border-transparent hover:border-[#006CFF]"></button>
               <button className="w-[20.76px] h-[21.27px] bg-[#FC3E39] rounded-full border-2 border-transparent hover:border-gray-800"></button>
@@ -113,14 +131,25 @@ const ProductPage = ({ params }) => {
           <div className="w-[499.49px] h-[2.13px] bg-[#F6F7F8] mt-[21.27px]"></div>
           <div className="mt-[20px] flex items-center justify-between">
             <div className="bg-[#F6F7F8] w-[123.28px] h-[48.91px] flex items-center justify-center gap-8 rounded-sm">
-              <button onClick={minusAmount} className="text-productFontColorBlue">-</button>
+              <button
+                onClick={minusAmount}
+                className="text-productFontColorBlue"
+              >
+                -
+              </button>
               <span>{amount}</span>
-              <button onClick={() => setAmount(amount + 1)} className="text-productFontColorBlue">+</button>
+              <button
+                onClick={() => setAmount(amount + 1)}
+                className="text-productFontColorBlue"
+              >
+                +
+              </button>
             </div>
             <div className="flex items-center gap-3">
               <button
                 className="flex gap-4 items-center justify-center h-[48.91px] w-[159.41px] bg-[#33A0FF] bg-opacity-[10%]"
-                onClick={() => dispatch(addToCart(products))}
+                onClick={() => addToCartHandler(products)}
+                
               >
                 <Image
                   src={CartPicture}
@@ -172,8 +201,12 @@ const ProductPage = ({ params }) => {
                 alt="rating-image"
               />
               <div className="flex items-center pt-[6px] justify-center">
-                <span className="text-[14px] text-[#33A0FF]">Add To Wish List</span>
-                <span className="text-[14px] text-[#33A0FF]">Add To Compare</span>
+                <span className="text-[14px] text-[#33A0FF]">
+                  Add To Wish List
+                </span>
+                <span className="text-[14px] text-[#33A0FF]">
+                  Add To Compare
+                </span>
               </div>
             </div>
           </div>

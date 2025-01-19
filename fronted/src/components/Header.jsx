@@ -48,7 +48,7 @@ const Header = () => {
       </div>
       <div className=" flex justify-between font-normal ">
         <div className=" flex">
-          <Link href='profile'>
+          <Link href='/profile'>
           <Button>
             <PermIdentityIcon style={{ color: "black" }} />
             <h1 className="text-[20px] text-textgrayColor pl-[6.53px]">my profile</h1>
@@ -57,7 +57,7 @@ const Header = () => {
           
         </div>
         <div className=" flex items-center">
-          <Link href="cart">
+          <Link href="/cart">
           <Button>
             <ShoppingCartIcon style={{ color: "black" }} className="mx-[20.53px]" />
 

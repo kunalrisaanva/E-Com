@@ -5,13 +5,18 @@ const verifyJwt = asyncHandler(
   async (req,reply) => {
     try {
       
-      const token = req.header['authrization'].split('Bearer');
+    const token = req.header['authrization'].split('Bearer');
   
       if(!token) {
           
-      }
+      };
+
+
+
+
+
     } catch (error) {
-      
+      console.log(error,"error");
     }
   }
 )

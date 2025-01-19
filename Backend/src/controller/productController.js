@@ -105,11 +105,17 @@ const updateProduct = async () => {
 const getSingleProductDetails = async (req,reply) => {
   
   const { _id } = req.params;
-    console.log("product id successfully -----",_id);
+    // console.log("product id successfully -----",_id);
+
+
+  if(!_id) return errorResponse("please provide id",404);
+
+  if(!isValidObjectId(_id)) throw errorResponse("Id is not valid",404);
+
   const product = await Product.findById(_id);
 
 
-  if(!product) errorResponse("no product found with given Id");
+  if(!product) errorResponse("no product found with given Id",401);
 
   return reply.status(200).send(successResponse(product,"product found successfully",200));
 

@@ -1,16 +1,28 @@
-"use client"
+"use client";
 import React, { useState } from "react";
 import UpperLine from "@/components/UpperLine.";
 import DelImgae from "../../../public/images/del.png";
 import Image from "next/image";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { removeFromCart } from "../../redux/cartSlice"
+
+
 
 const Page = () => {
   const [ammount, setAmmount] = useState(0);
 
+
+  const dispatch = useDispatch();
+
   // cart products
-  const cartItems = useSelector(state => state.cart.items);
-  console.log('cartItems', cartItems);
+  const cartItems = useSelector((state) => state.cart.items);
+  // console.log("cartItems", cartItems[0]?._id);
+
+  const removeFromCartHander = (id) => {
+
+    dispatch(removeFromCart(id));
+  }
 
   const minusAmmount = () => {
     setAmmount(ammount - 1);
@@ -41,10 +53,21 @@ const Page = () => {
           <div>No products in the cart...</div>
         ) : (
           cartItems.map((cartProduct, index) => (
-            <div key={index} className="mt-[62.63px] flex items-center text-[18px] text-darkText">
+            <div
+              key={index}
+              className="mt-[62.63px] flex items-center text-[18px] text-darkText"
+            >
               <div className="flex items-center">
                 <div className="pl-[104px]">
-                  <Image src={DelImgae} width={23.62} height={22} alt="del-image" />
+                  <Image
+                    src={DelImgae}
+                    width={23.62}
+                    height={22}
+                    alt="del-image"
+                    onClick={() => removeFromCartHander(cartProduct?._id)}
+                    className="cursor-pointer"
+                    id={cartItems?._id}
+                  />
                 </div>
                 <div className="pl-[71.41px]">
                   <Image
@@ -57,16 +80,30 @@ const Page = () => {
                 <span className="pl-[28.7px] text-darkText text-[18px]">
                   {cartProduct.productName}
                 </span>
-                <span className="pl-[322.38px]">${cartProduct.productPreviousPrice}</span>
+                <span className="pl-[322.38px]">
+                  ${cartProduct.productPreviousPrice}
+                </span>
               </div>
               <div>
                 <div className="bg-[#F6F7F8] w-[123.28px] h-[48.91px] flex items-center justify-center gap-8 ml-[126.68px]">
-                  <button onClick={minusAmmount} className="text-productFontColorBlue">-</button>
+                  <button
+                    onClick={minusAmmount}
+                    className="text-productFontColorBlue"
+                  >
+                    -
+                  </button>
                   <span>{ammount}</span>
-                  <button onClick={() => setAmmount(ammount + 1)} className="text-productFontColorBlue">+</button>
+                  <button
+                    onClick={() => setAmmount(ammount + 1)}
+                    className="text-productFontColorBlue"
+                  >
+                    +
+                  </button>
                 </div>
               </div>
-              <span className="ml-[74.08px]">${cartProduct.productCurrentPrice}</span>
+              <span className="ml-[74.08px]">
+                ${cartProduct.productCurrentPrice}
+              </span>
             </div>
           ))
         )}
@@ -74,18 +111,19 @@ const Page = () => {
         {/* additional elements like lines and voucher redeem code */}
 
         <div className="w-[369px] h-[60px] border-2 border-[#F1F3F4] mt-[90px] ml-[134.48px] flex items-center rounded ">
-<div>
-
-<input type="text"  placeholder="Voucher code" className="text-[#262626] text-[16px] text-center "/>
-</div>
-<div>
-<button className="bg-[#33A0FF] w-[118px] h-[60px] ml-[118px] text-white text-[18px] font-medium">
-Redeem
-</button>
-
-</div>
-
-</div>
+          <div>
+            <input
+              type="text"
+              placeholder="Voucher code"
+              className="text-[#262626] text-[16px] text-center "
+            />
+          </div>
+          <div>
+            <button className="bg-[#33A0FF] w-[118px] h-[60px] ml-[118px] text-white text-[18px] font-medium">
+              Redeem
+            </button>
+          </div>
+        </div>
       </div>
     </>
   );
@@ -93,32 +131,4 @@ Redeem
 
 export default Page;
 
-
-category
-: 
-"shoes"
-productCurrentPrice
-: 
-"$299.43"
-productImageUrl
-: 
-"https://storage.googleapis.com/fir-ef23f.appspot.com/dc9e6b63-238d-45ac-9a5c-ca2e447dc3db-/Users/kunal/Desktop/data/e-com/backend/uploads"
-productName
-: 
-"Nike Air Max 260 React"
-productOf
-: 
-"24% off"
-productPreviousPrice
-: 
-"534.33"
-quantity
-: 
-1
-__v
-: 
-0
-_id
-: 
-"675b28f50fa7b4faff25eed9"
 
