@@ -15,7 +15,7 @@ import { addToCart } from "../../../redux/cartSlice";
 import { useParams } from "next/navigation";
 // import { usePathname } from "next/navigation";
 // import Link from "next/link";
-import { useRouter } from 'next/navigation'
+import { useRouter } from "next/navigation";
 
 const ProductPage = () => {
   const { id } = useParams();
@@ -24,13 +24,13 @@ const ProductPage = () => {
   const [products, setProducts] = useState({});
   const [error, setError] = useState(null);
   // const navigate = usePathname();
-  const router = useRouter()
+  const router = useRouter();
 
-  const addToCartHandler = (products) =>{
+  const addToCartHandler = (products) => {
     dispatch(addToCart(products));
     // Link("/cart")
     // router.push("/cart")
-  }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -149,7 +149,6 @@ const ProductPage = () => {
               <button
                 className="flex gap-4 items-center justify-center h-[48.91px] w-[159.41px] bg-[#33A0FF] bg-opacity-[10%]"
                 onClick={() => addToCartHandler(products)}
-                
               >
                 <Image
                   src={CartPicture}

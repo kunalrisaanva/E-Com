@@ -24,6 +24,9 @@ module.exports = {
       backgroundImage: {
         'hero-pattern': "url('/public/images/Promotion Image.png')",
         'footer-texture': "url('/img/footer-texture.png')",
+      },
+      screens:{
+        xs:"480px"
       }
     },
   },

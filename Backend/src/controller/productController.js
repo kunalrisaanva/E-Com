@@ -6,16 +6,28 @@ import { uploadFile } from "../utils/firebase.js";
 import { isValidObjectId } from "mongoose";
 
 const homeScreeProduct = async (request, reply) => {
+  // const { category } = request.query;
+//  console.log(category);
+//   if (category) {
 
+//     const categoryProduct = await Product.find({ category: category });
 
-  const products = await Product.find();
+//     return reply
+//       .status(200)
+//       .send(successResponse(categoryProduct, "products found by category successfully", 200));
+//   }else if (category === 'all')
 
+//   {
+    const products = await Product.find();
 
-  if(!products) errorResponse("product not found ",404);
+    if (!products) errorResponse("product not found ", 404);
+  
+    return reply
+      .status(200)
+      .send(successResponse(products, "all products found successfully", 200));
+  // }
 
-
-
-  return reply.status(200).send(successResponse(products,"products found successfully",200));
+  
 };
 
 const createProduct = async (request, reply) => {
@@ -25,9 +37,9 @@ const createProduct = async (request, reply) => {
     productPreviousPrice,
     productCurrentPrice,
     category,
-    availability
+    availability,
   } = request.body;
- 
+
   const file = request.file;
 
   if (!file) {
@@ -35,7 +47,7 @@ const createProduct = async (request, reply) => {
   }
 
   const { path, destination } = file;
- 
+
   const publicUrl = await uploadFile(path, destination);
 
   const createdProduct = await Product.create({
@@ -45,7 +57,7 @@ const createProduct = async (request, reply) => {
     productPreviousPrice,
     productCurrentPrice,
     category,
-    availability
+    availability,
   });
 
   if (!createdProduct) {
@@ -69,7 +81,7 @@ const getAllProduct = async (request, _) => {
   //   );
   // }
 
-  const allProducts = await Product.find().limit(6)
+  const allProducts = await Product.find().limit(6);
 
   if (allProducts.length === 0 || !allProducts) {
     errorResponse("Products not found", 404);
@@ -82,47 +94,51 @@ const getAllProduct = async (request, _) => {
 };
 
 const updateProduct = async () => {
-
   const { _id } = req.params;
 
-  if(!isValidObjectId(_id)) errorResponse("product id is not valid ",400);
+  if (!isValidObjectId(_id)) errorResponse("product id is not valid ", 400);
 
-  const allowedUpdates = ["productName","productOf","productPreviousPrice","productCurrentPrice","category"];
+  const allowedUpdates = [
+    "productName",
+    "productOf",
+    "productPreviousPrice",
+    "productCurrentPrice",
+    "category",
+  ];
 
   const updates = Object.keys(request.body);
 
-  // validation 
+  // validation
 
-  const isValidUpdate = updates.every( update  => allowedUpdates.includes(update));
+  const isValidUpdate = updates.every((update) =>
+    allowedUpdates.includes(update)
+  );
 
-  if(!isValidUpdate) errorResponse("Invalid update",400);
-
-
-  
+  if (!isValidUpdate) errorResponse("Invalid update", 400);
 };
 
-
-const getSingleProductDetails = async (req,reply) => {
-  
+const getSingleProductDetails = async (req, reply) => {
   const { _id } = req.params;
-    // console.log("product id successfully -----",_id);
+  // console.log("product id successfully -----",_id);
 
+  if (!_id) return errorResponse("please provide id", 404);
 
-  if(!_id) return errorResponse("please provide id",404);
-
-  if(!isValidObjectId(_id)) throw errorResponse("Id is not valid",404);
+  if (!isValidObjectId(_id)) throw errorResponse("Id is not valid", 404);
 
   const product = await Product.findById(_id);
 
+  if (!product) errorResponse("no product found with given Id", 401);
 
-  if(!product) errorResponse("no product found with given Id",401);
-
-  return reply.status(200).send(successResponse(product,"product found successfully",200));
-
-
-
-}
+  return reply
+    .status(200)
+    .send(successResponse(product, "product found successfully", 200));
+};
 
 const delteProduct = async () => {};
 
-export { homeScreeProduct, createProduct, getAllProduct,getSingleProductDetails };
+export {
+  homeScreeProduct,
+  createProduct,
+  getAllProduct,
+  getSingleProductDetails,
+};

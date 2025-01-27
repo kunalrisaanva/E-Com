@@ -1,3 +1,4 @@
+'use client';
 import Header from "../components/Header";
 import Footer from "@/components/Footer";
 import Image from "next/image";
@@ -10,35 +11,117 @@ import KronosLogo from "/public/images/kronos-logo-1-1 1.png";
 import Reacangle from "/public/images/Rectangle 1 copy 25.png";
 import Rating from "/public/images/rate.png";
 import ImageProduct from "../../public/images/image_Product.png";
+import { useState,useEffect } from "react";
 // import Navbar from "@/components/Navbar";
 import Link from "next/link";
 // import Footer from "./components/Footer";
 
+// async function getProductData() {
+//   const res = await fetch(
+//     "http://localhost:3333/api/v1/products/home-screen/products"
+//   );
+//   if (!res.ok) {
+//     return <p className="text-black"> No product available </p>;
+//   }
+//   return res.json();
+// }
 
-async function getProductData() {
-  const res = await fetch('http://localhost:3333/api/v1/products/home-screen/products');
-  if (!res.ok) {
-    return <p className="text-black"> No product available </p>
-  }
-  return res.json();
-}
+
+// async function getProducts(category = "all") {
+//   const res = await fetch(
+//     `http://localhost:3333/api/v1/products/home-screen/products`
+//   );
+
+//   if (!res.ok) {
+//     throw new Error("Failed to fetch products");
+//   }
+
+//   const data = await res.json();
+//   return data.data || [];
+// }
+
+export default  function Home() {
+
+  // const category = searchParams?.category || "all"; // Default to "all"
+  // const data = await getProducts();
+  // console.log(data);
+
+  const [products, setProducts] = useState([]); // All products from the API
+  const [filteredProducts, setFilteredProducts] = useState([]); // Filtered products
+  const [category, setCategory] = useState("all"); // Current category filter
 
 
-export default async function Home  () {
+  useEffect(() => {
+    // Fetch products from the API
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch("http://localhost:3333/api/v1/products/home-screen/products");
+        const data = await response.json();
+        // console.log(data);
+        setProducts(data?.data);
+        // console.log(data.data);
+        setFilteredProducts(data?.data); // Initially show all products
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
 
-  const data = await getProductData();
-  // console.log("data------",data);
+    fetchProducts();
+  }, []);
+// console.log(products.data);
+
+  // Filter products when the category changes
+  useEffect(() => {
+    if (category === "all") {
+      setFilteredProducts(products);
+    } else {
+      setFilteredProducts(
+        products.filter((product) => product?.category === category)
+        // products.filter(())
+      );
+    }
+  }, [category, products]);
+
+  // console.log(filteredProducts);
+
+
+  // console.log("filter product --->>",filteredProducts);
+  // const [allProducts, setAllProducts] = useState([]);
+  // const [filteredProducts, setFilteredProducts] = useState([]);
+
+  // useEffect(() => {
+  //   async function fetchProducts() {
+  //     const data = await getProductData();
+  //     // console.log('data---->',data.data);
+  //     setAllProducts(data.data || []);
+  //     setFilteredProducts(data.data || []);
+  //   }
+  //   fetchProducts();
+  // },[])
+
+
+// console.log(allProducts[0]?.category);
+  // const filterByCategory = (category) => {
+  //   if (category === "All") {
+  //     setFilteredProducts(allProducts);
+  //   } else {
+  //     const filtered = allProducts.filter(
+  //       (product) => product.category.toLowerCase() === category.toLowerCase()
+  //     );
+  //     setFilteredProducts(filtered);
+  //   }
+  // };
+
 
   return (
     <>
-     
       <div className="mb-[15rem] pt-[30px]">
         {/* landing page image  */}
 
         {/* <div className="mt-[3rem]" > */}
 
         <div className="bg-[url('/images/PromotionImage.png')] bg-no-repeat bg-contain bg-center h-[653px] w-full">
-          <h1 className="text-white text-[64px] font-bold pt-[258px] pl-[100px]">
+          <h1 className="text-white text-[64px] font-bold pt-[258px] pl-[100px] ">
             Super Flash Sale <br /> 50% off
           </h1>
 
@@ -116,49 +199,60 @@ export default async function Home  () {
 
         <ul className="pt-[20px] flex text-[22px] text-black text-center items-center justify-center gap-[70px]">
           <li>
-            <a
-              href=""
-              className="text-productFontColorBlue underline underline-offset-8 "
-            >
+            {/* < */}
+              {/* href="" */}
+              <button
+              onClick={() => setCategory("all")}
+              className="text-productFontColorBlue underline underline-offset-8 ">
+              
               All
-            </a>
+
+              </button>
+            {/* > */}
+              
+
+            {/* </a> */}
           </li>
           <li>
-            <a href="">Bags</a>
+            {/* <a href="">Bags</a> */}
+            <button onClick={() => setCategory("bags")}>
+            Bags
+            </button>
+            {/* <Link href="#">Bags</Link> */}
+            
           </li>
           <li>
-            <a href="">Sneakers</a>
+          <button onClick={() => setCategory("shoes")}> Sneakers  </button>
           </li>
           <li>
-            <a href="">Belt</a>
+          <button>Belt  </button>
           </li>
           <li>
-            <a href="">Sunglasses</a>
+          <button>Sunglasses  </button>
           </li>
         </ul>
         {/* products */}
 
-          {/* <Link href={`/product`}>  */}
+        {/* <Link href={`/product`}>  */}
         <div className="grid grid-cols-4 gap-4 px-[83px] pt-[23px] gap-y-[34px]">
-        {data.data?.length === 0 ? (
-              <p className="text=black">No products available</p>
-            ) : (
-              
-              data?.data?.map((product, index) => (
-                <Link href={`/product/${product._id}`} key={index}>
+          {filteredProducts?.length === 0 ? (
+            <p className="text=black">No products available</p>
+          ) : (
+            filteredProducts?.map((product, index) => (
+              <Link href={`/product/${product._id}`} key={index}>
                 <div
                   key={index}
                   className="h-[388px] w-[301px] border-[#F6F7F8] border-b-4 border-l-4 border-r-4 rounded-md"
                 >
                   {/* Image Section */}
-                   <Image
+                  <Image
                     src={product.productImageUrl}
                     width={299}
                     height={272.5}
                     alt="product-image"
-                  /> 
+                  />
 
-                  {/* { Details Section */} 
+                  {/* { Details Section */}
                   <div className="pt-[14px]">
                     <h1 className="text-[18px] font-bold text-[#223263] text-center">
                       {product.productName}
@@ -176,25 +270,22 @@ export default async function Home  () {
                       </h3>
                       <div className="flex justify-center pl-[13px] items-center">
                         <h3 className="text-textLighGrayColor text-[14px]">
-                        {product.productPreviousPrice}
+                          {product.productPreviousPrice}
                         </h3>
                         <h3 className="text-textRedColor text-[14px] font-bold pl-[8px]">
-                        {product.productOf}
+                          {product.productOf}
                         </h3>
                       </div>
                     </div>
                   </div>
-                </div> 
-                </Link>
-              ))
-              
-            )}
+                </div>
+              </Link>
+            ))
+          )}
         </div>
 
-       
-      {/* </Link> */}
+        {/* </Link> */}
       </div>
-
 
       <div className="w-64 mx-auto text-center p-4">
         <h4 className="text-[20px] my-[4rem] cursor-pointer font-semibold text-productFontColorBlue underline underline-offset-8 ">
@@ -459,12 +550,8 @@ export default async function Home  () {
           </button>
         </div>
       </div>
-
-      
     </>
   );
 }
-
-
 
 /*    */
