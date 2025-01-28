@@ -13,6 +13,7 @@ import Rating from "/public/images/rate.png";
 import ImageProduct from "../../public/images/image_Product.png";
 import { useState,useEffect } from "react";
 // import Navbar from "@/components/Navbar";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 // import Footer from "./components/Footer";
 
@@ -50,6 +51,8 @@ export default  function Home() {
   const [filteredProducts, setFilteredProducts] = useState([]); // Filtered products
   const [category, setCategory] = useState("all"); // Current category filter
 
+
+  const pathname = usePathname();
 
   useEffect(() => {
     // Fetch products from the API
@@ -198,39 +201,58 @@ export default  function Home() {
         </h4>
 
         <ul className="pt-[20px] flex text-[22px] text-black text-center items-center justify-center gap-[70px]">
-          <li>
-            {/* < */}
-              {/* href="" */}
-              <button
-              onClick={() => setCategory("all")}
-              className="text-productFontColorBlue underline underline-offset-8 ">
-              
-              All
+  <li>
+    <button
+      onClick={() => setCategory("all")}
+      className={`${
+        category === "all" ? "text-productFontColorBlue underline underline-offset-8" : ""
+      }`}
+    >
+      All
+    </button>
+  </li>
+  <li>
+    <button
+      onClick={() => setCategory("bags")}
+      className={`${
+        category === "bags" ? "text-productFontColorBlue underline underline-offset-8" : ""
+      }`}
+    >
+      Bags
+    </button>
+  </li>
+  <li>
+    <button
+      onClick={() => setCategory("shoes")}
+      className={`${
+        category === "shoes" ? "text-productFontColorBlue underline underline-offset-8" : ""
+      }`}
+    >
+      Sneakers
+    </button>
+  </li>
+  <li>
+    <button
+      onClick={() => setCategory("belt")}
+      className={`${
+        category === "belt" ? "text-productFontColorBlue underline underline-offset-8" : ""
+      }`}
+    >
+      Belt
+    </button>
+  </li>
+  <li>
+    <button
+      onClick={() => setCategory("sunglasses")}
+      className={`${
+        category === "sunglasses" ? "text-productFontColorBlue underline underline-offset-8" : ""
+      }`}
+    >
+      Sunglasses
+    </button>
+  </li>
+</ul>
 
-              </button>
-            {/* > */}
-              
-
-            {/* </a> */}
-          </li>
-          <li>
-            {/* <a href="">Bags</a> */}
-            <button onClick={() => setCategory("bags")}>
-            Bags
-            </button>
-            {/* <Link href="#">Bags</Link> */}
-            
-          </li>
-          <li>
-          <button onClick={() => setCategory("shoes")}> Sneakers  </button>
-          </li>
-          <li>
-          <button>Belt  </button>
-          </li>
-          <li>
-          <button>Sunglasses  </button>
-          </li>
-        </ul>
         {/* products */}
 
         {/* <Link href={`/product`}>  */}
@@ -289,7 +311,8 @@ export default  function Home() {
 
       <div className="w-64 mx-auto text-center p-4">
         <h4 className="text-[20px] my-[4rem] cursor-pointer font-semibold text-productFontColorBlue underline underline-offset-8 ">
-          Load more
+         {/* <button onClick={() => {}}> Load more </button> */}
+         Load more
         </h4>
       </div>
 
