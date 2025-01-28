@@ -14,7 +14,7 @@ import { useDispatch } from "react-redux";
 import { addToCart } from "../../../redux/cartSlice";
 import { useParams } from "next/navigation";
 // import { usePathname } from "next/navigation";
-// import Link from "next/link";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 const ProductPage = () => {
@@ -170,16 +170,23 @@ const ProductPage = () => {
           </div>
           <div className="w-[499.49px] h-[2.13px] bg-[#F6F7F8] mt-[22.27px]"></div>
           <div className="mt-[20.02px]">
+          <Link href="">
             <div className="flex bg-[#385C8E] h-[48.91px] w-[244.43px] text-center text-white">
+             
+              
               <Image
-                className="bg-white"
-                src={FaceBookPicture}
+                className=""
+                src={FaceBookPicture }
                 alt="fblogo"
-                width={8.13}
-                height={16.09}
+                width={8}
+                height={16}
               />
-              <a href="#">Share on Facebook</a>
+              <button>Share on Facebook</button>
+             
+            
+             
             </div>
+              </Link>
           </div>
         </div>
         <div className="pl-[31.88px]">
@@ -210,7 +217,97 @@ const ProductPage = () => {
             </div>
           </div>
         </div>
+       
       </div>
+   
+
+      <div className="bg-[#FAFAFB] h-[382.8px] w-[924.58px] mt-[48.91px] ml-[125px] rounded-md">
+        <div className="text-[18px] flex gap-[78px] pt-[34.29px] px-[31.88px]">
+          <span className="text-productFontColorBlue ">Product Infomation</span>
+         
+          <span className="text-[#262626]">Reviews 0</span>
+          <span className="text-[#262626]">Another tab</span>
+          </div>
+          <div className="w-[924.58] h-[4.25px] bg-[#E5E8EA] mt-[27.58px] mb-[21.08px]">
+
+          <div className="bg-[#2E90E5] w-[150.91px] h-[4.25px] ml-[32.94px]"></div>
+            <div className="text-[#9098B1] text-[12px] pl-[30.95px] pt-[21px]">air max are always very comfortable fit, clean and just perfect in every way. just the box was too small and <br />scrunched the sneakers up a little bit, not sure if the box was always this small but the 90s are and will always be one <br />of my favorites.</div>
+            <div className="text-[#9098B1] text-[12px] pl-[30.95px] pt-[21px]">air max are always very comfortable fit, clean and just perfect in every way. just the box was too small and <br />scrunched the sneakers up a little bit, not sure if the box was always this small but the 90s are and will always be one <br />of my favorites.</div>
+            <div className="text-[#9098B1] text-[12px] pl-[30.95px] pt-[21px]">air max are always very comfortable fit, clean and just perfect in every way. just the box was too small and <br />scrunched the sneakers up a little bit, not sure if the box was always this small but the 90s are and will always be one <br />of my favorites.</div>
+          </div>
+        </div>
+
+
+     
+        <div className="flex mt-[77.51px]">
+        {/* <h4 className="mx-auto text-[35px] text-[#22262A] font-semibold">RELATED PRODUCTS</h4> */}
+       
+        <h4 className="mx-auto text-[35px] text-[#22262A] font-semibold">
+          RELATED PRODUCTS
+        </h4>
+      </div>
+
+      <div className="grid grid-cols-4 gap-4 mt-[83px] px-[109px]">
+      {Array(4)
+          .fill()
+          .map((_, index) => (
+           
+
+           <div
+              // key={index}
+              className="h-[388px] w-[301px]  border-[#F6F7F8] border-b-4 border-l-4 border-r-4 rounded-md "
+            >
+              {/* Image Section */}
+              <Image
+                src={ProductImage}
+                width={299}
+                height={272.5}
+                alt="product-image"
+              />
+
+              {/* Details Section */}
+              <div className="pt-[14px]">
+                <h1 className="text-[18px] font-bold text-[#223263] text-center">
+                  Nike Air Max 270 React
+                </h1>
+                <Image
+                  className="mx-auto pt-[6px]"
+                  src={Rating}
+                  width={123}
+                  height={15}
+                  alt="rating-image"
+                />
+                <div className="flex items-center pt-[6px] justify-center">
+                  <h3 className="text-imageBgColor text-[18px] font-bold ">
+                    $299.43
+                  </h3>
+                  <div className="flex justify-center pl-[13px] items-center">
+                    <h3 className="text-textLighGrayColor text-[14px]">
+                      $534.33
+                    </h3>
+                    <h3 className="text-textRedColor text-[14px] font-bold pl-[8px]">
+                      24% off
+                    </h3>
+                  </div>
+                </div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+))} 
+</div>
+
+
+ 
+
+         
+     
     </>
   );
 };
