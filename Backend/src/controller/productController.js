@@ -6,6 +6,8 @@ import { uploadFile } from "../utils/firebase.js";
 import { isValidObjectId } from "mongoose";
 
 const homeScreeProduct = async (request, reply) => {
+
+
   // const { category } = request.query;
 //  console.log(category);
 //   if (category) {
@@ -18,13 +20,15 @@ const homeScreeProduct = async (request, reply) => {
 //   }else if (category === 'all')
 
 //   {
-    const products = await Product.find();
+   
 
+    const products = await Product.find();
+    
     if (!products) errorResponse("product not found ", 404);
   
     return reply
       .status(200)
-      .send(successResponse(products, "all products found successfully", 200));
+      .send(successResponse(products, `all products ${await Product.countDocuments()} found successfully`, 200));
   // }
 
   
@@ -38,6 +42,7 @@ const createProduct = async (request, reply) => {
     productCurrentPrice,
     category,
     availability,
+    qty
   } = request.body;
 
   const file = request.file;
@@ -58,6 +63,7 @@ const createProduct = async (request, reply) => {
     productCurrentPrice,
     category,
     availability,
+    qty
   });
 
   if (!createdProduct) {
@@ -134,6 +140,21 @@ const getSingleProductDetails = async (req, reply) => {
     .send(successResponse(product, "product found successfully", 200));
 };
 
+
+const productbyFilter = async(req,reply) => {
+
+  const {q} = req.query;  
+  const product = await Product.find({category:q});
+
+  if (!product) errorResponse("no product found with given Id", 401);
+
+  return reply
+  .status(200)
+  .send(successResponse(product, "product found successfully", 200));
+
+
+}
+
 const delteProduct = async () => {};
 
 export {
@@ -141,4 +162,5 @@ export {
   createProduct,
   getAllProduct,
   getSingleProductDetails,
+  productbyFilter,
 };
