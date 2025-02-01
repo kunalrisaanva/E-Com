@@ -6,7 +6,7 @@ import { isValidObjectId } from "mongoose";
 const getUsers = async (request, reply) => {
   //   const users = await User.find();
   //   return { users };
-  return { message: "User created successfully" };
+  return { message: "User fatched successfully" };
 };
 
 const signInUser = async () => {
@@ -83,6 +83,10 @@ const updaterUserDetails = async () => {
   // check apply user give info only update that info
   // validation
 };
+
+
+
+
 
 export {
   getUsers,
