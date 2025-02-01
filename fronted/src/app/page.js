@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import Header from "../components/Header";
 import Footer from "@/components/Footer";
 import Image from "next/image";
@@ -11,46 +11,15 @@ import KronosLogo from "/public/images/kronos-logo-1-1 1.png";
 import Reacangle from "/public/images/Rectangle 1 copy 25.png";
 import Rating from "/public/images/rate.png";
 import ImageProduct from "../../public/images/image_Product.png";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 // import Navbar from "@/components/Navbar";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-// import Footer from "./components/Footer";
 
-// async function getProductData() {
-//   const res = await fetch(
-//     "http://localhost:3333/api/v1/products/home-screen/products"
-//   );
-//   if (!res.ok) {
-//     return <p className="text-black"> No product available </p>;
-//   }
-//   return res.json();
-// }
-
-
-// async function getProducts(category = "all") {
-//   const res = await fetch(
-//     `http://localhost:3333/api/v1/products/home-screen/products`
-//   );
-
-//   if (!res.ok) {
-//     throw new Error("Failed to fetch products");
-//   }
-
-//   const data = await res.json();
-//   return data.data || [];
-// }
-
-export default  function Home() {
-
-  // const category = searchParams?.category || "all"; // Default to "all"
-  // const data = await getProducts();
-  // console.log(data);
-
+export default function Home() {
   const [products, setProducts] = useState([]); // All products from the API
   const [filteredProducts, setFilteredProducts] = useState([]); // Filtered products
   const [category, setCategory] = useState("all"); // Current category filter
-
 
   const pathname = usePathname();
 
@@ -58,7 +27,9 @@ export default  function Home() {
     // Fetch products from the API
     const fetchProducts = async () => {
       try {
-        const response = await fetch("http://localhost:3333/api/v1/products/home-screen/products");
+        const response = await fetch(
+          "http://localhost:3333/api/v1/products/home-screen/products"
+        );
         const data = await response.json();
         // console.log(data);
         setProducts(data?.data);
@@ -71,7 +42,7 @@ export default  function Home() {
 
     fetchProducts();
   }, []);
-// console.log(products.data);
+  // console.log(products.data);
 
   // Filter products when the category changes
   useEffect(() => {
@@ -85,37 +56,6 @@ export default  function Home() {
     }
   }, [category, products]);
 
-  // console.log(filteredProducts);
-
-
-  // console.log("filter product --->>",filteredProducts);
-  // const [allProducts, setAllProducts] = useState([]);
-  // const [filteredProducts, setFilteredProducts] = useState([]);
-
-  // useEffect(() => {
-  //   async function fetchProducts() {
-  //     const data = await getProductData();
-  //     // console.log('data---->',data.data);
-  //     setAllProducts(data.data || []);
-  //     setFilteredProducts(data.data || []);
-  //   }
-  //   fetchProducts();
-  // },[])
-
-
-// console.log(allProducts[0]?.category);
-  // const filterByCategory = (category) => {
-  //   if (category === "All") {
-  //     setFilteredProducts(allProducts);
-  //   } else {
-  //     const filtered = allProducts.filter(
-  //       (product) => product.category.toLowerCase() === category.toLowerCase()
-  //     );
-  //     setFilteredProducts(filtered);
-  //   }
-  // };
-
-
   return (
     <>
       <div className="mb-[15rem] pt-[30px]">
@@ -123,14 +63,15 @@ export default  function Home() {
 
         {/* <div className="mt-[3rem]" > */}
 
-        <div className="bg-[url('/images/PromotionImage.png')] bg-no-repeat bg-contain bg-center h-[653px] w-full">
+        <div className="bg-[url('/images/PromotionImage.png')] bg-no-repeat bg-contain bg-center h-[653px] w-full lg:w-full">
           <h1 className="text-white text-[64px] font-bold pt-[258px] pl-[100px] ">
             Super Flash Sale <br /> 50% off
           </h1>
 
           {/* */}
           <div className="flex pt-[110px]">
-            <div className="pl-[105px] ">
+            <div className="mx-auto flex">
+            <div className="">
               <div className="bg-[url('/images/imageProduct.png')] bg-cover bg-center h-[358px] w-[417px]">
                 <h4 className="text-black text-[20px] pt-[29px] font-semibold pl-[52px] tracking-[0.5px] leading-[150%]">
                   FS - QUILTED MAXI <span className="block">CROSS BAG</span>
@@ -180,6 +121,8 @@ export default  function Home() {
                 </h4>
               </div>
             </div>
+            </div>
+          
           </div>
         </div>
 
@@ -201,57 +144,67 @@ export default  function Home() {
         </h4>
 
         <ul className="pt-[20px] flex text-[22px] text-black text-center items-center justify-center gap-[70px]">
-  <li>
-    <button
-      onClick={() => setCategory("all")}
-      className={`${
-        category === "all" ? "text-productFontColorBlue underline underline-offset-8" : ""
-      }`}
-    >
-      All
-    </button>
-  </li>
-  <li>
-    <button
-      onClick={() => setCategory("bags")}
-      className={`${
-        category === "bags" ? "text-productFontColorBlue underline underline-offset-8" : ""
-      }`}
-    >
-      Bags
-    </button>
-  </li>
-  <li>
-    <button
-      onClick={() => setCategory("shoes")}
-      className={`${
-        category === "shoes" ? "text-productFontColorBlue underline underline-offset-8" : ""
-      }`}
-    >
-      Sneakers
-    </button>
-  </li>
-  <li>
-    <button
-      onClick={() => setCategory("belt")}
-      className={`${
-        category === "belt" ? "text-productFontColorBlue underline underline-offset-8" : ""
-      }`}
-    >
-      Belt
-    </button>
-  </li>
-  <li>
-    <button
-      onClick={() => setCategory("sunglasses")}
-      className={`${
-        category === "sunglasses" ? "text-productFontColorBlue underline underline-offset-8" : ""
-      }`}
-    >
-      Sunglasses
-    </button>
-  </li>
-</ul>
+          <li>
+            <button
+              onClick={() => setCategory("all")}
+              className={`${
+                category === "all"
+                  ? "text-productFontColorBlue underline underline-offset-8"
+                  : ""
+              }`}
+            >
+              All
+            </button>
+          </li>
+          <li>
+            <button
+              onClick={() => setCategory("bags")}
+              className={`${
+                category === "bags"
+                  ? "text-productFontColorBlue underline underline-offset-8"
+                  : ""
+              }`}
+            >
+              Bags
+            </button>
+          </li>
+          <li>
+            <button
+              onClick={() => setCategory("shoes")}
+              className={`${
+                category === "shoes"
+                  ? "text-productFontColorBlue underline underline-offset-8"
+                  : ""
+              }`}
+            >
+              Sneakers
+            </button>
+          </li>
+          <li>
+            <button
+              onClick={() => setCategory("belt")}
+              className={`${
+                category === "belt"
+                  ? "text-productFontColorBlue underline underline-offset-8"
+                  : ""
+              }`}
+            >
+              Belt
+            </button>
+          </li>
+          <li>
+            <button
+              onClick={() => setCategory("sunglasses")}
+              className={`${
+                category === "sunglasses"
+                  ? "text-productFontColorBlue underline underline-offset-8"
+                  : ""
+              }`}
+            >
+              Sunglasses
+            </button>
+          </li>
+        </ul>
 
         {/* products */}
 
@@ -311,8 +264,8 @@ export default  function Home() {
 
       <div className="w-64 mx-auto text-center p-4">
         <h4 className="text-[20px] my-[4rem] cursor-pointer font-semibold text-productFontColorBlue underline underline-offset-8 ">
-         {/* <button onClick={() => {}}> Load more </button> */}
-         Load more
+          {/* <button onClick={() => {}}> Load more </button> */}
+          Load more
         </h4>
       </div>
 
