@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Search as SearchIcom } from "@mui/icons-material";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
@@ -8,6 +8,10 @@ import Link from "next/link";
 const Header = () => {
   const language = ["ENG", "HIN"];
   const currency = ["USD", "IND"];
+
+  const [ isAuthenticated , setIsAuthenticated ] = useState(true);
+
+
   return (
     <div className="flex font-normal bg-white pt-[27px] px-[104px] justify-between items-center mb-[26px]">
       <div className="flex justify-around ">
@@ -48,12 +52,23 @@ const Header = () => {
       </div>
       <div className=" flex justify-between font-normal ">
         <div className=" flex">
-          <Link href='/profile'>
-          <Button>
-            <PermIdentityIcon style={{ color: "black" }} />
-            <h1 className="text-[20px] text-textgrayColor pl-[6.53px]">my profile</h1>
-          </Button>
-          </Link>
+          {isAuthenticated === true ? (
+            
+             <Link href='/profile'>
+             <Button>
+               <PermIdentityIcon style={{ color: "black" }} />
+               <h1 className="text-[20px] text-textgrayColor pl-[6.53px]">my profile</h1>
+             </Button>
+             </Link>
+          ) : (
+            <Link href='/profile'>
+            <Button>
+              <PermIdentityIcon style={{ color: "black" }} />
+              <h1 className="text-[20px] text-textgrayColor pl-[6.53px]">Login</h1>
+            </Button>
+            </Link>
+          )}
+         
           
         </div>
         <div className=" flex items-center">

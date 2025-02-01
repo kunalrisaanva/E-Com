@@ -19,10 +19,12 @@ import { useRouter } from "next/navigation";
 
 const ProductPage = () => {
   const { id } = useParams();
+  // console.log(id);
   const dispatch = useDispatch();
   const [amount, setAmount] = useState(0);
   const [products, setProducts] = useState({});
-  const [error, setError] = useState(null);
+  const [error, setError] = useState(false);
+  const [isLoading,setIsLoading] = useState(false);
   // const navigate = usePathname();
   const router = useRouter();
 
@@ -33,25 +35,29 @@ const ProductPage = () => {
   };
 
   useEffect(() => {
-    const fetchData = async () => {
+    (async () => {
       try {
+        setError(false)
+        setIsLoading(true)
         const response = await fetch(
-          `http://localhost:3333/api/v1/products/product/${id}`
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/products/product/${id}`
         );
         const result = await response.json();
         if (result.success) {
           setProducts(result.data);
+          setIsLoading(false)
         } else {
-          setError("Error fetching data");
+          setError(false);
         }
       } catch {
-        setError("Error fetching data");
+        setError(true);
       }
-    };
-    fetchData();
+    })();
   }, [id]);
 
   if (error) return <div>{error}</div>;
+
+  if(isLoading) return <div> Loading ...</div>
 
   const minusAmount = () => {
     if (amount > 0) setAmount(amount - 1);
@@ -67,6 +73,7 @@ const ProductPage = () => {
             width={375}
             height={271}
             alt="product-image"
+            priority={true}
           />
           <div className="pt-[134.33px]">
             <Image
@@ -173,34 +180,35 @@ const ProductPage = () => {
             <Link href="">
               <div className="flex bg-[#385C8E] h-[48.91px] w-[244.43px] text-center text-white rounded-md">
                 <div className="mx-auto justify-center items-center flex gap-2">
-                <Image
-                  className=""
-                  src={FaceBookPicture}
-                  alt="fblogo"
-                  width={8.13}
-                  height={16.09}
-                />
-                <button className="text-[16px] font-medium">Share on Facebook</button>
+                  <Image
+                    className=""
+                    src={FaceBookPicture}
+                    alt="fblogo"
+                    width={8.13}
+                    height={16.09}
+                  />
+                  <button className="text-[16px] font-medium">
+                    Share on Facebook
+                  </button>
                 </div>
-               
               </div>
             </Link>
             <Link href="">
               <div className="flex bg-[#03A9F4] h-[48.91px] w-[244.43px] text-center text-white rounded-md">
                 <div className="mx-auto justify-center items-center flex gap-2">
-                <Image
-                  className=""
-                  src={TwitterPicture}
-                  alt="fblogo"
-                  width={17.28}
-                  height={12.65}
-                />
-                <button className="text-[16px] font-medium">Share on Twitter</button>
+                  <Image
+                    className=""
+                    src={TwitterPicture}
+                    alt="fblogo"
+                    width={17.28}
+                    height={12.65}
+                  />
+                  <button className="text-[16px] font-medium">
+                    Share on Twitter
+                  </button>
                 </div>
-               
               </div>
             </Link>
-            
           </div>
         </div>
         <div className="pl-[31.88px]">
@@ -279,7 +287,7 @@ const ProductPage = () => {
           .fill()
           .map((_, index) => (
             <div
-              // key={index}
+              key={index}
               className="h-[388px] w-[301px]  border-[#F6F7F8] border-b-4 border-l-4 border-r-4 rounded-md "
             >
               {/* Image Section */}

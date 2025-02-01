@@ -11,37 +11,80 @@ import KronosLogo from "/public/images/kronos-logo-1-1 1.png";
 import Reacangle from "/public/images/Rectangle 1 copy 25.png";
 import Rating from "/public/images/rate.png";
 import ImageProduct from "../../public/images/image_Product.png";
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 // import Navbar from "@/components/Navbar";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import axios from "axios";
 
 export default function Home() {
   const [products, setProducts] = useState([]); // All products from the API
   const [filteredProducts, setFilteredProducts] = useState([]); // Filtered products
   const [category, setCategory] = useState("all"); // Current category filter
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [visible, setVisible] = useState(8);
 
   const pathname = usePathname();
 
-  useEffect(() => {
-    // Fetch products from the API
-    const fetchProducts = async () => {
-      try {
-        const response = await fetch(
-          "http://localhost:3333/api/v1/products/home-screen/products"
-        );
-        const data = await response.json();
-        // console.log(data);
-        setProducts(data?.data);
-        // console.log(data.data);
-        setFilteredProducts(data?.data); // Initially show all products
-      } catch (error) {
-        console.error("Error fetching products:", error);
-      }
-    };
+  // code will come in future
 
-    fetchProducts();
+  // useEffect(() => {
+  //   let isMounted = true;
+  //   const fetchProducts = async () => {
+  //     try {
+  //       const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/products/home-screen/products`);
+  //       const data = await response.json();
+  //       if (isMounted) {
+  //         setProducts(data?.data);
+  //         setFilteredProducts(data?.data);
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching products:", error);
+  //     }
+  //   };
+  //   fetchProducts();
+  //   return () => { isMounted = false; };
+  // }, []);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        setIsLoading(true);
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/products/home-screen/products`
+        );
+        const { data } = response;
+        console.log(data);
+        setProducts(data?.data);
+        setIsLoading(false);
+      } catch (error) {
+        setError(true);
+      }
+    })();
   }, []);
+
+  // useEffect(() => {
+  //   ;( async() => {
+  //   try {
+  //     setError(false);
+
+  //     setIsLoading(true)
+  //      const response = await fetch.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/products/home-screen/products`);
+  //       const data = await response.json();
+  //       console.log(data);
+  //       setProducts(data?.data);
+  //       // console.log(data.data);
+  //       setFilteredProducts(data?.data);
+  //       setIsLoading(false) // Initially show all products
+  //   } catch (error) {
+  //    setError(error?.message || error)
+  //   }
+
+  //  })()
+
+  // },[])
+
   // console.log(products.data);
 
   // Filter products when the category changes
@@ -54,7 +97,17 @@ export default function Home() {
         // products.filter(())
       );
     }
-  }, [category, products]);
+  }, [category, products, visible]);
+
+  const handleLoadMore = () => {
+    setVisible((prev) => prev + 8);
+  };
+
+  const handleShowless = () => {
+    setVisible((prev) => prev - 8);
+  };
+
+  if(error) return <h1> something went wrong </h1>
 
   return (
     <>
@@ -63,66 +116,67 @@ export default function Home() {
 
         {/* <div className="mt-[3rem]" > */}
 
-        <div className="bg-[url('/images/PromotionImage.png')] bg-no-repeat bg-contain bg-center h-[653px] w-full lg:w-full">
-          <h1 className="text-white text-[64px] font-bold pt-[258px] pl-[100px] ">
+        <div className="bg-[url('/images/PromotionImage.png')] bg-no-repeat bg-cover bg-center h-[653px] sm:h-[500px] md:h-[653px] w-full">
+          <h1 className="text-white text-[64px] font-bold pt-[258px] pl-[100px]">
             Super Flash Sale <br /> 50% off
           </h1>
 
-          {/* */}
           <div className="flex pt-[110px]">
             <div className="mx-auto flex">
-            <div className="">
-              <div className="bg-[url('/images/imageProduct.png')] bg-cover bg-center h-[358px] w-[417px]">
-                <h4 className="text-black text-[20px] pt-[29px] font-semibold pl-[52px] tracking-[0.5px] leading-[150%]">
-                  FS - QUILTED MAXI <span className="block">CROSS BAG</span>
-                  <div className="flex pt-[180px]">
-                    <span className="text-[18px]">$534,33</span>
-                    <span className="text-[18px] pl-[8px] text-[#FB7181]">
-                      24% Off
-                    </span>
-                    <span className="text-[30px] font-bold pl-[68px] pt-[32px] text-[#40BFFF]">
-                      $299,43
-                    </span>
-                  </div>
-                </h4>
+              {/* Product Card 1 */}
+              <div>
+                <div className="bg-[url('/images/imageProduct.png')] bg-cover bg-center h-[358px] w-[417px]">
+                  <h4 className="text-black text-[20px] pt-[29px] font-semibold pl-[52px] tracking-[0.5px] leading-[150%]">
+                    FS - QUILTED MAXI <span className="block">CROSS BAG</span>
+                    <div className="flex pt-[180px]">
+                      <span className="text-[18px]">$534,33</span>
+                      <span className="text-[18px] pl-[8px] text-[#FB7181]">
+                        24% Off
+                      </span>
+                      <span className="text-[30px] font-bold pl-[68px] pt-[32px] text-[#40BFFF]">
+                        $299,43
+                      </span>
+                    </div>
+                  </h4>
+                </div>
               </div>
-            </div>
 
-            <div className="">
-              <div className="bg-[url('/images/imageProduct2.png')] bg-cover bg-center h-[358px] w-[417px]">
-                <h4 className="text-black text-[20px] pt-[29px] font-semibold pl-[52px] tracking-[0.5px] leading-[150%]">
-                  FS - QUILTED MAXI <span className="block">CROSS BAG</span>
-                  <div className="flex pt-[180px]">
-                    <span className="text-[18px]">$534,33</span>
-                    <span className="text-[18px] pl-[8px] text-[#FB7181]">
-                      24% Off
-                    </span>
-                    <span className="text-[30px] font-bold pl-[68px] pt-[32px] text-[#40BFFF]">
-                      $299,43
-                    </span>
-                  </div>
-                </h4>
+              {/* Product Card 2 */}
+              <div>
+                <div className="bg-[url('/images/imageProduct2.png')] bg-cover bg-center h-[358px] w-[417px]">
+                  <h4 className="text-black text-[20px] pt-[29px] font-semibold pl-[52px] tracking-[0.5px] leading-[150%]">
+                    FS - QUILTED MAXI <span className="block">CROSS BAG</span>
+                    <div className="flex pt-[180px]">
+                      <span className="text-[18px]">$534,33</span>
+                      <span className="text-[18px] pl-[8px] text-[#FB7181]">
+                        24% Off
+                      </span>
+                      <span className="text-[30px] font-bold pl-[68px] pt-[32px] text-[#40BFFF]">
+                        $299,43
+                      </span>
+                    </div>
+                  </h4>
+                </div>
               </div>
-            </div>
 
-            <div className="">
-              <div className="bg-[url('/images/imageProduct3.png')] bg-cover bg-center h-[358px] w-[417px]">
-                <h4 className="text-black text-[20px] pt-[29px] font-semibold pl-[52px] tracking-[0.5px] leading-[150%]">
-                  FS - QUILTED MAXI <span className="block">CROSS BAG</span>
-                  <div className="flex pt-[180px]">
-                    <span className="text-[18px]">$534,33</span>
-                    <span className="text-[18px] pl-[8px] text-[#FB7181]">
-                      24% Off
-                    </span>
-                    <span className="text-[30px] font-bold pl-[68px] pt-[32px] text-[#40BFFF]">
-                      $299,43
-                    </span>
-                  </div>
-                </h4>
+              {/* Product Card 3 */}
+              <div>
+                <div className="bg-[url('/images/imageProduct3.png')] bg-cover bg-center h-[358px] w-[417px]">
+                  <h4 className="text-black text-[20px] pt-[29px] font-semibold pl-[52px] tracking-[0.5px] leading-[150%]">
+                    FS - QUILTED MAXI <span className="block">CROSS BAG</span>
+                    <div className="flex pt-[180px]">
+                      <span className="text-[18px]">$534,33</span>
+                      <span className="text-[18px] pl-[8px] text-[#FB7181]">
+                        24% Off
+                      </span>
+                      <span className="text-[30px] font-bold pl-[68px] pt-[32px] text-[#40BFFF]">
+                        $299,43
+                      </span>
+                    </div>
+                  </h4>
+                </div>
               </div>
             </div>
-            </div>
-          
           </div>
         </div>
 
@@ -209,11 +263,12 @@ export default function Home() {
         {/* products */}
 
         {/* <Link href={`/product`}>  */}
-        <div className="grid grid-cols-4 gap-4 px-[83px] pt-[23px] gap-y-[34px]">
+        <div className="grid grid-cols-4 gap-4  px-[83px] pt-[23px] gap-y-[34px]">
+          {isLoading && <p> Loading Produts ....</p>}
           {filteredProducts?.length === 0 ? (
             <p className="text=black">No products available</p>
           ) : (
-            filteredProducts?.map((product, index) => (
+            filteredProducts?.slice(0, visible).map((product, index) => (
               <Link href={`/product/${product._id}`} key={index}>
                 <div
                   key={index}
@@ -264,8 +319,25 @@ export default function Home() {
 
       <div className="w-64 mx-auto text-center p-4">
         <h4 className="text-[20px] my-[4rem] cursor-pointer font-semibold text-productFontColorBlue underline underline-offset-8 ">
-          {/* <button onClick={() => {}}> Load more </button> */}
-          Load more
+          {visible === 16 ? (
+            <button
+              className="text-productFontColorBlue underline underline-offset-8"
+              onClick={handleShowless}
+            >
+              {" "}
+              show less{" "}
+            </button>
+          ) : (
+            <button
+              className="text-productFontColorBlue underline underline-offset-8"
+              onClick={handleLoadMore}
+            >
+              {" "}
+              Load more{" "}
+            </button>
+          )}
+
+          {/* Load more */}
         </h4>
       </div>
 
