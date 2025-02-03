@@ -16,6 +16,8 @@ import { useParams } from "next/navigation";
 // import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { Button } from "@mui/material";
+import axios from "axios";
 
 const ProductPage = () => {
   const { id } = useParams();
@@ -24,7 +26,12 @@ const ProductPage = () => {
   const [amount, setAmount] = useState(0);
   const [products, setProducts] = useState({});
   const [error, setError] = useState(false);
-  const [isLoading,setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [relatedProduct,setRelatedProduct] = useState([]);
+
+  const [activeTab, setActiveTab] = useState("product-info");
+  
+
   // const navigate = usePathname();
   const router = useRouter();
 
@@ -37,15 +44,15 @@ const ProductPage = () => {
   useEffect(() => {
     (async () => {
       try {
-        setError(false)
-        setIsLoading(true)
+        setError(false);
+        setIsLoading(true);
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/products/product/${id}`
         );
         const result = await response.json();
         if (result.success) {
           setProducts(result.data);
-          setIsLoading(false)
+          setIsLoading(false);
         } else {
           setError(false);
         }
@@ -55,9 +62,43 @@ const ProductPage = () => {
     })();
   }, [id]);
 
+
+  useEffect(() => {
+
+  ;(async() => {
+
+    setError(false);
+    setIsLoading(true);
+
+   try {
+     const response = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/products/related/${id}`);
+      // console.log('responst -------_>',response);
+    const {data} = response;
+
+    if(response.status !== 200){
+        setError(true)
+    }
+    setRelatedProduct(data?.data)
+    setIsLoading(false)
+    // console.log(response.status === 200);
+   } catch (error) {
+    console.log(error);
+    setError(true)
+   }
+
+
+
+  })()
+
+
+  },[]);
+
+
+
   if (error) return <div>{error}</div>;
 
-  if(isLoading) return <div> Loading ...</div>
+  if (isLoading) return <div> Loading ...</div>;
+
 
   const minusAmount = () => {
     if (amount > 0) setAmount(amount - 1);
@@ -241,38 +282,76 @@ const ProductPage = () => {
         </div>
       </div>
 
-      <div className="bg-[#FAFAFB] h-[382.8px] w-[924.58px] mt-[48.91px] ml-[125px] rounded-md">
-        <div className="text-[18px] flex gap-[78px] pt-[34.29px] px-[31.88px]">
-          <span className="text-productFontColorBlue ">Product Infomation</span>
-
-          <span className="text-[#262626]">Reviews 0</span>
-          <span className="text-[#262626]">Another tab</span>
-        </div>
-        <div className="w-[924.58] h-[4.25px] bg-[#E5E8EA] mt-[27.58px] mb-[21.08px]">
-          <div className="bg-[#2E90E5] w-[150.91px] h-[4.25px] ml-[32.94px]"></div>
-          <div className="text-[#9098B1] text-[12px] pl-[30.95px] pt-[21px]">
-            air max are always very comfortable fit, clean and just perfect in
-            every way. just the box was too small and <br />
-            scrunched the sneakers up a little bit, not sure if the box was
-            always this small but the 90s are and will always be one <br />
-            of my favorites.
-          </div>
-          <div className="text-[#9098B1] text-[12px] pl-[30.95px] pt-[21px]">
-            air max are always very comfortable fit, clean and just perfect in
-            every way. just the box was too small and <br />
-            scrunched the sneakers up a little bit, not sure if the box was
-            always this small but the 90s are and will always be one <br />
-            of my favorites.
-          </div>
-          <div className="text-[#9098B1] text-[12px] pl-[30.95px] pt-[21px]">
-            air max are always very comfortable fit, clean and just perfect in
-            every way. just the box was too small and <br />
-            scrunched the sneakers up a little bit, not sure if the box was
-            always this small but the 90s are and will always be one <br />
-            of my favorites.
-          </div>
-        </div>
+      <div className="bg-[#FAFAFB] h-[382.8px] w-[940.58px] mt-[48.91px] ml-[125px] rounded-md">
+      {/* Tabs */}
+      <div className="text-[18px] flex gap-[78px] pt-[34.29px] px-[31.88px] relative">
+        {["product-info", "review", "another"].map((tab) => (
+          <button
+            key={tab}
+            className={`cursor-pointer pb-2 ${
+              activeTab === tab ? "text-productFontColorBlue" : "text-[#262626]"
+            }`}
+            onClick={() => setActiveTab(tab)}
+          >
+            {tab === "product-info" && "Product Information"}
+            {tab === "review" && "Reviews 0"}
+            {tab === "another" && "Another Tab"}
+          </button>
+        ))}
       </div>
+
+      {/* Underline */}
+      <div className="relative w-[924.58px] h-[4.25px] bg-[#E5E8EA] mt-[27.58px] mb-[21.08px]">
+        <div
+          className={`absolute h-[4.25px] bg-[#2E90E5] transition-all duration-300`}
+          style={{
+            width: "150.91px", // Width of the underline
+            left: activeTab === "product-info" ? "32.94px" :
+                  activeTab === "review" ? "260px" : "420px", // Adjust based on tab position
+          }}
+        ></div>
+      </div>
+
+      {/* Tab Content */}
+      <div className="text-[#9098B1] text-[12px] pl-[30.95px] pt-[21px]">
+        {activeTab === "product-info" && (
+          <p>
+
+            <div>
+            Air Max are always very comfortable fit, clean and just perfect in every way. Just the box was too small and 
+            <br />
+            scrunched the sneakers up a little bit, not sure if the box was always this small but the 90s are and will always be one <br /> of my favorites. 
+            </div>
+
+            <div className="mt-[15px]">
+            Air Max are always very comfortable fit, clean and just perfect in every way. Just the box was too small and 
+            <br />
+            scrunched the sneakers up a little bit, not sure if the box was always this small but the 90s are and will always be one of <br /> my favorites. 
+            </div>
+
+            <div className="mt-[15px]">
+            Air Max are always very comfortable fit, clean and just perfect in every way. Just the box was too small and 
+            <br />
+            scrunched the sneakers up a little bit, not sure if the box was always this small but the 90s are and will always be one <br /> of my favorites. 
+            </div>
+           
+           
+            
+          </p>
+          
+        )}
+        {activeTab === "review" && (
+          <p>No reviews yet. Be the first to review this product!</p>
+        )}
+        {activeTab === "another" && (
+          <p>This is another tab content. You can add more details here.</p>
+        )}
+      </div>
+    </div>
+
+
+
+
 
       <div className="flex mt-[77.51px]">
         {/* <h4 className="mx-auto text-[35px] text-[#22262A] font-semibold">RELATED PRODUCTS</h4> */}
@@ -283,16 +362,15 @@ const ProductPage = () => {
       </div>
 
       <div className="grid grid-cols-4 gap-4 mt-[83px] px-[109px]">
-        {Array(4)
-          .fill()
-          .map((_, index) => (
+        {relatedProduct
+          .map((relatedProduct, index) => (
             <div
               key={index}
               className="h-[388px] w-[301px]  border-[#F6F7F8] border-b-4 border-l-4 border-r-4 rounded-md "
             >
               {/* Image Section */}
               <Image
-                src={ProductImage}
+                src={relatedProduct?.productImageUrl}
                 width={299}
                 height={272.5}
                 alt="product-image"
@@ -301,7 +379,7 @@ const ProductPage = () => {
               {/* Details Section */}
               <div className="pt-[14px]">
                 <h1 className="text-[18px] font-bold text-[#223263] text-center">
-                  Nike Air Max 270 React
+                {relatedProduct?.productName}
                 </h1>
                 <Image
                   className="mx-auto pt-[6px]"
@@ -312,14 +390,14 @@ const ProductPage = () => {
                 />
                 <div className="flex items-center pt-[6px] justify-center">
                   <h3 className="text-imageBgColor text-[18px] font-bold ">
-                    $299.43
+                   {products?.productCurrentPrice}
                   </h3>
                   <div className="flex justify-center pl-[13px] items-center">
                     <h3 className="text-textLighGrayColor text-[14px]">
-                      $534.33
+                      {relatedProduct?.productPreviousPrice}
                     </h3>
                     <h3 className="text-textRedColor text-[14px] font-bold pl-[8px]">
-                      24% off
+                      {relatedProduct?.productOf}
                     </h3>
                   </div>
                 </div>
