@@ -10,7 +10,9 @@ import GridImage from "/public/images/switch.png";
 import ListImage from "/public/images/switch (1).png";
 import Example from "@/components/RangeSlider";
 import axios from "axios";
-
+import HeartPicture from "/public/images/hearts.png";
+import CartPicture from "/public/images/cart_2.png";
+import Link from "next/link";
 
 const Product = ({ category }) => {
 
@@ -186,7 +188,7 @@ const Product = ({ category }) => {
                 <span>12 </span>
                 <div className="flex cursor-pointer pl-2 pb-3">
                   <Image
-                    src={ListImage}
+                    src={GridImage}
                     height={58}
                     width={55.26}
                     alt="list-image-option"
@@ -208,14 +210,16 @@ const Product = ({ category }) => {
           {products.length === 0 && <p> No Products available</p>}
           {showItemsType === "grid" ? (
             // <p className="text=black">No products available</p>
-            products?.map((product, index) => (
-              <div className="mt-[20px] flex" key={index}>
+            products?.slice(0,4).map((product, index) => (
+                <div className="pt-[20px] flex" key={index}>
+                    <Link href={`/product/${product._id}`} key={index}>
                 <Image
                   src={product?.productImageUrl}
                   width={299}
                   height={272.5}
                   alt="product-image"
-                />
+                  />
+                      </Link>
 
                 <div className="pl-[15.52px]">
                   <h1 className="text-[18px] font-bold text-[#223263] ">
@@ -227,7 +231,7 @@ const Product = ({ category }) => {
                       height={10.63}
                       width={76.95}
                       alt="rating"
-                    />
+                      />
                     <span className="text-[#C1C8CE] text-[16px] px-[16px]">
                       0 reviews
                     </span>
@@ -235,6 +239,8 @@ const Product = ({ category }) => {
                       Submit a review
                     </h4>
                   </div>
+
+                  {/* line */}
                   <div className="w-[499.49px] h-[2.13px] bg-[#F6F7F8] mt-[18.53px]"></div>
                   {/* <div className="text-[#40BFFF]">$299,43</div> */}
                   <div className="pt-[17px]">
@@ -250,8 +256,40 @@ const Product = ({ category }) => {
                   </div>
 {/* text product details */}
                   <div className="text-[#262626] text-[14px]">
-                        <span className="">Nunc facilisis sagittis ullamcorper. Proin lectus ipsum, gravida et mattis vulputate, tristique ut lectus. Sed et lectus lorem nunc leifend laorevtr istique et congue. Vivamus adipiscin vulputate g nisl ut dolor ...</span>
+                        <span className="">Nunc facilisis sagittis ullamcorper. Proin lectus ipsum, gravida et mattis vulputate, tristique ut <br /> lectus. Sed et lectus lorem nunc leifend laorevtr istique et congue. Vivamus adipiscin <br />vulputate g nisl ut dolor ...</span>
                   </div>
+
+                  {/* add to cart button  */}
+                      <div className="flex items-center gap-3 pt-[28px]">
+                                  <button
+                                    className="flex gap-4 items-center justify-center h-[46px] w-[150px] bg-[#33A0FF] bg-opacity-[10%]"
+                                    onClick={() => addToCartHandler(products)}
+                                  >
+                                    <Image
+                                      src={CartPicture}
+                                      alt="cart-picture"
+                                      height={16}
+                                      width={15.95}
+                                    />
+                                    <span className="text-[18px] text-[#33A0FF]">Add To Cart</span>
+                                  </button>
+                                  <button className="flex gap-4 items-center justify-center h-[48.91px] w-[48.89px] bg-[#33A0FF] bg-opacity-[10%]">
+                                    <Image
+                                      src={HeartPicture}
+                                      alt="cart-picture"
+                                      height={17.01}
+                                      width={16.95}
+                                    />
+                                  </button>
+                                </div>
+
+
+
+
+
+
+
+                <div className="w-[499.49px] h-[2.13px] bg-[#F6F7F8] mt-[18.53px]"></div>
                 </div>
               </div>
             ))
@@ -259,6 +297,7 @@ const Product = ({ category }) => {
             // <ul>
             <div className="grid grid-cols-3 gap-[34px]  pt-[23px] gap-y-[34px]">
               {products?.map((product, index) => (
+                <Link href={`/product/${product._id}`} key={index}>
                 <div
                   key={index}
                   className="h-[388px] w-[301px] border-[#F6F7F8] border-b-4 border-l-4 border-r-4 rounded-md"
@@ -298,7 +337,8 @@ const Product = ({ category }) => {
                     </div>
                   </div>
                 </div>
-              ))}{" "}
+                </Link>
+              ))}
             </div>
             // </ul>
           )}
