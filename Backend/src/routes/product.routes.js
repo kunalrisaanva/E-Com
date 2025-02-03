@@ -6,6 +6,7 @@ import {
   getAllProduct,
   getSingleProductDetails,
   productbyFilter,
+  relatedProduct,
 } from "../controller/productController.js";
 import { upload } from "../middleware/multer.js";
 
@@ -27,6 +28,7 @@ async function productRoutes(fastify, options) {
   fastify.get("/all", asyncHandler(getAllProduct));
   fastify.get("/product/:_id", asyncHandler(getSingleProductDetails));
   fastify.get("/product", asyncHandler(productbyFilter));
+  fastify.get("/related/:_id", asyncHandler(relatedProduct));
 
 }
 
