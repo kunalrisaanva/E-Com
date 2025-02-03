@@ -155,6 +155,30 @@ const productbyFilter = async(req,reply) => {
 
 }
 
+
+const relatedProduct = async(req,rep) => {
+
+
+  const productId = req.params._id;
+
+  if(!productId) return errorResponse("please prvide product id");
+
+
+  // console.log("product id ---->",productId);
+  
+  const productType = await Product.findById({_id:productId});
+  
+  if(!productType) return errorResponse("no product found with given Id",404);
+
+
+  const findSameCatePro = await Product.find({category:productType?.category}).limit(4)
+
+  
+  return rep.status(200).send(successResponse(findSameCatePro,'same category product found successfully'));
+
+
+}
+
 const delteProduct = async () => {};
 
 export {
@@ -163,4 +187,5 @@ export {
   getAllProduct,
   getSingleProductDetails,
   productbyFilter,
+  relatedProduct
 };
