@@ -107,7 +107,7 @@ export default function Home() {
     setVisible((prev) => prev - 8);
   };
 
-  if(error) return <h1> something went wrong </h1>
+  if (error) return <h1> something went wrong </h1>;
 
   return (
     <>
@@ -263,7 +263,8 @@ export default function Home() {
         {/* products */}
 
         {/* <Link href={`/product`}>  */}
-        <div className="grid grid-cols-4 gap-4  px-[83px] pt-[23px] gap-y-[34px]">
+        {/* <div className="grid grid-cols-4 gap-4   pt-[23px] gap-x-[34px] gap-y-[34px]"> */}
+        <div className="pt-[23px] flex flex-wrap items-center justify-center  gap-8">
           {isLoading && <p> Loading Produts ....</p>}
           {filteredProducts?.length === 0 ? (
             <p className="text=black">No products available</p>
@@ -324,16 +325,16 @@ export default function Home() {
               className="text-productFontColorBlue underline underline-offset-8"
               onClick={handleShowless}
             >
-              {" "}
-              show less{" "}
+              
+              show less
             </button>
           ) : (
             <button
               className="text-productFontColorBlue underline underline-offset-8"
               onClick={handleLoadMore}
             >
-              {" "}
-              Load more{" "}
+             
+              Load more
             </button>
           )}
 
@@ -361,17 +362,19 @@ export default function Home() {
         />
       </div>
 
-      <div className=" pt-[97px] flex">
+      <div className=" pt-[97px] flex-col">
+        <div>
         <Image
           className="mx-auto"
           src={WhyUs}
           height={865}
           width={1000}
           alt="why-us-image"
-        />
-      </div>
+          />
 
-      <div className="flex items-center pl-[231px]">
+        </div>
+
+        <div className="flex items-center justify-center ">
         {/* <h3 className="mx-auto text-[27px] font-medium">FREE SHIPPING</h3> */}
         <p className=" text-black">
           Lorem Ipsum is simply <br />
@@ -390,185 +393,201 @@ export default function Home() {
           industry.
         </p>
       </div>
-      <div className="flex pt-[121px]">
-        <h4 className="text-[34px] font-semibold mx-auto">LATEST NEWS</h4>
       </div>
 
-      <div className="flex items-start gap-4 pt-[71px] pl-[141px]">
-        {/* Image Section */}
-        <Image
-          className="object-contain pt-[18px]"
-          alt="product-image"
-          src={NikeLogo}
-          height={52}
-          width={144}
-        />
+      
 
-        {/* Text Content Section */}
-        <div className="">
-          <span className="text-[18px] text-[#C1C8CE] font-medium">
-            01 Jan, 2015
-          </span>
-          <h4 className="font-semibold text-[22px] pt-[2px]">
-            Fashion Industry
-          </h4>
-          <p className="pt-[2px]">
-            Lorem Ipsum is simply <br /> dummy text of the <br /> printing and
-            typesetting <br />
-            industry.
-          </p>
+
+      <div className=" pt-[121px]">
+        <div className="flex">
+          <h4 className="text-[34px] font-semibold mx-auto">LATEST NEWS</h4>
         </div>
 
-        <Image
-          className="object-contain pt-[18px]"
-          alt="product-image"
-          src={FigmaLogo}
-          height={52}
-          width={144}
-        />
+        <div className="flex items-start gap-10 pt-[61px] justify-center">
+          {/* Image Section */}
+          <div className="flex">
+            <Image
+              className="object-contain pt-[18px]"
+              alt="product-image"
+              src={NikeLogo}
+              height={52}
+              width={144}
+            />
 
-        {/* Text Content Section */}
-        <div className="">
-          <span className="text-[18px] text-[#C1C8CE] font-medium">
-            01 Jan, 2015
-          </span>
-          <h4 className="font-semibold text-[22px] pt-[2px]">
-            Fashion Industry
-          </h4>
-          <p className="pt-[2px]">
-            Lorem Ipsum is simply <br /> dummy text of the <br /> printing and
-            typesetting <br />
-            industry.
-          </p>
-        </div>
+            <div className="pl-[35px]">
+              <span className="text-[18px] text-[#C1C8CE] font-medium">
+                01 Jan, 2015
+              </span>
+              <h4 className="font-semibold text-[22px] pt-[2px]">
+                Fashion Industry
+              </h4>
+              <p className="pt-[2px]">
+                Lorem Ipsum is simply <br /> dummy text of the <br /> printing
+                and typesetting <br />
+                industry.
+              </p>
+            </div>
+          </div>
 
-        <Image
-          className="object-contain pt-[18px]"
-          alt="product-image"
-          src={KronosLogo}
-          height={52}
-          width={144}
-        />
+          {/* Text Content Section */}
 
-        {/* Text Content Section */}
-        <div className="">
-          <span className="text-[18px] text-[#C1C8CE] font-medium">
-            01 Jan, 2015
-          </span>
-          <h4 className="font-semibold text-[22px] pt-[2px]">
-            Fashion Industry
-          </h4>
-          <p className="pt-[2px]">
-            Lorem Ipsum is simply <br /> dummy text of the <br /> printing and
-            typesetting <br />
-            industry.
-          </p>
+          <div className="flex">
+            <Image
+              className="object-contain pt-[18px]"
+              alt="product-image"
+              src={FigmaLogo}
+              height={52}
+              width={144}
+            />
+
+            <div className="pl-[35px]">
+              <span className="text-[18px] text-[#C1C8CE] font-medium">
+                01 Jan, 2015
+              </span>
+              <h4 className="font-semibold text-[22px] pt-[2px]">
+              Best Design Tools
+              </h4>
+              <p className="pt-[2px]">
+                Lorem Ipsum is simply <br /> dummy text of the <br /> printing
+                and typesetting <br />
+                industry.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex">
+            <Image
+              className="object-contain pt-[18px]"
+              alt="product-image"
+              src={KronosLogo}
+              height={52}
+              width={144}
+            />
+
+            <div className="pl-[35px]">
+              <span className="text-[18px] text-[#C1C8CE] font-medium">
+                01 Jan, 2015
+              </span>
+              <h4 className="font-semibold text-[22px] pt-[2px]">
+              HR Community
+              </h4>
+              <p className="pt-[2px]">
+                Lorem Ipsum is simply <br /> dummy text of the <br /> printing
+                and typesetting <br />
+                industry.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div className="flex pt-[110px]">
-        <h3 className="mx-auto text-[#22262A] font-semibold text-[35px]">
+      <div className="flex flex-col pt-[110px]">
+        <div className="flex justify-center">
+        <h3 className="text-[#22262A] font-semibold text-[35px]">
           FEATURED PRODUCTS
         </h3>
+
+        </div>
+         <div className="flex justify-center pt-[73px] items-center gap-20">
+        <div className="flex">
+          <div>
+            <Image
+              src={Reacangle}
+              alt="product-image"
+              height={154}
+              width={154}
+            />
+          </div>
+          <div className="">
+            <h4 className="text-[22px] font-light  leading-[1.2]">
+              Blue Swade Nike <br />
+              Sneakers
+            </h4>
+            <Image
+              className="pt-[16px]"
+              src={Rating}
+              height={11}
+              width={86}
+              alt="rating"
+            />
+            <div className="pt-[17px]">
+              <span className="text-[#FF4858] font-medium text-[20px] pt-[17px]">
+                $499
+              </span>
+              <span className="text-[#C1C8CE] font-medium text-[20px] pt-[17px] pl-[4px]">
+                $499
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex">
+          <div>
+            <Image
+              src={Reacangle}
+              alt="product-image"
+              height={154}
+              width={154}
+            />
+          </div>
+          <div className="">
+            <h4 className="text-[22px] font-light  leading-[1.2]">
+              Blue Swade Nike <br />
+              Sneakers
+            </h4>
+            <Image
+              className="pt-[16px]"
+              src={Rating}
+              height={11}
+              width={86}
+              alt="rating"
+            />
+            <div className="pt-[17px]">
+              <span className="text-[#FF4858] font-medium text-[20px] pt-[17px]">
+                $499
+              </span>
+              <span className="text-[#C1C8CE] font-medium text-[20px] pt-[17px] pl-[4px]">
+                $499
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex">
+          <div>
+            <Image
+              src={Reacangle}
+              alt="product-image"
+              height={154}
+              width={154}
+            />
+          </div>
+          <div className="pl-[24px]">
+            <h4 className="text-[22px] font-light  leading-[1.2]">
+              Blue Swade Nike <br />
+              Sneakers
+            </h4>
+            <Image
+              className="pt-[16px]"
+              src={Rating}
+              height={11}
+              width={86}
+              alt="rating"
+            />
+            <div className="pt-[17px]">
+              <span className="text-[#FF4858] font-medium text-[20px] pt-[17px]">
+                $499
+              </span>
+              <span className="text-[#C1C8CE] font-medium text-[20px] pt-[17px] pl-[4px]">
+                $499
+              </span>
+            </div>
+          </div>
+        </div>
+      </div> 
       </div>
 
-      <div className="flex pl-[112px] pt-[73px] items-center gap-16">
-        <div className="flex">
-          <div>
-            <Image
-              src={Reacangle}
-              alt="product-image"
-              height={154}
-              width={154}
-            />
-          </div>
-          <div className="pl-[24px]">
-            <h4 className="text-[22px] font-light  leading-[1.2]">
-              Blue Swade Nike <br />
-              Sneakers
-            </h4>
-            <Image
-              className="pt-[16px]"
-              src={Rating}
-              height={11}
-              width={86}
-              alt="rating"
-            />
-            <div className="pt-[17px]">
-              <span className="text-[#FF4858] font-medium text-[20px] pt-[17px]">
-                $499
-              </span>
-              <span className="text-[#C1C8CE] font-medium text-[20px] pt-[17px] pl-[4px]">
-                $499
-              </span>
-            </div>
-          </div>
-        </div>
-
-        <div className="flex">
-          <div>
-            <Image
-              src={Reacangle}
-              alt="product-image"
-              height={154}
-              width={154}
-            />
-          </div>
-          <div className="pl-[24px]">
-            <h4 className="text-[22px] font-light  leading-[1.2]">
-              Blue Swade Nike <br />
-              Sneakers
-            </h4>
-            <Image
-              className="pt-[16px]"
-              src={Rating}
-              height={11}
-              width={86}
-              alt="rating"
-            />
-            <div className="pt-[17px]">
-              <span className="text-[#FF4858] font-medium text-[20px] pt-[17px]">
-                $499
-              </span>
-              <span className="text-[#C1C8CE] font-medium text-[20px] pt-[17px] pl-[4px]">
-                $499
-              </span>
-            </div>
-          </div>
-        </div>
-
-        <div className="flex">
-          <div>
-            <Image
-              src={Reacangle}
-              alt="product-image"
-              height={154}
-              width={154}
-            />
-          </div>
-          <div className="pl-[24px]">
-            <h4 className="text-[22px] font-light  leading-[1.2]">
-              Blue Swade Nike <br />
-              Sneakers
-            </h4>
-            <Image
-              className="pt-[16px]"
-              src={Rating}
-              height={11}
-              width={86}
-              alt="rating"
-            />
-            <div className="pt-[17px]">
-              <span className="text-[#FF4858] font-medium text-[20px] pt-[17px]">
-                $499
-              </span>
-              <span className="text-[#C1C8CE] font-medium text-[20px] pt-[17px] pl-[4px]">
-                $499
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
+    
 
       {/* search box */}
 
