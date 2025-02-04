@@ -3,13 +3,14 @@ import { Search as SearchIcom } from "@mui/icons-material";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { Button } from "@mui/material";
+import LoginIcon from '@mui/icons-material/Login';
 import Link from "next/link";
 
 const Header = () => {
   const language = ["ENG", "HIN"];
   const currency = ["USD", "IND"];
 
-  const [ isAuthenticated , setIsAuthenticated ] = useState(true);
+  const [ isAuthenticated , setIsAuthenticated ] = useState(false);
 
 
   return (
@@ -61,9 +62,9 @@ const Header = () => {
              </Button>
              </Link>
           ) : (
-            <Link href='/profile'>
+            <Link href='/login'>
             <Button>
-              <PermIdentityIcon style={{ color: "black" }} />
+              <LoginIcon style={{ color: "black" }} />
               <h1 className="text-[20px] text-textgrayColor pl-[6.53px]">Login</h1>
             </Button>
             </Link>
@@ -81,9 +82,9 @@ const Header = () => {
           </Link>
          
         </div>
-        <div className="flex ">
+        <div className="flex">
           <Button>
-            <h1 className="text-[20px] text-textgrayColor ">$0.00</h1>
+            <h1 className="text-[20px] text-textgrayColor px-3">$0.00</h1>
             <SearchIcom style={{ color: "black" }} />
           </Button>
         </div>

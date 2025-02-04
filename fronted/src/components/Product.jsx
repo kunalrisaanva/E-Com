@@ -178,15 +178,17 @@ const Product = ({ category }) => {
           </div>
 
           {/* line */}
-          <div className="flex">
-            <div className="flex mt-[47px] bg-[#F6F7F8] justify-center h-[56px] w-full pt-[14px] gap-12">
+          <div className="flex mt-[47px]">
+            <div className="flex  bg-[#F6F7F8] justify-between items-center h-[56px] w-full pt-[14px] px-8">
+              <div className="flex itmes-center gap-10">
               <span className="text-[16px]">{[products.length]} items</span>
-              <div className="flex itmes-center">
                 <span>Sort By</span>
                 <span>Name</span>
                 <span>Show</span>
                 <span>12 </span>
-                <div className="flex cursor-pointer pl-2 pb-3">
+                
+              </div>
+              <div className="flex cursor-pointer ">
                   <Image
                     src={GridImage}
                     height={58}
@@ -202,7 +204,6 @@ const Product = ({ category }) => {
                     onClick={() => setShowItemsType("list")}
                   />
                 </div>
-              </div>
             </div>
           </div>
 
