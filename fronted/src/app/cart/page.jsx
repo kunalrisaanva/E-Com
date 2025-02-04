@@ -50,7 +50,7 @@ const Page = () => {
         {/* line end */}
 
         {cartItems.length === 0 ? (
-          <div>No products in the cart...</div>
+          <div className="text-3xl pl-[100px] my-2">Oops! Your cart feels lonely. Add some products! 👜</div>
         ) : (
           cartItems.map((cartProduct, index) => (
             <div
@@ -123,7 +123,43 @@ const Page = () => {
               Redeem
             </button>
           </div>
+
+           {/* calculation part */}
+
+
+           {cartItems.length !== 0 &&
+
+           <div className="text-[#262626] pl-[441px]">
+            <div className="flex gap-[255px]">
+              <span>Subtotal</span>
+              <span>$998</span>
+            </div>
+            <div className="flex gap-[255px] mt-[23px]">
+              <span>Shipping </span>
+              <span>$998</span>
+            </div>
+            <div className="flex gap-[255px] mt-[23px]">
+              <span>Coupon</span>
+              <span>No</span>
+            </div>
+            <div className="bg-[#F6F7F8] w-[370px] h-[2px] mt-[24px]"></div>
+
+            <button className="mb-8 mt-2 w-[374px] h-[60px] bg-[#33A0FF] text-[18px] font-medium text-white py-[16px] px-[139px] " >Check out</button>
+          </div>
+          }
+
+          {/* totoal part */}
+
+
+
+          {/* button part */}
+
+         
         </div>
+
+       
+
+       
       </div>
     </>
   );
