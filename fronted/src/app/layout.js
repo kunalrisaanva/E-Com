@@ -6,6 +6,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Provider } from "react-redux";
 import { store } from "../redux/store";
+import { usePathname } from "next/navigation";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -24,16 +25,24 @@ const geistMono = localFont({
 // };
 
 export default function RootLayout({ children }) {
+
+  const pathname = usePathname();
+
+  const hidelayout = ["/login","/register"].includes(pathname);
+
+
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased `}
       >
         <Provider store={store}>
-          <Header />
-          <Navbar />
+          {!hidelayout && <Header/>}
+          {!hidelayout && <Navbar/>}
+          {/* <Header />
+          <Navbar /> */}
           {children}
-          <Footer />
+         {!hidelayout && <Footer />}
         </Provider>
       </body>
     </html>
