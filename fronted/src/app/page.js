@@ -95,7 +95,7 @@ export default function Home() {
       setFilteredProducts(
         products.filter((product) => product?.category === category)
         // products.filter(())
-      );
+      );  
     }
   }, [category, products, visible]);
 
@@ -144,18 +144,23 @@ export default function Home() {
               {/* Product Card 2 */}
               <div>
                 <div className="bg-[url('/images/imageProduct2.png')] bg-cover bg-center h-[358px] w-[417px]">
-                  <h4 className="text-black text-[20px] pt-[29px] font-semibold pl-[52px] tracking-[0.5px] leading-[150%]">
-                    FS - QUILTED MAXI <span className="block">CROSS BAG</span>
-                    <div className="flex pt-[180px]">
-                      <span className="text-[18px]">$534,33</span>
-                      <span className="text-[18px] pl-[8px] text-[#FB7181]">
-                        24% Off
-                      </span>
-                      <span className="text-[30px] font-bold pl-[68px] pt-[32px] text-[#40BFFF]">
+                  <div className="text-black text-[20px] pt-[29px] font-semibold pl-[52px] tracking-[0.5px] leading-[150%]">
+                    <div className="flex gap-14">
+                    <h3 className="">FS - Nike Air <br />Max 270 React...</h3>
+                     <span className="inline-block text-[30px] font-bold  text-[#40BFFF] pt-2">
                         $299,43
                       </span>
                     </div>
-                  </h4>
+                    
+                    
+                    <div className="flex justify-center pt-[210px]">
+                      <span className="text-[18px]">$534,33</span>
+                      <p className="text-[18px] pl-[8px] text-[#FB7181]">
+                        24% Off
+                      </p>
+                    
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -164,13 +169,16 @@ export default function Home() {
                 <div className="bg-[url('/images/imageProduct3.png')] bg-cover bg-center h-[358px] w-[417px]">
                   <h4 className="text-black text-[20px] pt-[29px] font-semibold pl-[52px] tracking-[0.5px] leading-[150%]">
                     FS - QUILTED MAXI <span className="block">CROSS BAG</span>
-                    <div className="flex pt-[180px]">
-                      <span className="text-[18px]">$534,33</span>
+                    <div>
+                    <span className="text-[18px]">$534,33</span>
                       <span className="text-[18px] pl-[8px] text-[#FB7181]">
                         24% Off
                       </span>
-                      <span className="text-[30px] font-bold pl-[68px] pt-[32px] text-[#40BFFF]">
-                        $299,43
+                    </div>
+                    <div className="flex pt-[180px] justify-end pr-[40px]">
+                      
+                      <span className="text-[30px] font-bold  text-[#40BFFF]">
+                      $<span className="text-12px]">2</span>99,43
                       </span>
                     </div>
                   </h4>
@@ -352,6 +360,9 @@ export default function Home() {
           <p className="text-white text-[24px] pt-[23px]">
             Performance and design. Taken right to the edge.
           </p>
+
+          <span className="inline-block font-semibold text-white text-[20px] mt-[16px]">SHOP NOW</span>
+          <div className="w-[100px] border border-white mt-1 "></div>
         </div>
         <Image
           src={Shoes}
@@ -488,7 +499,7 @@ export default function Home() {
         </h3>
 
         </div>
-         <div className="flex justify-center pt-[73px] items-center gap-20">
+         <div className="flex justify-center pt-[73px] items-center gap-16">
         <div className="flex">
           <div>
             <Image
@@ -498,7 +509,7 @@ export default function Home() {
               width={154}
             />
           </div>
-          <div className="">
+          <div className="pl-[20px]">
             <h4 className="text-[22px] font-light  leading-[1.2]">
               Blue Swade Nike <br />
               Sneakers
@@ -530,8 +541,8 @@ export default function Home() {
               width={154}
             />
           </div>
-          <div className="">
-            <h4 className="text-[22px] font-light  leading-[1.2]">
+          <div className="pl-[20px]">
+            <h4 className="text-[22px] font-light  leading-[1.2] ">
               Blue Swade Nike <br />
               Sneakers
             </h4>

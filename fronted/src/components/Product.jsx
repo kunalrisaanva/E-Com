@@ -20,7 +20,7 @@ const Product = ({ category }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const [showItemsType, setShowItemsType] = useState("list");
+  const [showItemsType, setShowItemsType] = useState("grid");
 
 
 
@@ -28,6 +28,7 @@ const Product = ({ category }) => {
   useEffect(() => {
     (async () => {
       try {
+        setIsLoading(true);
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/products/product?q=${category}`
         );
@@ -37,9 +38,11 @@ const Product = ({ category }) => {
           setIsLoading(false);
         } else {
           setError("Error fetching data");
+          setIsLoading(false);
         }
       } catch (err) {
         setError(`Error fetching data${err}`);
+        setIsLoading(false)
       }
     })();
   }, [category]);
@@ -158,36 +161,53 @@ const Product = ({ category }) => {
         </div>
 
         {/* image */}
-        <div className="pt-[51px] pl-[31px]">
+        <div className="pt-[51px] pl-[31px] ">
           <div className="bg-imageBgColor h-[297px] w-[961px] flex relative overflow-visible ">
-            <div className="pt-[57px] pl-[31px] z-10">
-              <h1 className="text-[55px] font-medium text-white ">
+            <div className="pt-[57px] pl-[109px] z-10">
+              <h1 className="text-[30px] font-semibold text-white ">
                 Adidas Men Running <br /> Sneakers
               </h1>
-              <p className="text-white text-[24px] pt-[13px]">
+              <p className="text-white text-[14px] pt-[13px]">
                 Performance and design. Taken right to the edge.
               </p>
+              <span className="inline-block font-semibold text-white text-[12px] mt-[24px]">SHOP NOW</span>
+          <div className="w-[60px] border border-white mt-1 "></div>
             </div>
             <Image
               src={Shoes}
               alt="shoes-image"
               height={297}
               width={397}
-              className="absolute right-[10px] top-[-40px] z-0"
+              className="absolute left-[45%] top-[-40px] z-0"
             />
           </div>
 
-          {/* line */}
-          <div className="flex mt-[47px]">
-            <div className="flex  bg-[#F6F7F8] justify-between items-center h-[56px] w-full pt-[14px] px-8">
-              <div className="flex itmes-center gap-10">
+          {/* itesm details and category types show type bar */}
+          
+          <div className=" mt-[47px] w-full">
+            <div className="flex  justify-between bg-[#F6F7F8] items-center h-[56px]  ">
+              <div className="flex   gap-10 pl-[22px] ">
               <span className="text-[16px]">{[products.length]} items</span>
                 <span>Sort By</span>
-                <span>Name</span>
-                <span>Show</span>
-                <span>12 </span>
+                <div className="flex items-center justify-between px-5 h-[38px] w-[128.21px] border-2 border-[F1F3F4] rounded">
+                <span className="  inline-block">Name</span>
+                <div className="cursor-pointer">
+ <Image src="data:image/png;base64,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" height={10} width={15} alt="dropdown-image"/>
+                </div>
+                
+                </div>
+                <span className="text-center">Show</span>
+                <div className="flex items-center justify-between px-5 h-[38px] w-[128.21px] border-2 border-[F1F3F4] rounded">
+                <span className="  inline-block">8</span>
+                <div className="cursor-pointer">
+ <Image src="data:image/png;base64,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" height={10} width={15} alt="dropdown-image"/>
+                </div>
+                
+                </div>
                 
               </div>
+
+              {/* images of list image and grid images options */}
               <div className="flex cursor-pointer ">
                   <Image
                     src={GridImage}
@@ -209,7 +229,7 @@ const Product = ({ category }) => {
 
           {isLoading && <p> Loading ... </p>}
           {products.length === 0 && <p> No Products available</p>}
-          {showItemsType === "grid" ? (
+          {showItemsType === "list" ? (
             // <p className="text=black">No products available</p>
             products?.slice(0,4).map((product, index) => (
                 <div className="pt-[20px] flex" key={index}>

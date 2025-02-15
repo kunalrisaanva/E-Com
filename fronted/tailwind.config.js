@@ -26,7 +26,8 @@ module.exports = {
         'footer-texture': "url('/img/footer-texture.png')",
       },
       screens:{
-        xs:"480px"
+        xs:"480px",
+        xll:'1492px'
       }
     },
   },

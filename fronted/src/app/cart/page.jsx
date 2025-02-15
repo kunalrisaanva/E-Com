@@ -50,7 +50,7 @@ const Page = () => {
         {/* line end */}
 
         {cartItems.length === 0 ? (
-          <div className="text-3xl pl-[100px] my-2">Oops! Your cart feels lonely. Add some products! 👜</div>
+          <div className="text-3xl pl-[100px] my-4 flex justify-center">Oops! Your cart feels lonely. Add some products! 👜</div>
         ) : (
           cartItems.map((cartProduct, index) => (
             <div
