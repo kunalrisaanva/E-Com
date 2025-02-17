@@ -64,30 +64,9 @@ export default function Home() {
     })();
   }, []);
 
-  // useEffect(() => {
-  //   ;( async() => {
-  //   try {
-  //     setError(false);
-
-  //     setIsLoading(true)
-  //      const response = await fetch.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/products/home-screen/products`);
-  //       const data = await response.json();
-  //       console.log(data);
-  //       setProducts(data?.data);
-  //       // console.log(data.data);
-  //       setFilteredProducts(data?.data);
-  //       setIsLoading(false) // Initially show all products
-  //   } catch (error) {
-  //    setError(error?.message || error)
-  //   }
-
-  //  })()
-
-  // },[])
-
-  // console.log(products.data);
 
   // Filter products when the category changes
+  
   useEffect(() => {
     if (category === "all") {
       setFilteredProducts(products);

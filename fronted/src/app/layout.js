@@ -7,6 +7,8 @@ import Footer from "@/components/Footer";
 import { Provider } from "react-redux";
 import { store } from "../redux/store";
 import { usePathname } from "next/navigation";
+import Development from "@/components/Development";
+
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -43,6 +45,7 @@ export default function RootLayout({ children }) {
           <Navbar /> */}
           {children}
          {!hidelayout && <Footer />}
+         {<Development/>}
         </Provider>
       </body>
     </html>
