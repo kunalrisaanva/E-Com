@@ -13,21 +13,24 @@ import axios from "axios";
 import HeartPicture from "/public/images/hearts.png";
 import CartPicture from "/public/images/cart_2.png";
 import Link from "next/link";
-import ListIcon from '@mui/icons-material/List';
-import ViewCompactIcon from '@mui/icons-material/ViewCompact';
-
-
-
+import ListIcon from "@mui/icons-material/List";
+import ViewCompactIcon from "@mui/icons-material/ViewCompact";
+import { useDispatch } from "react-redux";
+import { addToCart } from "@/redux/cartSlice";
 
 const Product = ({ category }) => {
+  const dispatch = useDispatch();
 
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const [showItemsType, setShowItemsType] = useState("grid");
-
-
+ 
+  const addToCartHandler = (product) => {
+    console.log(product);
+    dispatch(addToCart(product));
+  };
 
   // Fetch data on component mount
   useEffect(() => {
@@ -47,13 +50,13 @@ const Product = ({ category }) => {
         }
       } catch (err) {
         setError(`Error fetching data${err}`);
-        setIsLoading(false)
+        setIsLoading(false);
       }
     })();
   }, [category]);
 
   if (error) return <div>{error}</div>;
-
+ 
   return (
     <>
       <UpperLine />
@@ -175,8 +178,10 @@ const Product = ({ category }) => {
               <p className="text-white text-[14px] pt-[13px]">
                 Performance and design. Taken right to the edge.
               </p>
-              <span className="inline-block font-semibold text-white text-[12px] mt-[24px]">SHOP NOW</span>
-          <div className="w-[60px] border border-white mt-1 "></div>
+              <span className="inline-block font-semibold text-white text-[12px] mt-[24px]">
+                SHOP NOW
+              </span>
+              <div className="w-[60px] border border-white mt-1 "></div>
             </div>
             <Image
               src={Shoes}
@@ -188,75 +193,77 @@ const Product = ({ category }) => {
           </div>
 
           {/* itesm details and category types show type bar */}
-          
+
           <div className=" mt-[47px] w-full ">
             <div className="flex  justify-between bg-[#F6F7F8] items-center h-[56px]  ">
               <div className="flex items-center gap-10 pl-[22px] ">
-              <span className="text-[16px]">{[products.length]} items</span>
-              <div className="flex items-center gap-3">
-              <span>Sort By</span>
-                <div className="flex items-center justify-between px-5 h-[38px] w-[128.21px] border-2 border-[#F1F3F4] rounded">
-                <span className="  inline-block">Name</span>
-                <div className="cursor-pointer">
- <Image src="data:image/png;base64,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" height={10} width={15} alt="dropdown-image"/>
-                </div>
-              </div>
-               
-                
+                <span className="text-[16px]">{[products.length]} items</span>
+                <div className="flex items-center gap-3">
+                  <span>Sort By</span>
+                  <div className="flex items-center justify-between px-5 h-[38px] w-[128.21px] border-2 border-[#F1F3F4] rounded">
+                    <span className="  inline-block">Name</span>
+                    <div className="cursor-pointer">
+                      <Image
+                        src="data:image/png;base64,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"
+                        height={10}
+                        width={15}
+                        alt="dropdown-image"
+                      />
+                    </div>
+                  </div>
                 </div>
                 <div className="flex items-center gap-3">
-                <span className="text-center">Show</span>
-                <div className="flex items-center justify-between px-5 h-[38px] w-[128.21px] border-2 border-[F1F3F4] rounded">
-                <span className="  inline-block">8</span>
-                <div className="cursor-pointer">
- <Image src="data:image/png;base64,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" height={10} width={15} alt="dropdown-image"/>
+                  <span className="text-center">Show</span>
+                  <div className="flex items-center justify-between px-5 h-[38px] w-[128.21px] border-2 border-[F1F3F4] rounded">
+                    <span className="  inline-block">8</span>
+                    <div className="cursor-pointer">
+                      <Image
+                        src="data:image/png;base64,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"
+                        height={10}
+                        width={15}
+                        alt="dropdown-image"
+                      />
+                    </div>
+                  </div>
                 </div>
-                </div>
-                
-                
-                </div>
-                
               </div>
 
               {/* images of list image and grid images options */}
               <div className="flex items-center cursor-pointer gap-2 pr-2 ">
-                  {/* <Image
+                {/* <Image
                     src={GridImage}
                     height={58}
                     width={55.26}
                     alt="list-image-option"
                     onClick={() => setShowItemsType("grid")}
                   /> */}
-                  {/* <Image
+                {/* <Image
                     src={ListImage}
                     height={58}
                     width={55.26}
                     alt="list-image-option"
                     onClick={() => setShowItemsType("list")}
                   /> */}
-                  {/* <ListIcon  onClick={() => setShowItemsType("list")}/> */}
-                  <div className="bg-[#F1F3F4] ">
-                  <ViewCompactIcon 
-  sx={{ 
-    fontSize: 35, 
-   
-    color: showItemsType === "grid" ? "#33A0FF" : "#B0B0B0" 
-  }} 
-  onClick={() => setShowItemsType("grid")} 
-/>
-                  </div>
-                 
+                {/* <ListIcon  onClick={() => setShowItemsType("list")}/> */}
+                <div className="bg-[#F1F3F4] ">
+                  <ViewCompactIcon
+                    sx={{
+                      fontSize: 35,
 
-<ListIcon 
-  sx={{ 
-    fontSize: 40, 
-    color: showItemsType === "list" ? "#33A0FF" : "#B0B0B0" 
-  }} 
-  onClick={() => setShowItemsType("list")} 
-/>
-
-
+                      color: showItemsType === "grid" ? "#33A0FF" : "#B0B0B0",
+                    }}
+                    onClick={() => setShowItemsType("grid")}
+                  />
                 </div>
+
+                <ListIcon
+                  sx={{
+                    fontSize: 40,
+                    color: showItemsType === "list" ? "#33A0FF" : "#B0B0B0",
+                  }}
+                  onClick={() => setShowItemsType("list")}
+                />
+              </div>
             </div>
           </div>
 
@@ -264,20 +271,20 @@ const Product = ({ category }) => {
           {products.length === 0 && <p> No Products available</p>}
           {showItemsType === "list" ? (
             // <p className="text=black">No products available</p>
-            products?.slice(0,4).map((product, index) => (
-                <div className="pt-[20px] flex" key={index}>
-                    <Link href={`/product/${product._id}`} key={index}>
-                <Image
-                  src={product?.productImageUrl}
-                  width={299}
-                  height={272.5}
-                  alt="product-image"
+            products?.slice(0, 4).map((product, index) => (
+              <div className="pt-[20px] flex" key={index}>
+                <Link href={`/product/${product._id}`} key={index}>
+                  <Image
+                    src={product?.productImageUrl}
+                    width={299}
+                    height={272.5}
+                    alt="product-image"
                   />
-                      </Link>
+                </Link>
 
                 <div className="pl-[15.52px]">
                   <h1 className="text-[18px] font-bold text-[#223263] ">
-                   {product?.productName}
+                    {product?.productName}
                   </h1>
                   <div className="flex items-center pt-[10px]">
                     <Image
@@ -285,7 +292,7 @@ const Product = ({ category }) => {
                       height={10.63}
                       width={76.95}
                       alt="rating"
-                      />
+                    />
                     <span className="text-[#C1C8CE] text-[16px] px-[16px]">
                       0 reviews
                     </span>
@@ -299,7 +306,7 @@ const Product = ({ category }) => {
                   {/* <div className="text-[#40BFFF]">$299,43</div> */}
                   <div className="pt-[17px]">
                     <span className="text-[20px] font-bold text-[#40BFFF]">
-                    {product?.productCurrentPrice}
+                      {product?.productCurrentPrice}
                     </span>
                     <span className="text-[14px] text-[#9098B1] pl-[9px]">
                       {product?.productPreviousPrice}
@@ -308,42 +315,44 @@ const Product = ({ category }) => {
                       {product?.productOf}
                     </span>
                   </div>
-{/* text product details */}
+                  {/* text product details */}
                   <div className="text-[#262626] text-[14px]">
-                        <span className="">Nunc facilisis sagittis ullamcorper. Proin lectus ipsum, gravida et mattis vulputate, tristique ut <br /> lectus. Sed et lectus lorem nunc leifend laorevtr istique et congue. Vivamus adipiscin <br />vulputate g nisl ut dolor ...</span>
+                    <span className="">
+                      Nunc facilisis sagittis ullamcorper. Proin lectus ipsum,
+                      gravida et mattis vulputate, tristique ut <br /> lectus.
+                      Sed et lectus lorem nunc leifend laorevtr istique et
+                      congue. Vivamus adipiscin <br />
+                      vulputate g nisl ut dolor ...
+                    </span>
                   </div>
 
                   {/* add to cart button  */}
-                      <div className="flex items-center gap-3 pt-[28px]">
-                                  <button
-                                    className="flex gap-4 items-center justify-center h-[46px] w-[150px] bg-[#33A0FF] bg-opacity-[10%]"
-                                    onClick={() => addToCartHandler(products)}
-                                  >
-                                    <Image
-                                      src={CartPicture}
-                                      alt="cart-picture"
-                                      height={16}
-                                      width={15.95}
-                                    />
-                                    <span className="text-[18px] text-[#33A0FF]">Add To Cart</span>
-                                  </button>
-                                  <button className="flex gap-4 items-center justify-center h-[48.91px] w-[48.89px] bg-[#33A0FF] bg-opacity-[10%]">
-                                    <Image
-                                      src={HeartPicture}
-                                      alt="cart-picture"
-                                      height={17.01}
-                                      width={16.95}
-                                    />
-                                  </button>
-                                </div>
+                  <div className="flex items-center gap-3 pt-[28px]">
+                    <button
+                      className="flex gap-4 items-center justify-center h-[46px] w-[150px] bg-[#33A0FF] bg-opacity-[10%]"
+                      onClick={() => addToCartHandler(product)}
+                    >
+                      <Image
+                        src={CartPicture}
+                        alt="cart-picture"
+                        height={16}
+                        width={15.95}
+                      />
+                      <span className="text-[18px] text-[#33A0FF]">
+                        Add To Cart
+                      </span>
+                    </button>
+                    <button className="flex gap-4 items-center justify-center h-[48.91px] w-[48.89px] bg-[#33A0FF] bg-opacity-[10%]">
+                      <Image
+                        src={HeartPicture}
+                        alt="cart-picture"
+                        height={17.01}
+                        width={16.95}
+                      />
+                    </button>
+                  </div>
 
-
-
-
-
-
-
-                <div className="w-[499.49px] h-[2.13px] bg-[#F6F7F8] mt-[18.53px]"></div>
+                  <div className="w-[499.49px] h-[2.13px] bg-[#F6F7F8] mt-[18.53px]"></div>
                 </div>
               </div>
             ))
@@ -352,45 +361,45 @@ const Product = ({ category }) => {
             <div className="grid grid-cols-3 gap-[34px]  pt-[23px] gap-y-[34px]">
               {products?.map((product, index) => (
                 <Link href={`/product/${product._id}`} key={index}>
-                <div
-                  key={index}
-                  className="h-[388px] w-[301px] border-[#F6F7F8] border-b-4 border-l-4 border-r-4 rounded-md"
-                >
-                  {/* Image Section */}
-                  <Image
-                    src={product.productImageUrl}
-                    width={299}
-                    height={272.5}
-                    alt="product-image"
-                  />
-
-                  {/* { Details Section */}
-                  <div className="pt-[14px]">
-                    <h1 className="text-[18px] font-bold text-[#223263] text-center">
-                      {product.productName}
-                    </h1>
+                  <div
+                    key={index}
+                    className="h-[388px] w-[301px] border-[#F6F7F8] border-b-4 border-l-4 border-r-4 rounded-md"
+                  >
+                    {/* Image Section */}
                     <Image
-                      className="mx-auto pt-[6px]"
-                      src={Rating}
-                      width={123}
-                      height={15}
-                      alt="rating-image"
+                      src={product.productImageUrl}
+                      width={299}
+                      height={272.5}
+                      alt="product-image"
                     />
-                    <div className="flex items-center pt-[6px] justify-center">
-                      <h3 className="text-imageBgColor text-[18px] font-bold ">
-                        $299.43
-                      </h3>
-                      <div className="flex justify-center pl-[13px] items-center">
-                        <h3 className="text-textLighGrayColor text-[14px]">
-                          $534.33
+
+                    {/* { Details Section */}
+                    <div className="pt-[14px]">
+                      <h1 className="text-[18px] font-bold text-[#223263] text-center">
+                        {product.productName}
+                      </h1>
+                      <Image
+                        className="mx-auto pt-[6px]"
+                        src={Rating}
+                        width={123}
+                        height={15}
+                        alt="rating-image"
+                      />
+                      <div className="flex items-center pt-[6px] justify-center">
+                        <h3 className="text-imageBgColor text-[18px] font-bold ">
+                          $299.43
                         </h3>
-                        <h3 className="text-textRedColor text-[14px] font-bold pl-[8px]">
-                          24% off
-                        </h3>
+                        <div className="flex justify-center pl-[13px] items-center">
+                          <h3 className="text-textLighGrayColor text-[14px]">
+                            $534.33
+                          </h3>
+                          <h3 className="text-textRedColor text-[14px] font-bold pl-[8px]">
+                            24% off
+                          </h3>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
                 </Link>
               ))}
             </div>

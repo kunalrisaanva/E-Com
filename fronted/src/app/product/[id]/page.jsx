@@ -364,6 +364,7 @@ const ProductPage = () => {
       <div className="grid grid-cols-4 gap-4 mt-[83px] px-[109px]">
         {relatedProduct
           .map((relatedProduct, index) => (
+            <Link href={`/product/${relatedProduct._id}`} >
             <div
               key={index}
               className="h-[388px] w-[301px]  border-[#F6F7F8] border-b-4 border-l-4 border-r-4 rounded-md "
@@ -403,6 +404,7 @@ const ProductPage = () => {
                 </div>
               </div>
             </div>
+            </Link>
           ))}
       </div>
     </>
