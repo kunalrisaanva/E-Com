@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken"; // ✅ Added missing import
 
-const userShcema = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
   username: {
     type: String,
     required: [true, "username is required"],
@@ -10,54 +11,63 @@ const userShcema = new mongoose.Schema({
   email: {
     type: String,
     required: [true, "email is required"],
+    unique: true, // Ensure email is unique
   },
 
   password: {
     type: String,
-    required: [true, "username is required"],
+    required: [true, "password is required"],
   },
 
   isAdmin: {
     type: Boolean,
-    required: [true, "username is required"],
+    required: [true, "admin status is required"],
     default: false,
   },
 
   token: {
     type: String,
-    // required: [true, "username is required"],
   },
 
   mob: {
     type: String,
-    // required: [true, " mobile number is required"],
   },
 
   refreshToken: {
-    type:String
+    type: String,
   },
 
   accessToken: {
-    type:String
+    type: String,
   },
-
-
 });
 
-const User = mongoose.model("User", userShcema);
 
-// password will store in hash form
-
-userShcema.pre("save", async function () {
-  if (this.isModified("password")) {
-    this.password = await bcrypt.hash(this.password, bcrypt.genSalt(10));
-  }
+userSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) return next();
+  this.password = await bcrypt.hash(this.password, 10);
+  next();
 });
 
-// compare password method
 
-userShcema.methods.comparePassword = async function (password) {
+userSchema.methods.comparePassword = async function (password) {
   return await bcrypt.compare(password, this.password);
 };
+
+
+userSchema.methods.generateToken = async function () {
+  return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
+    expiresIn: "1d",
+  });
+};
+
+
+userSchema.methods.generateRefreshToken = async function () {
+  return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
+    expiresIn: "7d",
+  });
+};
+
+const User = mongoose.model("User", userSchema);
 
 export { User };

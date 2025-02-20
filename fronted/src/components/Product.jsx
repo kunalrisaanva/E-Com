@@ -4,7 +4,7 @@ import Shoes from "/public/images/shoes-shoe-png-transparent-shoe-images-pluspng
 import ImageProduct from "/public/images/image_Product.png";
 import Rating from "/public/images/rate.png";
 import Image from "next/image";
-import UpperLine from "@/components/UpperLine.";
+import UpperLine from "@/components/UpperLine";
 import Pegination from "@/components/Pegination";
 import GridImage from "/public/images/switch.png";
 import ListImage from "/public/images/switch (1).png";

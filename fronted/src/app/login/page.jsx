@@ -1,11 +1,22 @@
 "use client";
-
 import React, { useState } from "react";
 import rightImage from "/public/images/c392ba101244345 1.png";
 import Image from "next/image";
 import Link from "next/link";
+import axios from "axios";
+import {toast} from "sonner"
+import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { loginSuccess } from "@/redux/authSlice";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+
 
 const Page = () => {
+
+  const router = useRouter();
+  const dispatch = useDispatch();
+
   const [userDetails, setUserDetails] = useState({
     email: "",
     password: "",
@@ -14,9 +25,48 @@ const Page = () => {
   const loginHandler = async (e) => {
     try {
       e.preventDefault();
-      console.log(userDetails);
+
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/user/signin`,
+        userDetails
+      );
+
+      const {data} = response;
+      
+      
+      // console.log("object",data.data.user.email);
+
+
+      if (response.status === 200) {
+        toast.success("Login successful");
+        dispatch(loginSuccess(data?.data?.user))
+        // localStorage.setItem("token", response.data.token); // Store token
+
+        router.push("/"); // Redirect to home page
+      }
+      
+
+     
+      
+
     } catch (error) {
-      console.error(error);
+        console.error("Axios Error:", error);
+      
+        if (error.response) {
+          // Server responded with a status outside 2xx range
+          console.error("Error Response Data:", error.response.data);
+          console.error("Error Status:", error.response.status);
+          toast.error(error.response.data.message || "Signup failed! Please try again.");
+        } else if (error.request) {
+          // Request was made but no response was received
+          console.error("No Response Received:", error.request);
+          toast.error("No response from the server. Please check your connection.");
+        } else {
+          // Other errors (e.g., setup issues)
+          console.error("Axios Request Error:", error.message);
+          toast.error("An unexpected error occurred. Please try again.");
+        }
+      
     }
   };
 

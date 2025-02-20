@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import UpperLine from "@/components/UpperLine.";
+import UpperLine from "@/components/UpperLine";
 import DelImgae from "../../../public/images/del.png";
 import Image from "next/image";
 import { useSelector } from "react-redux";

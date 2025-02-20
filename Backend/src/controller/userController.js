@@ -31,72 +31,70 @@ const signUpUser = async (request, reply) => {
     .send(successResponse(createdUser, "User has been created successfully"));
 };
 
-const signInUser = async (req,reply) => {
-
-  const {email,password} = req.body
-
+const signInUser = async (req, reply) => {
+  const { email, password } = req.body;
 
   if (!email || !password) return errorResponse("please provide all fields");
 
-  const user = await User.findOne({email});
+  const user = await User.findOne({ email });
 
-  if(user) return errorResponse("user not found please register first");
+  if (!user) return errorResponse("user not found please register first");
+
+  console.log("\n",user);
 
   const isMatch = await user.comparePassword(password);
-
-  if(!isMatch) return errorResponse("user email or password wrong please check once")
+  console.log("\n",isMatch);
   
-  // token create 
-  // set into cookies 
+  if (!isMatch) {
+    return reply.status(
+      401
+    ).send(
+      errorResponse("Email or password is incorrect")
+    );
+   
+  }
 
-  user.genrateToken()
+  // token create
+  // set into cookies
+
+  const token = await user.generateToken();
+
+  
+
 
   return reply
-              .status(200)
-              .send(successResponse(user,"user logged in successfully"));
-  
-}
-
-const signOutUser = async (req,rep) => {
-
+    .status(200)
+    .send(successResponse({user,token}, "user logged in successfully"));
 };
 
-const changePassword = async (req,rep) => {
+const signOutUser = async (req, rep) => {};
 
-
-
-};
+const changePassword = async (req, rep) => {};
 
 const updaterUserDetails = async () => {
   const { userId } = req.query;
 
-  
   if (!isValidObjectId(userId)) {
     return errorResponse("Invalid userId", 401);
   }
 
   // const { username, email, mob } = req.body;
 
-  const allowedUpdates = ["username","mob","email","password"];
-
+  const allowedUpdates = ["username", "mob", "email", "password"];
 
   const updates = Object.keys(req.body);
 
+  const isValidUpdate = updates.every((update) =>
+    allowedUpdates.includes(update)
+  );
 
-  const isValidUpdate = updates.every(update => allowedUpdates.includes(update));
-
-  if(!isValidUpdate) errorResponse("invalid update request",400);
-
-
-
-
+  if (!isValidUpdate) errorResponse("invalid update request", 400);
 
   const user = await User.findById(userId);
 
   if (!user) {
     return errorResponse("user not existed with this userId", 404);
   }
-
 
   // todo fix this lines
   user.username = username;
@@ -109,13 +107,10 @@ const updaterUserDetails = async () => {
   // validation
 };
 
-
-
-
-
 export {
   getUsers,
   signUpUser,
+  signInUser,
   signOutUser,
   changePassword,
   updaterUserDetails,

@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import UpperLine from "@/components/UpperLine.";
+import UpperLine from "@/components/UpperLine";
 import Image from "next/image";
 import NikeShoes from "../../../../public/images/imageProduct3.png";
 import Rating from "../../../../public/images/rate.png";
@@ -58,9 +58,11 @@ const ProductPage = () => {
           setIsLoading(false);
         } else {
           setError(false);
+          setIsLoading(false);
         }
       } catch {
         setError(true);
+        setIsLoading(false);
       }
     })();
   }, [id]);
@@ -73,7 +75,7 @@ const ProductPage = () => {
     
     try {
       setError(false);
-     setIsLoading(true);
+      setIsLoading(true);
      const response = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/products/related/${id}`);
       // console.log('responst -------_>',response);
     const {data} = response;
@@ -113,7 +115,7 @@ const ProductPage = () => {
       <div className="pl-[125px] mt-[42px] flex">
         <div>
           <Image
-            src={products?.productImageUrl}
+            src={products?.productImageUrl || "/fallback-image.png"}
             width={375}
             height={271}
             alt="product-image"
@@ -130,7 +132,7 @@ const ProductPage = () => {
         </div>
         <div className="pl-[53px]">
           <h2 className="text-[24px] font-medium text-[#22262A]">
-            {products.productName}
+            {products?.productName}
           </h2>
           <div className="flex items-center pt-[10px]">
             <Image src={Rating} height={10.63} width={76.95} alt="rating" />
@@ -142,13 +144,13 @@ const ProductPage = () => {
           <div className="w-[499.49px] h-[2.13px] bg-[#F6F7F8] mt-[18.53px]"></div>
           <div className="pt-[17px]">
             <span className="text-[20px] font-bold text-[#40BFFF]">
-              {products.productCurrentPrice}
+              {products?.productCurrentPrice}
             </span>
             <span className="text-[14px] text-[#9098B1] pl-[9px]">
-              {products.productPreviousPrice}
+              {products?.productPreviousPrice}
             </span>
             <span className="text-[14px] font-bold pl-[8px] text-[#FB7181]">
-              {products.productOf}
+              {products?.productOf}
             </span>
           </div>
           <div>
@@ -318,7 +320,7 @@ const ProductPage = () => {
       {/* Tab Content */}
       <div className="text-[#9098B1] text-[12px] pl-[30.95px] pt-[21px]">
         {activeTab === "product-info" && (
-          <p>
+          <div>
 
             <div>
             Air Max are always very comfortable fit, clean and just perfect in every way. Just the box was too small and 
@@ -340,7 +342,7 @@ const ProductPage = () => {
            
            
             
-          </p>
+          </div>
           
         )}
         {activeTab === "review" && (
@@ -369,14 +371,14 @@ const ProductPage = () => {
       <div className="grid grid-cols-4 gap-4 mt-[83px] px-[109px]">
         {relatedProduct
           .map((relatedProduct, index) => (
-            <Link href={`/product/${relatedProduct._id}`} >
+            <Link href={`/product/${relatedProduct._id}`} key={index}>
             <div
               key={index}
               className="h-[388px] w-[301px]  border-[#F6F7F8] border-b-4 border-l-4 border-r-4 rounded-md "
             >
               {/* Image Section */}
               <Image
-                src={relatedProduct?.productImageUrl}
+                src={relatedProduct?.productImageUrl || "/fallback-image.png"}
                 width={299}
                 height={272.5}
                 alt="product-image"

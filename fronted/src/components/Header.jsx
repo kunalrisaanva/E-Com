@@ -6,12 +6,16 @@ import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import { Button } from "@mui/material";
 import LoginIcon from '@mui/icons-material/Login';
 import Link from "next/link";
+import { useSelector } from "react-redux";
+
 
 const Header = () => {
   const language = ["ENG", "HIN"];
   const currency = ["USD", "IND"];
 
-  const [ isAuthenticated , setIsAuthenticated ] = useState(false);
+  const authcheck = useSelector((state) => state.auth.isAuthenticated);
+  // console.log("authcheck",authcheck);
+  const [ isAuthenticated , setIsAuthenticated ] = useState(authcheck);
 
 
   return (
