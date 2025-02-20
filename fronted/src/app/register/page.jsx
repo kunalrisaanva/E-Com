@@ -6,15 +6,20 @@ import Image from "next/image";
 import Link from "next/link";
 import axios from "axios";
 import {toast} from "sonner"
+import { useRouter } from "next/navigation";
+
 
 const Page = () => {
+
+    const router = useRouter();
+
   const [userDetails, setUserDetails] = useState({
     username:"",
     email: "",
     password: "",
   });
 
-  const loginHandler = async (e) => {
+  const registerHandler = async (e) => {
 
     e.preventDefault();
     try {
@@ -28,6 +33,8 @@ const Page = () => {
         if (response.status !== 201 || !response) {
           toast.error("Something went wrong while creating the user");
         }
+        toast.success("User has been created successfully");
+        router.push("/login");
       } catch (error) {
         console.error("Axios Error:", error);
       
@@ -61,7 +68,7 @@ const Page = () => {
           Join us today and continue your journey!
           </p>
 
-          <form onSubmit={loginHandler} className="mt-6 space-y-4">
+          <form onSubmit={registerHandler} className="mt-6 space-y-4">
 
           <div>
               <label className="text-[14px] font-medium text-gray-700">username</label>
