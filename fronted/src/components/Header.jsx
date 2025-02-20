@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Search as SearchIcom } from "@mui/icons-material";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+// import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import { Button } from "@mui/material";
 import LoginIcon from '@mui/icons-material/Login';
 import Link from "next/link";
@@ -75,7 +76,8 @@ const Header = () => {
         <div className=" flex items-center">
           <Link href="/cart">
           <Button>
-            <ShoppingCartIcon style={{ color: "black" }} className="mx-[20.53px]" />
+            {/* <div className="text-red-400">1</div> */}
+            <ShoppingCartOutlinedIcon style={{ color: "black" }} className="mx-[20.53px]" />
 
             <h1 className="text-[20px] text-textgrayColor ">Items </h1>
           </Button>

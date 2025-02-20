@@ -18,6 +18,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Button } from "@mui/material";
 import axios from "axios";
+import { Toaster,toast } from "sonner";
+
 
 const ProductPage = () => {
   const { id } = useParams();
@@ -36,6 +38,7 @@ const ProductPage = () => {
   const router = useRouter();
 
   const addToCartHandler = (products) => {
+    toast.success("Product added to cart");
     dispatch(addToCart(products));
     // Link("/cart")
     // router.push("/cart")
@@ -67,10 +70,10 @@ const ProductPage = () => {
 
   ;(async() => {
 
-    setError(false);
-    setIsLoading(true);
-
-   try {
+    
+    try {
+      setError(false);
+     setIsLoading(true);
      const response = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/products/related/${id}`);
       // console.log('responst -------_>',response);
     const {data} = response;
@@ -361,6 +364,8 @@ const ProductPage = () => {
         </h4>
       </div>
 
+      {isLoading && <p>Loading...</p>}
+      {error && <p>Something went wrong</p>}
       <div className="grid grid-cols-4 gap-4 mt-[83px] px-[109px]">
         {relatedProduct
           .map((relatedProduct, index) => (

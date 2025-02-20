@@ -58,7 +58,7 @@ const Page = () => {
               className="mt-[62.63px] flex items-center text-[18px] text-darkText"
             >
               <div className="flex items-center">
-                <div className="pl-[104px]">
+                <div className="pl-[90px]">
                   <Image
                     src={DelImgae}
                     width={23.62}
@@ -69,7 +69,7 @@ const Page = () => {
                     id={cartItems?._id}
                   />
                 </div>
-                <div className="pl-[71.41px]">
+                <div className="pl-[61.41px]">
                   <Image
                     src={cartProduct.productImageUrl}
                     alt="product image"
@@ -85,7 +85,7 @@ const Page = () => {
                 </span>
               </div>
               <div>
-                <div className="bg-[#F6F7F8] w-[123.28px] h-[48.91px] flex items-center justify-center gap-8 ml-[126.68px]">
+                <div className="bg-[#F6F7F8] w-[123.28px] h-[48.91px] flex items-center justify-center gap-8 ml-[120.68px]">
                   <button
                     onClick={minusAmmount}
                     className="text-productFontColorBlue"

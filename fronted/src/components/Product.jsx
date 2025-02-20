@@ -17,18 +17,21 @@ import ListIcon from "@mui/icons-material/List";
 import ViewCompactIcon from "@mui/icons-material/ViewCompact";
 import { useDispatch } from "react-redux";
 import { addToCart } from "@/redux/cartSlice";
+import { Toaster,toast } from "sonner";
+
 
 const Product = ({ category }) => {
   const dispatch = useDispatch();
 
   const [products, setProducts] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const [showItemsType, setShowItemsType] = useState("grid");
  
   const addToCartHandler = (product) => {
     console.log(product);
+    toast.success("Product added to cart");
     dispatch(addToCart(product));
   };
 
@@ -267,8 +270,8 @@ const Product = ({ category }) => {
             </div>
           </div>
 
-          {isLoading && <p> Loading ... </p>}
-          {products.length === 0 && <p> No Products available</p>}
+          {isLoading &&  <p> Loading ... </p>}
+          { products.length === 0 && isLoading === false && <p> No Products available</p>}
           {showItemsType === "list" ? (
             // <p className="text=black">No products available</p>
             products?.slice(0, 4).map((product, index) => (
