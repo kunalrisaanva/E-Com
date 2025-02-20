@@ -1,5 +1,6 @@
-import userRoutes from "./user.routes.js";
+import { userRoutes } from "./user.routes.js";
 import { productRoutes } from "./product.routes.js";
+
 // import authRoutes from './auth.routes.js';
 
 async function registerRoutes(fastify) {

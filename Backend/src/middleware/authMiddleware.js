@@ -1,5 +1,7 @@
 import { errorResponse } from "../utils/Error.js";
 import { asyncHandler } from "../utils/AsynchHandler.js"
+import jwt from "jsonwebtoken";
+
 
 const verifyJwt = asyncHandler(
   async (req,reply) => {
@@ -11,7 +13,9 @@ const verifyJwt = asyncHandler(
       if(!token) {
           errorResponse("please provide token",401);      
       };
+      
 
+      const decoded = jwt.decode()
 
        // token decode and set into req.user variable 
 

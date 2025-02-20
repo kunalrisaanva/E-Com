@@ -8,7 +8,9 @@ import { Provider } from "react-redux";
 import { store } from "../redux/store";
 import { usePathname } from "next/navigation";
 import Development from "@/components/Development";
-
+import MobileWarning from "@/components/MobileWarning";
+import { Toaster,toast } from "sonner";
+import ForgotPassword from "./forget-password/page";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -30,7 +32,7 @@ export default function RootLayout({ children }) {
 
   const pathname = usePathname();
 
-  const hidelayout = ["/login","/register"].includes(pathname);
+  const hidelayout = ["/login","/register","/forget-password"].includes(pathname);
 
 
   return (
@@ -39,13 +41,16 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased `}
       >
         <Provider store={store}>
+        <Toaster position="bottom-center"/>
           {!hidelayout && <Header/>}
           {!hidelayout && <Navbar/>}
+          {/* {!hidelayout && <ForgotPassword/>} */}
           {/* <Header />
           <Navbar /> */}
+           <MobileWarning />
           {children}
          {!hidelayout && <Footer />}
-         {<Development/>}
+         {/* {<Development/>} */}
         </Provider>
       </body>
     </html>

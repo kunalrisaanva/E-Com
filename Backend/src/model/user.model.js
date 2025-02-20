@@ -25,12 +25,12 @@ const userShcema = new mongoose.Schema({
 
   token: {
     type: String,
-    required: [true, "username is required"],
+    // required: [true, "username is required"],
   },
 
   mob: {
     type: String,
-    required: [true, " mobile number is required"],
+    // required: [true, " mobile number is required"],
   },
 
   refreshToken: {

@@ -9,38 +9,63 @@ const getUsers = async (request, reply) => {
   return { message: "User fatched successfully" };
 };
 
-const signInUser = async () => {
-  const { username, email, password, mob } = req.body;
+const signUpUser = async (request, reply) => {
+  const { username, email, password } = request.body;
 
-  const isUserExisted = await User.findOne({
-    $or: [
-      {
-        email: email,
-        mob: mob,
-      },
-    ],
-  });
+  const isUserExisted = await User.findOne({ email });
 
   if (isUserExisted) {
-    errorResponse("user is already exitsted", 409);
+    return reply.status(400).send(errorResponse("User already exists", 409));
   }
 
-  const createdUser = await User.create({
-    username,
-    email,
-    password,
-    mob,
-  });
+  const createdUser = await User.create({ username, email, password });
 
-  // todo
-  // token create and validation
+  if (!createdUser) {
+    return reply
+      .status(500)
+      .send(errorResponse("Something went wrong while creating the user"));
+  }
 
-  successResponse(changePassword, "user has been created sucessfully");
+  return reply
+    .status(201)
+    .send(successResponse(createdUser, "User has been created successfully"));
 };
 
-const signOutUser = async () => {};
+const signInUser = async (req,reply) => {
 
-const changePassword = async () => {};
+  const {email,password} = req.body
+
+
+  if (!email || !password) return errorResponse("please provide all fields");
+
+  const user = await User.findOne({email});
+
+  if(user) return errorResponse("user not found please register first");
+
+  const isMatch = await user.comparePassword(password);
+
+  if(!isMatch) return errorResponse("user email or password wrong please check once")
+  
+  // token create 
+  // set into cookies 
+
+  user.genrateToken()
+
+  return reply
+              .status(200)
+              .send(successResponse(user,"user logged in successfully"));
+  
+}
+
+const signOutUser = async (req,rep) => {
+
+};
+
+const changePassword = async (req,rep) => {
+
+
+
+};
 
 const updaterUserDetails = async () => {
   const { userId } = req.query;
@@ -90,7 +115,7 @@ const updaterUserDetails = async () => {
 
 export {
   getUsers,
-  signInUser,
+  signUpUser,
   signOutUser,
   changePassword,
   updaterUserDetails,

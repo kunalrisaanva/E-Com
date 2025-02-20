@@ -164,7 +164,7 @@ const relatedProduct = async(req,rep) => {
   if(!productId) return errorResponse("please prvide product id");
 
 
-  // console.log("product id ---->",productId);
+  // console.log("product id ---->",productId);zz
   
   const productType = await Product.findById({_id:productId});
   
