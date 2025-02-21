@@ -290,30 +290,34 @@ export default function Home() {
 
                   {/* Hover Effect - Buttons */}
                   <div className="absolute h-[219px] w-[278px] mt-[38px] mb-[19px] inset-0 flex items-center justify-center bg-[#FFFFFF] bg-opacity-90 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-500">
-                    <div className="flex items-center gap-3">
-                      <button className="flex gap-4 items-center justify-center h-[48.91px] w-[48.89px] bg-[#33A0FF] bg-opacity-[10%] rounded-full">
-                        <Image
-                          src={CartPicture}
-                          alt="cart-picture"
-                          height={17.01}
-                          width={16.95}
-                          onClick={(e) => {
-                            e.preventDefault(); // Prevents Link navigation when clicking button
-                            addToCartHandler(product);
-                          }}
-                        />
-                      </button>
+  <div className="flex items-center justify-center gap-5"> {/* Centering the buttons */}
 
-                      <button className="flex gap-4 items-center justify-center h-[48.91px] w-[48.89px] bg-[#33A0FF] bg-opacity-[10%] rounded-full">
-                        <Image
-                          src={HeartPicture}
-                          alt="cart-picture"
-                          height={17.01}
-                          width={16.95}
-                        />
-                      </button>
-                    </div>
-                  </div>
+  <button className="flex items-center justify-center h-[50px] w-[50px] border-opacity-25%]  border-2 border-[#33A0FF] rounded-full">
+      <Image
+        src={HeartPicture}
+        alt="cart-picture"
+        height={20}
+        width={20}
+      />
+    </button>
+
+    <button className="flex items-center justify-center h-[50px] w-[50px] border-opacity-25%]  border-2 border-[#33A0FF]   rounded-full">
+      <Image
+        src={CartPicture}
+        alt="cart-picture"
+        height={50}
+        width={50}
+        onClick={(e) => {
+          e.preventDefault(); // Prevents Link navigation when clicking button
+          addToCartHandler(product);
+        }}
+      />
+    </button>
+
+    
+  </div>
+</div>
+
                 </div>
               </Link>
             ))
