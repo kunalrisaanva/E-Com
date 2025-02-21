@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from "uuid"; // Importing UUID for unique filenames
 
 // for deployment read the service account from the environment variable on the server
 const serviceAccount = JSON.parse(
-  fs.readFileSync("/etc/secrets/service-account.json", "utf8")
+  fs.readFileSync("/etc/secrets/fir-ef23f-firebase-adminsdk-3u0vg-d46030c41e.json", "utf8")
 );
 
 if (!admin.apps.length) {
