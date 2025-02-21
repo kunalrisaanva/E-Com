@@ -28,7 +28,7 @@
     "fastify-multer": "^2.0.3",
     "firebase": "^11.0.2",
     "firebase-admin": "^13.0.1",
-    "mongoose": "^8.14.0",
+    "mongoose": "^8.10.1",
     "node-cache": "^5.1.2",
     "nodemailer": "^6.9.16",
     "prettier": "^3.3.3",
