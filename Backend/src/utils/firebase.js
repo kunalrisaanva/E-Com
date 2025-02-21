@@ -1,7 +1,22 @@
 import admin from "firebase-admin";
-import serviceAccount from "../../fir-ef23f-firebase-adminsdk-3u0vg-d46030c41e.json" with { type: "json" };
+// import serviceAccount from "../../fir-ef23f-firebase-adminsdk-3u0vg-d46030c41e.json" with { type: "json" };
 import fs from "fs";
 import { v4 as uuidv4 } from "uuid"; // Importing UUID for unique filenames
+
+
+
+// for deployment read the service account from the environment variable on the server
+const serviceAccount = JSON.parse(
+  fs.readFileSync("/etc/secrets/service-account.json", "utf8")
+);
+
+if (!admin.apps.length) {
+  admin.initializeApp({
+      credential: admin.credential.cert(serviceAccount),
+      storageBucket: process.env.BUCKET_NAME,
+  });
+}
+
 
 // Initialize Firebase
 admin.initializeApp({
