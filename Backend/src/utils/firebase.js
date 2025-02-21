@@ -19,10 +19,10 @@ if (!admin.apps.length) {
 
 
 // Initialize Firebase
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  storageBucket: process.env.BUCKET_NAME,
-});
+// admin.initializeApp({
+//   credential: admin.credential.cert(serviceAccount),
+//   storageBucket: process.env.BUCKET_NAME,
+// });
 
 const bucket = admin.storage().bucket();
 
