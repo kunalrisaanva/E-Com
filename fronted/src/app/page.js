@@ -1,5 +1,4 @@
 "use client";
-
 import Image from "next/image";
 import Shoes from "/public/images/shoes.png";
 import WhyUs from "/public/images/WHY US.png";
@@ -12,8 +11,13 @@ import { useState, useEffect, use } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import axios from "axios";
-import CartPicture from "/public/images/Group 4.png";
-import HeartPicture from "/public/images/hearts.png";
+// import CartPicture from "/public/images/Group 4.png";
+// import HeartPicture from "/public/images/hearts.png";
+import Three from "../components/Three"
+import CardProducts from "../components/CardProducts";
+
+
+
 
 export default function Home() {
   const [products, setProducts] = useState([]); // All products from the API
@@ -88,10 +92,12 @@ export default function Home() {
     setVisible((prev) => prev - 8);
   };
 
-  if (error) return <h1> something went wrong </h1>;
+  // if (error) return <h1> something went wrong </h1>;
+  // { if (error) return <h1>Something went wrong </h1>}
 
   return (
     <>
+    {/* <BackgroundLinesDemo/> */}
       <div className="mb-[15rem] pt-[30px]">
         {/* landing page image  */}
 
@@ -102,10 +108,17 @@ export default function Home() {
             Super Flash Sale <br /> 50% off
           </h1>
 
+          <div className="flex justify-center items-center">
+          <Three title="FS - QUILTED MAXI " category="CROSS BAG"  offPrrice = "24% Off" image="bg-[url('/images/imageProduct.png')]" currentPrice="$299,43" previousPrice="$534,33"/>
+          <Three title="FS - Nike Air" category="Max 270 React..."  offPrrice = "24% Off" image="bg-[url('/images/imageProduct2.png')]" currentPrice="$299,43"   previousPrice="$534,33"/>
+          <Three title="FS - Nike Air" category="Max 270 React..."  offPrrice = "24% Off" image="bg-[url('/images/imageProduct3.png')]" currentPrice="$299,43" previousPrice="$534,33"/>
+          </div>
+       
           <div className="flex pt-[110px]">
             <div className="mx-auto flex">
+            
               {/* Product Card 1 */}
-              <div>
+              {/* <div>
                 <div className="bg-[url('/images/imageProduct.png')] bg-cover bg-center h-[358px] w-[417px]">
                   <h4 className="text-black text-[20px] pt-[29px] font-semibold pl-[52px] tracking-[0.5px] leading-[150%]">
                     FS - QUILTED MAXI <span className="block">CROSS BAG</span>
@@ -120,10 +133,11 @@ export default function Home() {
                     </div>
                   </h4>
                 </div>
-              </div>
+              </div> */}
+              
 
               {/* Product Card 2 */}
-              <div>
+              {/* <div>
                 <div className="bg-[url('/images/imageProduct2.png')] bg-cover bg-center h-[358px] w-[417px]">
                   <div className="text-black text-[20px] pt-[29px] font-semibold pl-[52px] tracking-[0.5px] leading-[150%]">
                     <div className="flex gap-14">
@@ -144,10 +158,10 @@ export default function Home() {
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> */}
 
               {/* Product Card 3 */}
-              <div>
+              {/* <div>
                 <div className="bg-[url('/images/imageProduct3.png')] bg-cover bg-center h-[358px] w-[417px]">
                   <h4 className="text-black text-[20px] pt-[29px] font-semibold pl-[52px] tracking-[0.5px] leading-[150%]">
                     FS - QUILTED MAXI <span className="block">CROSS BAG</span>
@@ -164,7 +178,7 @@ export default function Home() {
                     </div>
                   </h4>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
@@ -239,30 +253,59 @@ export default function Home() {
         </ul>
 
         {/* products */}
+        <div className="mt-[10px] flex flex-wrap justify-center gap-2">
+  {/* Error Message */}
+  {error && !isLoading && (
+    <p className="text-xl text-red-600">Something went wrong while fetching data</p>
+  )}
+
+  {/* Loading Message */}
+  {isLoading && <p className="text-gray-500">Loading Products...</p>}
+
+  {/* No Products Message */}
+  {!isLoading && filteredProducts?.length === 0 ? (
+    <p className="text-black">No products available</p>
+  ) : (
+    // ✅ Reduce gap between product rows
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-6 ">
+      {filteredProducts?.slice(0, visible).map((product, index) => (
+      
+        <Link href={`/product/${product._id}`} key={index} className="block">
+          <CardProducts 
+            image={product?.productImageUrl} 
+            ratingImage={Rating} 
+            productName={product?.productName} 
+            productCurrentPrice={product?.productCurrentPrice} 
+            productOf={product?.productOf} 
+            productPreviousPrice={product?.productPreviousPrice}
+          />
+        </Link>
+      ))}
+    </div>
+  )}
+</div>
+
+
+      {/* <Three title="MYnamne"  offPrrice = "24% Off" image="" currentPrice="$299,43" previousPrice="$534,33"/> */}
 
         {/* <Link href={`/product`}>  */}
         {/* <div className="grid grid-cols-4 gap-4   pt-[23px] gap-x-[34px] gap-y-[34px]"> */}
-        <div className="pt-[23px] flex flex-wrap items-center justify-center  gap-8">
-          {isLoading && <p> Loading Produts ....</p>}
-          {filteredProducts?.length === 0 && isLoading === false ? (
-            <p className="text=black">No products available</p>
-          ) : (
-            filteredProducts?.slice(0, visible).map((product, index) => (
-              <Link href={`/product/${product._id}`} key={index}>
-                <div
+      
+             
+                {/* <div
                   key={index}
                   className="group relative h-[388px] w-[301px] border-[#F6F7F8] border-b-4 border-l-4 border-r-4 rounded-md overflow-hidden"
                 >
                   {/* Image Section */}
-                  <Image
+                  {/* <Image
                     src={product.productImageUrl}
                     width={299}
                     height={272.5}
                     alt="product-image"
-                  />
+                  /> */}
 
                   {/* Details Section */}
-                  <div className="pt-[14px]">
+                  {/* <div className="pt-[14px]">
                     <h1 className="text-[18px] font-bold text-[#223263] text-center">
                       {product.productName}
                     </h1>
@@ -286,43 +329,14 @@ export default function Home() {
                         </h3>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
 
-                  {/* Hover Effect - Buttons */}
-                  <div className="absolute h-[219px] w-[278px] mt-[38px] mb-[19px] inset-0 flex items-center justify-center bg-[#FFFFFF] bg-opacity-90 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-500">
-  <div className="flex items-center justify-center gap-5"> {/* Centering the buttons */}
-
-  <button className="flex items-center justify-center h-[50px] w-[50px] border-opacity-25%]  border-2 border-[#33A0FF] rounded-full">
-      <Image
-        src={HeartPicture}
-        alt="cart-picture"
-        height={20}
-        width={20}
-      />
-    </button>
-
-    <button className="flex items-center justify-center h-[50px] w-[50px] border-opacity-25%]  border-2 border-[#33A0FF]   rounded-full">
-      <Image
-        src={CartPicture}
-        alt="cart-picture"
-        height={50}
-        width={50}
-        onClick={(e) => {
-          e.preventDefault(); // Prevents Link navigation when clicking button
-          addToCartHandler(product);
-        }}
-      />
-    </button>
-
-    
-  </div>
-</div>
-
-                </div>
-              </Link>
-            ))
-          )}
-        </div>
+                 
+                 
+              {/* </Link> */}
+            {/* )) */}
+          {/* )} */}
+        {/* </div> */}
 
         {/* </Link> */}
       </div>

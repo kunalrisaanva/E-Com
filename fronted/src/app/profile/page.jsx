@@ -1,8 +1,31 @@
 "use client"
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
 
 const ProfilePage = () => {
+
+  const router = useRouter();
+  const [isChecking, setIsChecking] = useState(true); 
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
+
+  //   if (!token) {
+  //     console.log("🔒 No token found, redirecting to login...");
+  //     router.replace("/login");
+  //   } else {
+  //     setIsChecking(false); // ✅ Only show page after verification
+  //   }
+  // }, []);
+
+  // if (isChecking) {
+  //   return <div className="h-screen flex items-center justify-center">Loading...</div>; // ✅ Show loading instead of profile page
+  // }
+
+ 
+  const userInfo = useSelector((state) => state.auth.user);
+
   const [user, setUser] = useState({
     username: "JohnDoe", // Example username (fetch from API later)
     email: "johndoe@example.com", // Example email (fetch from API later)
@@ -18,8 +41,22 @@ const ProfilePage = () => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
 
+  // iife
+  ;(() => {
+    useEffect(() => {
+      const token = localStorage.getItem("token");
+     console.log("tokennn",token);
+      if (!token) {
+        console.log("🔒 No token found, redirecting to login...");
+        router.push("/login"); // ✅ Redirect to login if not authenticated
+      }
+    }, []);
+  })()
+ 
+
   return (
     <div className="max-w-4xl mx-auto mt-10 p-10 bg-white shadow-lg rounded-lg border border-gray-300">
+      <h1>{userInfo?.email}</h1>
       <h2 className="text-3xl font-bold text-[#33A0FF] text-center mb-8">
         Profile Settings
       </h2>
@@ -52,7 +89,7 @@ const ProfilePage = () => {
             <input
               type="email"
               name="email"
-              value={user.email}
+              value={user.userInfo?.email}
               onChange={handleChange}
               disabled={!isEditing}
               className="w-full p-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#33A0FF] disabled:bg-gray-100"

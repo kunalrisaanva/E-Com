@@ -4,16 +4,13 @@ import rightImage from "/public/images/c392ba101244345 1.png";
 import Image from "next/image";
 import Link from "next/link";
 import axios from "axios";
-import {toast} from "sonner"
-import { redirect } from "next/navigation";
+import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { loginSuccess } from "@/redux/authSlice";
 import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
-
+import { BackgroundLinesDemo } from "@/components/Background";
 
 const Page = () => {
-
   const router = useRouter();
   const dispatch = useDispatch();
 
@@ -23,61 +20,48 @@ const Page = () => {
   });
 
   const loginHandler = async (e) => {
+    e.preventDefault();
     try {
-      e.preventDefault();
-
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/user/signin`,
-        userDetails
+        "http://localhost:3333/api/v1/user/signin",
+        userDetails,
+        { withCredentials: true } 
       );
 
-      const {data} = response;
-      
-      
-      // console.log("object",data.data.user.email);
-
-
+      const { data } = response;
       if (response.status === 200) {
         toast.success("Login successful");
-        dispatch(loginSuccess(data?.data?.user))
-        // localStorage.setItem("token", response.data.token); // Store token
+        dispatch(loginSuccess(data?.data?.user));
 
-        router.push("/"); // Redirect to home page
-      }
-      
-
-     
-      
-
-    } catch (error) {
-        console.error("Axios Error:", error);
-      
-        if (error.response) {
-          // Server responded with a status outside 2xx range
-          console.error("Error Response Data:", error.response.data);
-          console.error("Error Status:", error.response.status);
-          toast.error(error.response.data.message || "Signup failed! Please try again.");
-        } else if (error.request) {
-          // Request was made but no response was received
-          console.error("No Response Received:", error.request);
-          toast.error("No response from the server. Please check your connection.");
-        } else {
-          // Other errors (e.g., setup issues)
-          console.error("Axios Request Error:", error.message);
-          toast.error("An unexpected error occurred. Please try again.");
+        if (data.data?.token) {
+          localStorage.setItem("token", data.data?.token);
         }
-      
+
+        router.push("/profile"); 
+      }
+    } catch (error) {
+      console.error("Login Error:", error);
+      toast.error("Login failed! Please try again.");
     }
+  };
+
+  const handleGoogleLogin = () => {
+    window.location.href = "http://localhost:3333/auth/google?prompt=consent&access_type=offline";
   };
 
   return (
     <div className="h-screen flex bg-gray-100">
-      {/* Left Side - Form */}
-      <div className="w-1/2 flex flex-col justify-center items-center p-6 bg-white shadow-lg rounded-lg">
-        <div className="w-[350px]">
-          <h4 className="text-[34px] text-gray-800 font-semibold text-center">
-            Welcome Back
-          </h4>
+      {/* {  Left Side } */}
+      <div className="relative w-1/2 flex flex-col justify-center items-center p-6 bg-white shadow-lg rounded-lg overflow-hidden">
+        
+       
+        <div className="absolute inset-0 flex justify-center items-center">
+          <BackgroundLinesDemo className="w-full h-full opacity-30" />
+        </div>
+
+      
+        <div className="w-[350px] relative z-10">
+          <h4 className="text-[34px] text-gray-800 font-semibold text-center">Welcome Back</h4>
           <p className="text-gray-500 text-[14px] text-center mt-2">
             Login to continue your journey with us.
           </p>
@@ -88,9 +72,7 @@ const Page = () => {
               <input
                 type="email"
                 placeholder="Enter your email"
-                onChange={(e) =>
-                  setUserDetails({ ...userDetails, email: e.target.value })
-                }
+                onChange={(e) => setUserDetails({ ...userDetails, email: e.target.value })}
                 value={userDetails.email}
                 className="h-[45px] w-full rounded-md border border-gray-300 px-3 mt-2 focus:outline-none focus:ring-2 focus:ring-red-400"
               />
@@ -101,9 +83,7 @@ const Page = () => {
               <input
                 type="password"
                 placeholder="*********"
-                onChange={(e) =>
-                  setUserDetails({ ...userDetails, password: e.target.value })
-                }
+                onChange={(e) => setUserDetails({ ...userDetails, password: e.target.value })}
                 value={userDetails.password}
                 className="h-[45px] w-full rounded-md border border-gray-300 px-3 mt-2 focus:outline-none focus:ring-2 focus:ring-red-400"
               />
@@ -138,7 +118,10 @@ const Page = () => {
             </div>
           </div>
 
-          <button className="bg-gray-100 hover:bg-gray-200 text-black font-medium rounded-md h-[45px] w-full mt-3 flex items-center justify-center transition-all">
+          <button
+            onClick={handleGoogleLogin}
+            className="bg-gray-100 hover:bg-gray-200 text-black font-medium rounded-md h-[45px] w-full mt-3 flex items-center justify-center transition-all"
+          >
             Sign in with Google
           </button>
 
@@ -161,15 +144,9 @@ const Page = () => {
         </div>
       </div>
 
-      {/* Right Side - Image */}
+      {/*  Right Side - Image */}
       <div className="relative h-screen w-1/2">
-        <Image
-          src={rightImage}
-          alt="Background"
-          layout="fill"
-          objectFit="fit"
-          priority
-        />
+        <Image src={rightImage} alt="Background" layout="fill" objectFit="fit" priority />
       </div>
     </div>
   );

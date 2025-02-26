@@ -45,7 +45,7 @@ const Navbar = () => {
 
           {/* drop down menu  */}
           <div
-    className="absolute hidden group-hover:block bg-white shadow-md rounded-md mt-2 py-2 w-40"
+    className="absolute hidden group-hover:block bg-white shadow-md rounded-md mt-2 py-2 w-[500px]"
   >
     <Link
       href="/option1"

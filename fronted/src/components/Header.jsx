@@ -1,13 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Search as SearchIcon } from "@mui/icons-material";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import LogoutIcon from "@mui/icons-material/Logout";
 import { Button, Badge } from "@mui/material";
 import LoginIcon from "@mui/icons-material/Login";
 import Link from "next/link";
 import { useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
+import axios from "axios";
+import { toast } from "sonner";
+import { useDispatch } from "react-redux";
+// import { logout } from "@/redux/authSlice";
 
 const Header = () => {
+  const router = useRouter();
   const language = ["ENG", "HIN"];
   const currency = ["USD", "IND"];
 
@@ -16,6 +23,30 @@ const Header = () => {
 
   const [isAuthenticated, setIsAuthenticated] = useState(authcheck);
   const cartItemCount = cartItems.length;
+
+  // console.log("\nStored Token:", localStorage.getItem("token"));
+  const handleLogout = async () => {
+    try {
+      await axios.post(
+        "http://localhost:3333/api/v1/user/logout",
+        {},
+        {
+          withCredentials: true,
+          headers: { Authorization: `${localStorage.getItem("token")}` },
+        }
+      );
+
+      localStorage.removeItem("token");
+      // useDispatch(logout)
+
+      router.push("/login");
+
+      toast.success("Logged out successfully!");
+    } catch (error) {
+      console.error("Logout Error:", error);
+      toast.error("Logout failed! Please try again.");
+    }
+  };
 
   return (
     <div className="flex font-normal bg-white pt-[27px] px-[104px] justify-between items-center mb-[26px]">
@@ -58,17 +89,36 @@ const Header = () => {
 
       <div className="flex justify-between font-normal items-center gap-6">
         {/* Profile / Login */}
-        <div className="flex">
+        <div className="flex gap-3 ">
           {isAuthenticated ? (
-            <Link href="/profile">
-              <Button className="flex items-center">
-                <PermIdentityIcon style={{ color: "black" }} />
-                <h1 className="text-[20px] text-textgrayColor pl-[6.53px]">
-                  My Profile
-                </h1>
-              </Button>
-            </Link>
+            <>
+              <Link href="/profile">
+                <Button className="flex items-center" onClick={handleLogout}>
+                  <LogoutIcon style={{ color: "black" }} />
+                  <h1 className="text-[20px] text-textgrayColor pl-[6.53px]">
+                    Log out
+                  </h1>
+                </Button>
+              </Link>
+              <Link href="/profile">
+                <Button className="flex items-center">
+                  <PermIdentityIcon style={{ color: "black" }} />
+                  <h1 className="text-[20px] text-textgrayColor pl-[6.53px]">
+                    My Profile
+                  </h1>
+                </Button>
+              </Link>
+            </>
           ) : (
+            // <Link href="/profile">
+            //   <Button className="flex items-center">
+            //     <PermIdentityIcon style={{ color: "black" }} />
+            //     <h1 className="text-[20px] text-textgrayColor pl-[6.53px]">
+            //       My Profile
+            //     </h1>
+            //   </Button>
+            // </Link>
+
             <Link href="/login">
               <Button className="flex items-center">
                 <LoginIcon style={{ color: "black" }} />
@@ -82,24 +132,23 @@ const Header = () => {
 
         {/* Cart with Custom Badge Color */}
         <div className="flex items-center">
-        <Link href="/cart">
-  <Button className="flex items-center gap-8">
-    <Badge
-      badgeContent={cartItemCount}
-      sx={{
-        "& .MuiBadge-badge": {
-          backgroundColor: "#FB7181",
-          color: "white", // Makes the text inside the badge white
-          fontWeight: "bold",
-        },
-      }}
-    >
-      <ShoppingCartOutlinedIcon style={{ color: "black" }} />
-    </Badge>
-    <h1 className="text-[20px] text-textgrayColor ">Items</h1>
-  </Button>
-</Link>
-
+          <Link href="/cart">
+            <Button className="flex items-center gap-8">
+              <Badge
+                badgeContent={cartItemCount}
+                sx={{
+                  "& .MuiBadge-badge": {
+                    backgroundColor: "#FB7181",
+                    color: "white", // Makes the text inside the badge white
+                    fontWeight: "bold",
+                  },
+                }}
+              >
+                <ShoppingCartOutlinedIcon style={{ color: "black" }} />
+              </Badge>
+              <h1 className="text-[20px] text-textgrayColor ">Items</h1>
+            </Button>
+          </Link>
         </div>
 
         {/* Search and Price */}
