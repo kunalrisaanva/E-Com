@@ -156,7 +156,7 @@ const Page = () => {
           src={rightImage}
           alt="Background"
           layout="fill"
-          objectFit="cover"
+          objectFit="fit"
           priority
         />
       </div>

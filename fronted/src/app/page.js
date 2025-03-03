@@ -110,77 +110,10 @@ export default function Home() {
 
           <div className="flex justify-center items-center">
           <Three title="FS - QUILTED MAXI " category="CROSS BAG"  offPrrice = "24% Off" image="bg-[url('/images/imageProduct.png')]" currentPrice="$299,43" previousPrice="$534,33"/>
-          <Three title="FS - Nike Air" category="Max 270 React..."  offPrrice = "24% Off" image="bg-[url('/images/imageProduct2.png')]" currentPrice="$299,43"   previousPrice="$534,33"/>
-          <Three title="FS - Nike Air" category="Max 270 React..."  offPrrice = "24% Off" image="bg-[url('/images/imageProduct3.png')]" currentPrice="$299,43" previousPrice="$534,33"/>
+          <Three title="FS - Nike Air" category="Max 270 React..."  offPrrice = "24% Off" image="bg-[url('/images/imageProduct2.png')]" currentPrice="$299,43"   previousPrice="$534,33" variant="variant1"/>
+          <Three title="FS - Nike Air" category="Max 270 React..."  offPrrice = "24% Off" image="bg-[url('/images/imageProduct3.png')]" currentPrice="$299,43" previousPrice="$534,33" variant="variant2"/>
           </div>
        
-          <div className="flex pt-[110px]">
-            <div className="mx-auto flex">
-            
-              {/* Product Card 1 */}
-              {/* <div>
-                <div className="bg-[url('/images/imageProduct.png')] bg-cover bg-center h-[358px] w-[417px]">
-                  <h4 className="text-black text-[20px] pt-[29px] font-semibold pl-[52px] tracking-[0.5px] leading-[150%]">
-                    FS - QUILTED MAXI <span className="block">CROSS BAG</span>
-                    <div className="flex pt-[180px]">
-                      <span className="text-[18px]">$534,33</span>
-                      <span className="text-[18px] pl-[8px] text-[#FB7181]">
-                        24% Off
-                      </span>
-                      <span className="text-[30px] font-bold pl-[68px] pt-[32px] text-[#40BFFF]">
-                        $299,43
-                      </span>
-                    </div>
-                  </h4>
-                </div>
-              </div> */}
-              
-
-              {/* Product Card 2 */}
-              {/* <div>
-                <div className="bg-[url('/images/imageProduct2.png')] bg-cover bg-center h-[358px] w-[417px]">
-                  <div className="text-black text-[20px] pt-[29px] font-semibold pl-[52px] tracking-[0.5px] leading-[150%]">
-                    <div className="flex gap-14">
-                      <h3 className="">
-                        FS - Nike Air <br />
-                        Max 270 React...
-                      </h3>
-                      <span className="inline-block text-[30px] font-bold  text-[#40BFFF] pt-2">
-                        $299,43
-                      </span>
-                    </div>
-
-                    <div className="flex justify-center pt-[210px]">
-                      <span className="text-[18px]">$534,33</span>
-                      <p className="text-[18px] pl-[8px] text-[#FB7181]">
-                        24% Off
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div> */}
-
-              {/* Product Card 3 */}
-              {/* <div>
-                <div className="bg-[url('/images/imageProduct3.png')] bg-cover bg-center h-[358px] w-[417px]">
-                  <h4 className="text-black text-[20px] pt-[29px] font-semibold pl-[52px] tracking-[0.5px] leading-[150%]">
-                    FS - QUILTED MAXI <span className="block">CROSS BAG</span>
-                    <div>
-                      <span className="text-[18px]">$534,33</span>
-                      <span className="text-[18px] pl-[8px] text-[#FB7181]">
-                        24% Off
-                      </span>
-                    </div>
-                    <div className="flex pt-[180px] justify-end pr-[40px]">
-                      <span className="text-[30px] font-bold  text-[#40BFFF]">
-                        $<span className="text-12px]">2</span>99,43
-                      </span>
-                    </div>
-                  </h4>
-                </div>
-              </div> */}
-            </div>
-          </div>
         </div>
       </div>
 
@@ -286,59 +219,7 @@ export default function Home() {
 </div>
 
 
-      {/* <Three title="MYnamne"  offPrrice = "24% Off" image="" currentPrice="$299,43" previousPrice="$534,33"/> */}
-
-        {/* <Link href={`/product`}>  */}
-        {/* <div className="grid grid-cols-4 gap-4   pt-[23px] gap-x-[34px] gap-y-[34px]"> */}
-      
-             
-                {/* <div
-                  key={index}
-                  className="group relative h-[388px] w-[301px] border-[#F6F7F8] border-b-4 border-l-4 border-r-4 rounded-md overflow-hidden"
-                >
-                  {/* Image Section */}
-                  {/* <Image
-                    src={product.productImageUrl}
-                    width={299}
-                    height={272.5}
-                    alt="product-image"
-                  /> */}
-
-                  {/* Details Section */}
-                  {/* <div className="pt-[14px]">
-                    <h1 className="text-[18px] font-bold text-[#223263] text-center">
-                      {product.productName}
-                    </h1>
-                    <Image
-                      className="mx-auto pt-[6px]"
-                      src={Rating}
-                      width={123}
-                      height={15}
-                      alt="rating-image"
-                    />
-                    <div className="flex items-center pt-[6px] justify-center">
-                      <h3 className="text-imageBgColor text-[18px] font-bold ">
-                        {product.productCurrentPrice}
-                      </h3>
-                      <div className="flex justify-center pl-[13px] items-center">
-                        <h3 className="text-textLighGrayColor text-[14px]">
-                          {product.productPreviousPrice}
-                        </h3>
-                        <h3 className="text-textRedColor text-[14px] font-bold pl-[8px]">
-                          {product.productOf}
-                        </h3>
-                      </div>
-                    </div>
-                  </div> */}
-
-                 
-                 
-              {/* </Link> */}
-            {/* )) */}
-          {/* )} */}
-        {/* </div> */}
-
-        {/* </Link> */}
+     
       </div>
 
       <div className="w-64 mx-auto text-center p-4">
@@ -625,4 +506,4 @@ export default function Home() {
   );
 }
 
-/*    */
+
