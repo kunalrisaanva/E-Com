@@ -34,57 +34,60 @@ const CardProducts = ({
         />
       </CardItem>
 
-      {/* ✅ Product Name (Floating Effect) */}
+      {/* Product Name (Floating Effect) */}
       <CardItem
         translateZ="150"
         as="h1"
-        className="text-[18px] items-center font-bold text-[#223263] text-center mt-2 transition-transform duration-700 
+        className="text-[18px] mx-auto items-center font-bold text-[#223263] text-center mt-2 transition-transform duration-700 
         group-hover:translate-y-[-6px] group-hover:translate-x-[-5px] group-hover:rotate-[3deg]"
       >
         {productName}
       </CardItem>
 
-      {/* ✅ Rating Section (Floats Slightly Up) */}
+      {/*  Rating Section (Floats Slightly Up) */}
       <CardItem
-        translateZ="130"
-        className="flex justify-center mt-1 transition-transform duration-700 
-        group-hover:translate-y-[-6px] group-hover:translate-x-[5px] group-hover:rotate-[2deg]"
-      >
-        <Image
-          src={ratingImage}
-          height={15}
-          width={123}
-          className="mx-auto"
-          alt="rating-image"
-        />
-      </CardItem>
+  translateZ="130"
+  className="flex justify-center items-center mt-1 transition-transform duration-700 
+  group-hover:translate-y-[-6px] group-hover:translate-x-[5px] group-hover:rotate-[2deg] w-full"
+>
+  <Image
+    src={ratingImage}
+    height={15}
+    width={123.6}
+    className="mx-auto"
+    alt="rating-image"
+  />
+</CardItem>
 
-      {/* ✅ Price Section (More Depth & Left-Right Motion) */}
-      <div className="flex justify-between items-center mt-3 px-4">
-        <CardItem
-          translateZ="120"
-          className="text-imageBgColor text-[18px] font-bold transition-transform duration-700 
-          group-hover:translate-y-[-4px] group-hover:translate-x-[8px] group-hover:rotate-[3deg]"
-        >
-          {productCurrentPrice}
-        </CardItem>
-        <div className="flex items-center">
-          <CardItem
-            translateZ="100"
-            className="text-textLighGrayColor text-[14px] text-center line-through transition-transform duration-700 
-            group-hover:translate-y-[-3px] group-hover:translate-x-[-8px] group-hover:rotate-[-3deg]"
-          >
-            {productPreviousPrice}
-          </CardItem>
-          <CardItem
-            translateZ="100"
-            className="text-textRedColor text-[14px] font-bold pl-[8px] transition-transform duration-700 
-            group-hover:translate-y-[-3px] group-hover:translate-x-[8px] group-hover:rotate-[3deg]"
-          >
-            {productOf}
-          </CardItem>
-        </div>
-      </div>
+
+      {/*  Price Section (More Depth & Left-Right Motion) */}
+      <div className="flex items-center justify-center gap-2 mt-3 px-4">
+  <CardItem
+    translateZ="120"
+    className="text-imageBgColor text-[18px] font-bold transition-transform duration-700 
+    group-hover:translate-y-[-4px] group-hover:translate-x-[8px] group-hover:rotate-[3deg]"
+  >
+    {productCurrentPrice}
+  </CardItem>
+  
+  <CardItem
+    translateZ="100"
+    className="text-textLighGrayColor text-[14px] text-center line-through transition-transform duration-700 
+    group-hover:translate-y-[-3px] group-hover:translate-x-[-8px] group-hover:rotate-[-3deg]"
+  >
+    {productPreviousPrice}
+  </CardItem>
+  
+  <CardItem
+    translateZ="100"
+    className="text-textRedColor text-[14px] font-bold transition-transform duration-700 
+    group-hover:translate-y-[-3px] group-hover:translate-x-[8px] group-hover:rotate-[3deg]"
+  >
+    {productOf}
+  </CardItem>
+</div>
+
+
     </CardBody>
   </CardContainer>
 

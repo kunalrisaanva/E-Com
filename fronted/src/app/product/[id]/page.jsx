@@ -19,7 +19,8 @@ import { useRouter } from "next/navigation";
 import { Button } from "@mui/material";
 import axios from "axios";
 import { Toaster,toast } from "sonner";
-
+// import { Lens } from "@/components/ui/lens";
+import { LensDemo } from "@/components/Lens";
 
 const ProductPage = () => {
   const { id } = useParams();
@@ -114,13 +115,15 @@ const ProductPage = () => {
       <UpperLine />
       <div className="pl-[125px] mt-[42px] flex">
         <div>
-          <Image
+          {/* <Lens/> */}
+          <LensDemo image={ <Image
             src={products?.productImageUrl || "/fallback-image.png"}
             width={375}
             height={271}
             alt="product-image"
             priority={true}
-          />
+          />}/>
+         
           <div className="pt-[134.33px]">
             <Image
               src={ProductPicture}

@@ -11,9 +11,11 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { toast } from "sonner";
 import { useDispatch } from "react-redux";
-// import { logout } from "@/redux/authSlice";
+import { logout } from "../redux/authSlice";
 
 const Header = () => {
+
+  const dispatch = useDispatch();
   const router = useRouter();
   const language = ["ENG", "HIN"];
   const currency = ["USD", "IND"];
@@ -24,7 +26,7 @@ const Header = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(authcheck);
   const cartItemCount = cartItems.length;
 
-  // console.log("\nStored Token:", localStorage.getItem("token"));
+
   const handleLogout = async () => {
     try {
       await axios.post(
@@ -37,7 +39,7 @@ const Header = () => {
       );
 
       localStorage.removeItem("token");
-      // useDispatch(logout)
+      dispatch(logout())
 
       router.push("/login");
 
