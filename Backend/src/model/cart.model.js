@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 
 const cartShcema = new mongoose.Schema({
-  
   productName: {
     type: String,
     required: [true, "product name is required"],

@@ -1,30 +1,25 @@
 import { errorResponse } from "../utils/Error.js";
-import { asyncHandler } from "../utils/AsynchHandler.js"
-import jwt from "jsonwebtoken";
+import { asyncHandler } from "../utils/AsynchHandler.js";
 
+const verifyJwt = asyncHandler(async (req, reply) => {
+  try {
+    const token = req.cookies?.token 
+    // req.headers.authorization?.replace("Bearer","").trim(); // ✅ Fix extra space issue
+      // req.cookies?.token ||
 
-const verifyJwt = asyncHandler(
-  async (req,reply) => {
-    try {
-      
-    const token = req.cookie?.token || req.header['authrization'].replace("Bearer","");
+    console.log("\n🔐 JWT Token Extracted:",token); // ✅ Debugging
 
-  
-      if(!token) {
-          errorResponse("please provide token",401);      
-      };
-      
-
-      const decoded = jwt.decode()
-
-       // token decode and set into req.user variable 
-
-
-
-
-
-    } catch (error) {
-      console.log(error,"error");
+    if (!token) {
+      return reply.code(401).send(errorResponse("Please provide token", 401));
     }
+
+    const user = await req.jwtVerify(); // ✅ Verify JWT
+    req.user = user;
+  } catch (error) {
+    console.error("❌ JWT Error:", error.message);
+    reply.code(401).send({ error: "Unauthorized", message: "Invalid token" });
   }
-)
+});
+
+
+export { verifyJwt };

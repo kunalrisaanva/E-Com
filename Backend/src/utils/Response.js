@@ -1,10 +1,14 @@
 // response.js (Fastify)
-const successResponse = (data, message = "Request successful", statusCode = 200) => {
+const successResponse = (
+  data,
+  message = "Request successful",
+  statusCode = 200
+) => {
   return {
     success: true,
     data,
     message,
-    statusCode
+    statusCode,
   };
 };
 

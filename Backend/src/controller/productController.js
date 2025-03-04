@@ -6,32 +6,33 @@ import { uploadFile } from "../utils/firebase.js";
 import { isValidObjectId } from "mongoose";
 
 const homeScreeProduct = async (request, reply) => {
-
-
   // const { category } = request.query;
-//  console.log(category);
-//   if (category) {
+  //  console.log(category);
+  //   if (category) {
 
-//     const categoryProduct = await Product.find({ category: category });
+  //     const categoryProduct = await Product.find({ category: category });
 
-//     return reply
-//       .status(200)
-//       .send(successResponse(categoryProduct, "products found by category successfully", 200));
-//   }else if (category === 'all')
+  //     return reply
+  //       .status(200)
+  //       .send(successResponse(categoryProduct, "products found by category successfully", 200));
+  //   }else if (category === 'all')
 
-//   {
-   
+  //   {
 
-    const products = await Product.find();
-    
-    if (!products) errorResponse("product not found ", 404);
-  
-    return reply
-      .status(200)
-      .send(successResponse(products, `all products ${await Product.countDocuments()} found successfully`, 200));
+  const products = await Product.find();
+
+  if (!products) errorResponse("product not found ", 404);
+
+  return reply
+    .status(200)
+    .send(
+      successResponse(
+        products,
+        `all products ${await Product.countDocuments()} found successfully`,
+        200
+      )
+    );
   // }
-
-  
 };
 
 const createProduct = async (request, reply) => {
@@ -42,7 +43,7 @@ const createProduct = async (request, reply) => {
     productCurrentPrice,
     category,
     availability,
-    qty
+    qty,
   } = request.body;
 
   const file = request.file;
@@ -63,7 +64,7 @@ const createProduct = async (request, reply) => {
     productCurrentPrice,
     category,
     availability,
-    qty
+    qty,
   });
 
   if (!createdProduct) {
@@ -141,43 +142,55 @@ const getSingleProductDetails = async (req, reply) => {
 };
 
 
-const productbyFilter = async(req,reply) => {
 
-  const {q} = req.query;  
-  const product = await Product.find({category:q});
 
+const productbyFilter = async (req, reply) => {
+  
+  const { q,sort,limit ,skip} = req.query , limitConvertedNumber = Number(limit) || 8 , skipConvertedNumber = Number(skip) || 1
+  
+  // console.log("\n","catefory",q,"sort-",sort,"limit-",limit);
+
+  const skipSystem = (skipConvertedNumber - 1)*limitConvertedNumber
+
+  const product = await Product.find({ category: q }).limit(limitConvertedNumber).skip(skipSystem);
+
+  
   if (!product) errorResponse("no product found with given Id", 401);
 
   return reply
-  .status(200)
-  .send(successResponse(product, "product found successfully", 200));
+    .status(200)
+    .send(successResponse(product, "product found successfully", 200));
+};
 
 
-}
 
 
-const relatedProduct = async(req,rep) => {
 
 
+const relatedProduct = async (req, rep) => {
   const productId = req.params._id;
 
-  if(!productId) return errorResponse("please prvide product id");
-
+  if (!productId) return errorResponse("please prvide product id");
 
   // console.log("product id ---->",productId);zz
-  
-  const productType = await Product.findById({_id:productId});
-  
-  if(!productType) return errorResponse("no product found with given Id",404);
 
+  const productType = await Product.findById({ _id: productId });
 
-  const findSameCatePro = await Product.find({category:productType?.category}).limit(4)
+  if (!productType) return errorResponse("no product found with given Id", 404);
 
-  
-  return rep.status(200).send(successResponse(findSameCatePro,'same category product found successfully'));
+  const findSameCatePro = await Product.find({
+    category: productType?.category,
+  }).limit(4);
 
-
-}
+  return rep
+    .status(200)
+    .send(
+      successResponse(
+        findSameCatePro,
+        "same category product found successfully"
+      )
+    );
+};
 
 const delteProduct = async () => {};
 
@@ -187,5 +200,5 @@ export {
   getAllProduct,
   getSingleProductDetails,
   productbyFilter,
-  relatedProduct
+  relatedProduct,
 };

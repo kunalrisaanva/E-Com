@@ -9,6 +9,7 @@ import {
   relatedProduct,
 } from "../controller/productController.js";
 import { upload } from "../middleware/multer.js";
+import { verifyJwt as authMiddleware } from "../middleware/authMiddleware.js";
 
 async function productRoutes(fastify, options) {
   // Home screen route
@@ -25,11 +26,11 @@ async function productRoutes(fastify, options) {
   );
 
   // Get all products route
+  // fastify.get("/all",{preHandler:authMiddleware}, asyncHandler(getAllProduct));
   fastify.get("/all", asyncHandler(getAllProduct));
   fastify.get("/product/:_id", asyncHandler(getSingleProductDetails));
   fastify.get("/product", asyncHandler(productbyFilter));
   fastify.get("/related/:_id", asyncHandler(relatedProduct));
-
 }
 
 export { productRoutes };

@@ -2,6 +2,7 @@ import { User } from "../model/user.model.js";
 import { successResponse } from "../utils/Response.js";
 import { errorResponse } from "../utils/Error.js";
 import { isValidObjectId } from "mongoose";
+import fastifyJwt from "@fastify/jwt";
 
 const getUsers = async (request, reply) => {
   //   const users = await User.find();
@@ -38,42 +39,55 @@ const signInUser = async (req, reply) => {
 
   const user = await User.findOne({ email });
 
-  if (!user) return errorResponse("user not found please register first");
+  if (!user) throw errorResponse("user not found please register first");
 
-  console.log("\n",user);
+  // console.log("\n", user);
 
   const isMatch = await user.comparePassword(password);
-  console.log("\n",isMatch);
-  
+  // console.log("\n",isMatch);
+
   if (!isMatch) {
-    return reply.status(
-      401
-    ).send(
-      errorResponse("Email or password is incorrect")
-    );
-   
+    return reply
+      .status(401)
+      .send(errorResponse("Email or password is incorrect"));
   }
 
-  // token create
-  // set into cookies
+  const token = req.server.jwt.sign(
+    {
+      id: user.id,
+      username: user.name,
+      email: user.email,
+    },
+    { expiresIn: "1h" }
+  );
 
-  const token = await user.generateToken();
-
-  
-
-
-  return reply
-    .status(200)
-    .send(successResponse({user,token}, "user logged in successfully"));
+  reply
+  .setCookie("token",token, {
+    httpOnly: true,
+    secure: false,
+    sameSite: "strict",
+    path: "/",
+  })
+  .header("Authorization", `Bearer ${token}`)
+  .status(200)
+  .send(successResponse({ user, token }, "User logged in successfully"));
 };
 
-const signOutUser = async (req, rep) => {};
+const signOutUser = async (req, rep) => {
+  try {
+    rep.clearCookie("token", { path: "/" }); // ✅ Remove JWT from cookies
+    return rep.status(200).send({ message: "Logout successful" });
+  } catch (error) {
+    console.error("❌ Logout Error:", error.message);
+    rep.status(500).send({ error: "Logout failed" });
+  }
+};
 
 const changePassword = async (req, rep) => {};
 
 const updaterUserDetails = async () => {
   const { userId } = req.query;
-
+  // user: req.user
   if (!isValidObjectId(userId)) {
     return errorResponse("Invalid userId", 401);
   }
