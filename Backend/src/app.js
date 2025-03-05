@@ -27,7 +27,7 @@ fastify.register(fastifyMultipart, {
 //cors implimentation
 
 fastify.register(fastifyCors, {
-  origin: "http://localhost:3001", 
+  origin: process.env.FRONTEND_URL, 
   methods: ["GET", "POST", "PUT", "DELETE"], 
   allowedHeaders: ["Content-Type", "Authorization"], 
   credentials: true, 
