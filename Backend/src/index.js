@@ -5,17 +5,14 @@ import { fastify } from "./app.js";
 // Load environment variables
 dotenv.config();
 
-// console.log(process.env.PORT);
-
-// db connection
-
+// Database connection
 connectDb()
   .then(() => {
     const PORT = process.env.PORT || 4000;
 
     fastify
-      .listen({ port: PORT })
-      .then(() => fastify.log.info(`Server is running on port ${PORT}`))
+      .listen({ port: PORT, host: "0.0.0.0" }) 
+      .then(() => fastify.log.info(`🚀 Server is running on port ${PORT}`))
       .catch((e) => {
         fastify.log.error(e);
         process.exit(1);
@@ -23,5 +20,5 @@ connectDb()
   })
   .catch((err) => {
     console.error("Error connecting to the database:", err);
-    process.exit(1); // Exit the process if DB connection fails
+    process.exit(1); 
   });
