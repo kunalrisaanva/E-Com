@@ -4,22 +4,21 @@ import { errorResponse } from "../utils/Error.js";
 import { upload } from "../middleware/multer.js";
 import { uploadFile } from "../utils/firebase.js";
 import { isValidObjectId } from "mongoose";
+import { cache } from "../app.js";
 
-const homeScreeProduct = async (request, reply) => {
-  // const { category } = request.query;
-  //  console.log(category);
-  //   if (category) {
+const homeScreeProduct = async (_, reply) => {
 
-  //     const categoryProduct = await Product.find({ category: category });
+  const cacheKey = "allProducts", cachedProducts = cache.get(cacheKey);
 
-  //     return reply
-  //       .status(200)
-  //       .send(successResponse(categoryProduct, "products found by category successfully", 200));
-  //   }else if (category === 'all')
-
-  //   {
+  if (cachedProducts) {
+    return reply
+      .status(200)
+      .send(successResponse(cachedProducts, "from cached data", 200));
+  }
 
   const products = await Product.find();
+
+  cache.set(cacheKey, products);
 
   if (!products) errorResponse("product not found ", 404);
 
@@ -77,7 +76,7 @@ const createProduct = async (request, reply) => {
   });
 };
 
-const getAllProduct = async (request, _) => {
+const getAllProduct = async (request, rep) => {
   // const cacheKey = "allProducts";
   // const cachedProducts = request.server.cache.get(cacheKey);
 
@@ -97,7 +96,9 @@ const getAllProduct = async (request, _) => {
   // Set the fetched data into the cache
   // request.server.cache.set(cacheKey, allProducts);
 
-  return successResponse(allProducts, "Products founded successfully");
+  return rep
+    .send(successResponse(allProducts, "Products founded successfully"))
+    .status(200);
 };
 
 const updateProduct = async () => {
@@ -141,31 +142,25 @@ const getSingleProductDetails = async (req, reply) => {
     .send(successResponse(product, "product found successfully", 200));
 };
 
-
-
-
 const productbyFilter = async (req, reply) => {
-  
-  const { q,sort,limit ,skip} = req.query , limitConvertedNumber = Number(limit) || 8 , skipConvertedNumber = Number(skip) || 1
-  
+  const { q, sort, limit, skip } = req.query,
+    limitConvertedNumber = Number(limit) || 8,
+    skipConvertedNumber = Number(skip) || 1;
+
   // console.log("\n","catefory",q,"sort-",sort,"limit-",limit);
 
-  const skipSystem = (skipConvertedNumber - 1)*limitConvertedNumber
+  const skipSystem = (skipConvertedNumber - 1) * limitConvertedNumber;
 
-  const product = await Product.find({ category: q }).limit(limitConvertedNumber).skip(skipSystem);
+  const product = await Product.find({ category: q })
+    .limit(limitConvertedNumber)
+    .skip(skipSystem);
 
-  
   if (!product) errorResponse("no product found with given Id", 401);
 
   return reply
     .status(200)
     .send(successResponse(product, "product found successfully", 200));
 };
-
-
-
-
-
 
 const relatedProduct = async (req, rep) => {
   const productId = req.params._id;

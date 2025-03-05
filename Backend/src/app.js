@@ -20,17 +20,17 @@ const fastify = Fastify({
 });
 
 fastify.register(fastifyMultipart, {
-  addToBody: true, // Add files to the request body
-  // limits: { fileSize: 5 * 1024 * 1024 }, // Optional: Set file size limit (e.g., 5MB)
+  addToBody: true, 
+  // limits: { fileSize: 5 * 1024 * 1024 }, Set file size limit (e.g., 5MB)
 });
 
 //cors implimentation
 
 fastify.register(fastifyCors, {
-  origin: "http://localhost:3002", // Allow all origins
-  methods: ["GET", "POST", "PUT", "DELETE"], // Allowed methods
-  allowedHeaders: ["Content-Type", "Authorization"], // Allowed headers
-  credentials: true, //
+  origin: "*", 
+  methods: ["GET", "POST", "PUT", "DELETE"], 
+  allowedHeaders: ["Content-Type", "Authorization"], 
+  credentials: true, 
 });
 
 //cookies
@@ -38,10 +38,7 @@ fastify.register(fastifyCors, {
 fastify.register(fastifyCookie);
 
 // Add cache instance to Fastify
-const cache = new NodeCache({ stdTTL: 3600 });
-
-// ✅ Register JWT for token authentication
-// fastify.register(fastifyJwt, { secret: "thisismysecret" });
+const cache = new NodeCache({ stdTTL: 600, checkperiod: 120 }); 
 
 fastify.register(fastifyJwt, {
   secret: "thisismyscretmynameiskunalhahah", // Change this to a strong secret
@@ -51,7 +48,7 @@ fastify.register(fastifyJwt, {
   },
 });
 
-// // ✅ Register Google OAuth2
+
 // fastify.register(fastifyOauth2, {
 //   name: "googleOAuth",
 //   scope: ["profile", "email"],
@@ -129,7 +126,7 @@ fastify.register(fastifyJwt, {
 //   reply.send({ message: "Logout successful, remove token on frontend" });
 // });
 
-fastify.decorate("cache", cache);
+// fastify.decorate("cache", cache);
 
 // Register routes
 registerRoutes(fastify);
@@ -144,3 +141,4 @@ fastify.register(productRoutes, { prefix: "/api/v1" }); // Route registration
 // export the server  fastify
 
 export { fastify };
+export { cache }
