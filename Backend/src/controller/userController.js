@@ -41,8 +41,6 @@ const signInUser = async (req, reply) => {
 
   if (!user) throw errorResponse("user not found please register first");
 
-  // console.log("\n", user);
-
   const isMatch = await user.comparePassword(password);
   // console.log("\n",isMatch);
 
@@ -52,14 +50,9 @@ const signInUser = async (req, reply) => {
       .send(errorResponse("Email or password is incorrect"));
   }
 
-  const token = req.server.jwt.sign(
-    {
-      id: user.id,
-      username: user.name,
-      email: user.email,
-    },
-    { expiresIn: "1h" }
-  );
+  const token = await user.generateAccessToken();
+
+  console.log("\n token --->",token);
 
   reply
   .setCookie("token",token, {
