@@ -1,0 +1,124 @@
+import { User } from "../model/user.model.js";
+import { successResponse } from "../utils/Response.js";
+import { errorResponse } from "../utils/Error.js";
+import { isValidObjectId } from "mongoose";
+import fastifyJwt from "@fastify/jwt";
+
+const getUsers = async (request, reply) => {
+  //   const users = await User.find();
+  //   return { users };
+  return { message: "User fatched successfully" };
+};
+
+const signUpUser = async (request, reply) => {
+  const { username, email, password } = request.body;
+
+  const isUserExisted = await User.findOne({ email });
+
+  if (isUserExisted) {
+    return reply.status(400).send(errorResponse("User already exists", 409));
+  }
+
+  const createdUser = await User.create({ username, email, password });
+
+  if (!createdUser) {
+    return reply
+      .status(500)
+      .send(errorResponse("Something went wrong while creating the user"));
+  }
+
+  return reply
+    .status(201)
+    .send(successResponse(createdUser, "User has been created successfully"));
+};
+
+const signInUser = async (req, reply) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) return errorResponse("please provide all fields");
+
+  const user = await User.findOne({ email });
+
+  if (!user) throw errorResponse("user not found please register first");
+
+  const isMatch = await user.comparePassword(password);
+  // console.log("\n",isMatch);
+
+  if (!isMatch) {
+    return reply
+      .status(401)
+      .send(errorResponse("Email or password is incorrect"));
+  }
+
+  const token = await user.generateAccessToken();
+
+  console.log("\n token --->",token);
+
+  reply
+  .setCookie("token",token, {
+    httpOnly: true,
+    secure: false,
+    sameSite: "strict",
+    path: "/",
+  })
+  .header("Authorization", `Bearer ${token}`)
+  .status(200)
+  .send(successResponse({ user, token }, "User logged in successfully"));
+};
+
+const signOutUser = async (req, rep) => {
+  try {
+    rep.clearCookie("token", { path: "/" }); // ✅ Remove JWT from cookies
+    return rep.status(200).send({ message: "Logout successful" });
+  } catch (error) {
+    console.error("❌ Logout Error:", error.message);
+    rep.status(500).send({ error: "Logout failed" });
+  }
+};
+
+const changePassword = async (req, rep) => {};
+
+const updaterUserDetails = async () => {
+  const { userId } = req.query;
+  // user: req.user
+  if (!isValidObjectId(userId)) {
+    return errorResponse("Invalid userId", 401);
+  }
+
+  // const { username, email, mob } = req.body;
+
+  const allowedUpdates = ["username", "mob", "email", "password"];
+
+  const updates = Object.keys(req.body);
+
+  const isValidUpdate = updates.every((update) =>
+    allowedUpdates.includes(update)
+  );
+
+  if (!isValidUpdate) errorResponse("invalid update request", 400);
+
+  const user = await User.findById(userId);
+
+  if (!user) {
+    return errorResponse("user not existed with this userId", 404);
+  }
+
+  // todo fix this lines
+  user.username = username;
+  user.email = email;
+  user.mob = mob;
+
+  // todo
+
+  // check apply user give info only update that info
+  // validation
+};
+
+export {
+  getUsers,
+  signUpUser,
+  signInUser,
+  signOutUser,
+  changePassword,
+  updaterUserDetails,
+};
