@@ -1,0 +1,16 @@
+component:
+  name: my-ecom
+  type: service
+  source:
+    type: git
+    repository: https://github.com/kunalrisaanva/E-Com
+    branch: k-code
+  build:
+    command: npm install
+    output: .
+  run:
+    command: npm run dev
+    port: 3333
+  scaling:
+    minReplicas: 1
+    maxReplicas: 3
