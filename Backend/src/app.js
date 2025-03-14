@@ -25,7 +25,7 @@ console.log("Allowed CORS Origin:", process.env.FRONTEND_URL);
 
 fastify.register(fastifyCors, {
   origin: process.env.FRONTEND_URL || "*", 
-  methods: ["GET", "POST", "PUT", "DELETE"], 
+  methods: ["GET", "POST", "PUT", "DELETE","OPTIONS"], 
   allowedHeaders: ["Content-Type", "Authorization"], 
   credentials: true, 
 });
