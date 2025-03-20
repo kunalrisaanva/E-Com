@@ -7,7 +7,7 @@ import {authRoutes} from "./auth.routes.js"
 async function registerRoutes(fastify) {
   await fastify.register(userRoutes, { prefix: "/api/v1/user" });
   await fastify.register(productRoutes, { prefix: "/api/v1/products" });
-  // await fastify.register(authRoutes); /// google auth routes 
+  await fastify.register(authRoutes); /// google auth routes 
 }
 
 export { registerRoutes };

@@ -1,18 +1,57 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import rightImage from "/public/images/c392ba101244345 1.png";
+import googleImage from "/public/images/google-logo-9808.png";
 import Image from "next/image";
 import Link from "next/link";
 import axios from "axios";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { loginSuccess } from "@/redux/authSlice";
 import { useDispatch } from "react-redux";
 import { BackgroundLinesDemo } from "@/components/Background";
 
+
+
 const Page = () => {
   const router = useRouter();
   const dispatch = useDispatch();
+  const searchParams = useSearchParams(); 
+  const tokenup = searchParams.get("token"); 
+
+  console.log("Login page -- token coming form backend side send --+>",tokenup);
+  
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await axios.get("http://localhost:3333/auth/me", {
+          headers: {
+            Authorization: `Bearer ${tokenup}`,
+          },
+        });
+      
+        console.log("🔥 User Data: __->", response.status);
+
+        if (response.status === 200) {
+          if (response.data?.user) {
+            dispatch(loginSuccess(response?.data?.user));
+            localStorage.setItem("token", tokenup);
+            router.push("/profile");
+            toast.success("Login successful");
+          }
+        }
+
+        // setIsChecking(false);
+      } catch (error) {
+        console.error("🔥 Error fetching user data:", error);
+        router.push("/login");
+      }
+    };
+
+    fetchUser();
+  }, [tokenup, router]);
+
 
   const [userDetails, setUserDetails] = useState({
     email: "",
@@ -45,9 +84,11 @@ const Page = () => {
     }
   };
 
+
   const handleGoogleLogin = () => {
-    window.location.href = "http://localhost:3333/auth/google?prompt=consent&access_type=offline";
+    window.location.href = "http://localhost:3333/auth/google";
   };
+ 
 
   return (
     <div className="h-screen flex bg-gray-100">
@@ -118,10 +159,12 @@ const Page = () => {
             </div>
           </div>
 
+          
           <button
             onClick={handleGoogleLogin}
             className="bg-gray-100 hover:bg-gray-200 text-black font-medium rounded-md h-[45px] w-full mt-3 flex items-center justify-center transition-all"
           >
+            <Image src={googleImage} alt="Google" width={30} className="mr-2" height={20} />
             Sign in with Google
           </button>
 

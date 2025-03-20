@@ -49,7 +49,7 @@ export default function RootLayout({ children }) {
           {/* {!hidelayout && <ForgotPassword/>} */}
           {/* <Header />
           <Navbar /> */}
-           <MobileWarning />
+           {/* <MobileWarning /> */}
           {children}
          {!hidelayout && <Footer />}
          {/* {<Development/>} */}

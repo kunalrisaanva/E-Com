@@ -29,31 +29,20 @@ export default function Home() {
 
   const pathname = usePathname();
 
-  // code will come in future
-
-  // useEffect(() => {
-  //   let isMounted = true;
-  //   const fetchProducts = async () => {
-  //     try {
-  //       const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/products/home-screen/products`);
-  //       const data = await response.json();
-  //       if (isMounted) {
-  //         setProducts(data?.data);
-  //         setFilteredProducts(data?.data);
-  //       }
-  //     } catch (error) {
-  //       console.error("Error fetching products:", error);
-  //     }
-  //   };
-  //   fetchProducts();
-  //   return () => { isMounted = false; };
-  // }, []);
-
-  // if(isLoading === true){
-
-  // }
-
   useEffect(() => {
+
+    const localStorageProducts = localStorage.getItem("productsInLocalStorage")
+
+    if (localStorageProducts) {
+      try {
+        setProducts(JSON.parse(localStorageProducts)); 
+      } catch (error) {
+        console.error("Error parsing localStorage data:", error);
+        localStorage.removeItem("productsInLocalStorage");
+      }
+    }
+
+
     (async () => {
       try {
         setIsLoading(true);
@@ -62,9 +51,10 @@ export default function Home() {
           `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/products/home-screen/products`
         );
         const { data } = response;
-        console.log(data);
+        // console.log(data);
         setProducts(data?.data);
         setIsLoading(false);
+        localStorage.setItem("productsInLocalStorage",JSON.stringify(data?.data));
       } catch (error) {
         setError(true);
       }
@@ -92,8 +82,6 @@ export default function Home() {
     setVisible((prev) => prev - 8);
   };
 
-  // if (error) return <h1> something went wrong </h1>;
-  // { if (error) return <h1>Something went wrong </h1>}
 
   return (
     <>
@@ -199,7 +187,6 @@ export default function Home() {
   {!isLoading && filteredProducts?.length === 0 ? (
     <p className="text-black">No products available</p>
   ) : (
-    // ✅ Reduce gap between product rows
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-6 ">
       {filteredProducts?.slice(0, visible).map((product, index) => (
       

@@ -27,7 +27,13 @@ const Product = ({ category }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const [showItemsType, setShowItemsType] = useState("grid");
+  
+  
+  const localShowItmsType = localStorage.getItem("showItemsType");
+  
+  const [showItemsType, setShowItemsType] = useState(localShowItmsType || "grid");  
+  localStorage.setItem("showItemsType", showItemsType);
+
 
     // State for sorting and show count
     const [sortBy, setSortBy] = useState("name");
@@ -297,7 +303,7 @@ const Product = ({ category }) => {
 
           {isLoading &&  <p> Loading ... </p>}
           { products.length === 0 && isLoading === false && <p> No Products available</p>}
-          {showItemsType === "list" ? (
+          {localShowItmsType === "list" ? (
             // <p className="text=black">No products available</p>
             products?.slice(0, 4).map((product, index) => (
               <div className="pt-[20px] flex" key={index}>

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import UpperLine from "@/components/UpperLine";
 import DelImgae from "../../../public/images/del.png";
 import Image from "next/image";
@@ -12,11 +12,13 @@ import { removeFromCart } from "../../redux/cartSlice"
 const Page = () => {
   const [ammount, setAmmount] = useState(0);
 
-
+  const [subtotal, setSubtotal] = useState(0);
   const dispatch = useDispatch();
 
   // cart products
   const cartItems = useSelector((state) => state.cart.items);
+
+  console.log("cart itms --->",cartItems);
   // console.log("cartItems", cartItems[0]?._id);
 
   const removeFromCartHander = (id) => {
@@ -28,6 +30,23 @@ const Page = () => {
     setAmmount(ammount - 1);
     if (ammount === 0) setAmmount(0);
   };
+
+
+  // calculation part wil be here 
+
+  /*useEffect(() => {
+    let total = cartItems.reduce((acc, item) => acc + item.productCurrentPrice, 0);
+    console.log("total ---> ",total);
+    setSubtotal(total);
+  }, [cartItems]);  */
+  
+  // const calculation = () => {
+  //   let total = 0;
+  //   cartItems.map((item) => {
+  //     total += item.productCurrentPrice;
+  //   });
+  //   return total;
+  // };  
 
   return (
     <>
@@ -132,7 +151,7 @@ const Page = () => {
            <div className="text-[#262626] pl-[441px]">
             <div className="flex gap-[255px]">
               <span>Subtotal</span>
-              <span>$998</span>
+              <span>{subtotal ? subtotal : 0}</span>
             </div>
             <div className="flex gap-[255px] mt-[23px]">
               <span>Shipping </span>
@@ -166,5 +185,3 @@ const Page = () => {
 };
 
 export default Page;
-
-

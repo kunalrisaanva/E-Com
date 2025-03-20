@@ -16,7 +16,6 @@ const userSchema = new mongoose.Schema({
 
   password: {
     type: String,
-    required: [true, "password is required"],
   },
 
   isAdmin: {
@@ -40,6 +39,17 @@ const userSchema = new mongoose.Schema({
   accessToken: {
     type: String,
   },
+
+  authType:{
+    type: String,
+    default: "local",
+    enum: ["google", "local"]
+  },
+  
+  googleId: {
+    type:String
+  }
+
 });
 
 userSchema.pre("save", async function (next) {

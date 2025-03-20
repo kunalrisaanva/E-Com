@@ -10,6 +10,11 @@ import {
 } from "../controller/productController.js";
 import { upload } from "../middleware/multer.js";
 import { verifyJwt as authMiddleware } from "../middleware/authMiddleware.js";
+import { fastify } from "../app.js";
+
+
+// register global hook 
+// fastify.addHook("preHandler",authMiddleware)
 
 async function productRoutes(fastify, options) {
   // Home screen route

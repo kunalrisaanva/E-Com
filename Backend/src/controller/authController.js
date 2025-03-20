@@ -1,78 +1,99 @@
 import axios from "axios";
-// import { User } from "../model/user.model";
+import { User } from "../model/user.model.js";
+import jwt from "jsonwebtoken";
 
 export const googleAuthCallback = async (req, reply) => {
   try {
     console.log("🔄 Google OAuth Callback Received:", req.query);
 
-    // ✅ Exchange Google code for an access token
-    const tokenResponse = await req.server.googleOAuth.getAccessTokenFromAuthorizationCodeFlow(req);
 
-    if (!tokenResponse || !tokenResponse.token.access_token) {
-      return reply.send({ error: "OAuth failed", details: tokenResponse });
+    const tokenResponse =
+      await req.server.googleOAuth.getAccessTokenFromAuthorizationCodeFlow(req);
+    if (!tokenResponse?.token?.access_token) {
+      return reply.code(400).send({ error: "OAuth failed" });
     }
 
-    console.log("✅ Google OAuth Token:", tokenResponse.token.access_token);
-
-    // ✅ Fetch user details from Google
+    
     const { data: userInfo } = await axios.get(
       "https://www.googleapis.com/oauth2/v2/userinfo",
       {
-        headers: { Authorization: `Bearer ${tokenResponse.token.access_token}` },
+        headers: {
+          Authorization: `Bearer ${tokenResponse.token.access_token}`,
+        },
       }
     );
 
-    console.log("✅ Google User Info:", userInfo);
+  
 
-    // ✅ Store or Update User in Database (if using DB)
-    // let user = await User.findOne({ email: userInfo.email });
-    // if (!user) {
-    //   user = await User.create({
-    //     googleId: userInfo.id,
-    //     name: userInfo.name,
-    //     email: userInfo.email,
-    //     avatar: userInfo.picture,
-    //     authType: "google",
-    //   });
-    // }
-
-    // ✅ Generate JWT Token
-    const jwtToken = await reply.jwtSign(
+  
+    const user = await User.findOneAndUpdate(
+      { email: userInfo.email },
       {
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        avatar: user.avatar,
+        googleId: userInfo.id,
+        username: userInfo.name,
+        email: userInfo.email,
+        avatar: userInfo.picture,
+        authType: "google",
       },
-      { expiresIn: "1h" }
+      { new: true, upsert: true }
     );
 
+  
+    const jwtToken = await user.generateAccessToken();
     console.log("✅ JWT Token Generated:", jwtToken);
 
-    // ✅ Store JWT in HttpOnly Cookie
-    reply.setCookie("token", jwtToken, {
-      httpOnly: true,
-      secure: false, // Set `true` in production
-      sameSite: "strict",
-      path: "/",
-    });
+ 
+  reply.redirect("http://localhost:3000/login?token=" + jwtToken);
 
-    // ✅ Redirect user to frontend (without exposing token in URL)
-    reply.redirect("http://localhost:3000/profile");
+
   } catch (error) {
-    console.error("❌ OAuth Callback Error:", error);
-    reply.send({ error: "OAuth Callback Error", details: error.message });
+    console.error("OAuth Callback Error:", error);
+    reply
+      .code(500)
+      .send({ error: "OAuth Callback Error", details: error.message });
   }
 };
 
+// export const getAuthUser = async (req, reply) => {
+//   try {
+//     const token = req.cookies.token || req.headers.authorization.split(" ")[1];
+//     console.log("tokennn from bakcend side --->>>",token);
+//     if (!token) return reply.code(401).send({ error: "Unauthorized" });
+
+//     // const user = await req.jwtVerify();
+//     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+//     // req.user = decoded;
+//     console.log("decoded token data --->\n",decoded);
+//     reply.send(token);
+//   } catch (err) {
+//     reply.code(401).send({ error: "Unauthorized", message: "Invalid token" });
+//   }
+// };
+
 export const getAuthUser = async (req, reply) => {
   try {
-    const token = req.cookies.token;
-    if (!token) return reply.code(401).send({ error: "Unauthorized" });
+    
+    const token = req.headers.authorization?.split(" ")[1] || req.cookies.token;
 
-    const user = await req.jwtVerify();
-    reply.send(user);
+    console.log("🔹 Token received at backend:", token);
+
+    if (!token)
+      return reply.code(401).send({ error: "Unauthorized, No Token" });
+
+    
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    console.log("Decoded Token Data:", decoded);
+
+   
+    const user = await User.findById(decoded.id).select("-password");
+
+    if (!user) return reply.code(404).send({ error: "User not found" });
+
+    
+    reply.send({ success: true, user });
   } catch (err) {
+    console.error("Token Verification Error:", err);
     reply.code(401).send({ error: "Unauthorized", message: "Invalid token" });
   }
 };

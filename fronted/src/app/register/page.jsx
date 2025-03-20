@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import rightImage from "/public/images/c392ba101244345 1.png";
+import googleImage from "/public/images/google-logo-9808.png";
 import Image from "next/image";
 import Link from "next/link";
 import axios from "axios";
@@ -136,6 +137,7 @@ const Page = () => {
           </div>
 
           <button className="bg-gray-100 hover:bg-gray-200 text-black font-medium rounded-md h-[45px] w-full mt-3 flex items-center justify-center transition-all">
+            <Image src={googleImage} alt="Google" width={30} className="mr-2" height={20} />
             Sign up with Google
           </button>
 

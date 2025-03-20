@@ -67,7 +67,7 @@ const CardProducts = ({
     className="text-imageBgColor text-[18px] font-bold transition-transform duration-700 
     group-hover:translate-y-[-4px] group-hover:translate-x-[8px] group-hover:rotate-[3deg]"
   >
-    {productCurrentPrice}
+    ${productCurrentPrice}
   </CardItem>
   
   <CardItem
@@ -75,7 +75,7 @@ const CardProducts = ({
     className="text-textLighGrayColor text-[14px] text-center line-through transition-transform duration-700 
     group-hover:translate-y-[-3px] group-hover:translate-x-[-8px] group-hover:rotate-[-3deg]"
   >
-    {productPreviousPrice}
+    ${productPreviousPrice}
   </CardItem>
   
   <CardItem
@@ -83,7 +83,7 @@ const CardProducts = ({
     className="text-textRedColor text-[14px] font-bold transition-transform duration-700 
     group-hover:translate-y-[-3px] group-hover:translate-x-[8px] group-hover:rotate-[3deg]"
   >
-    {productOf}
+   ${productOf}
   </CardItem>
 </div>
 

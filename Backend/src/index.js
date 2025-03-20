@@ -12,7 +12,7 @@ connectDb()
 
     fastify
       .listen({ port: PORT, host: "0.0.0.0" }) 
-      .then(() => fastify.log.info(`🚀 Server is running on port ${PORT}`))
+      .then(() => fastify.log.info(`\n 🚀 Server is running on port ${PORT}`))
       .catch((e) => {
         fastify.log.error(e);
         process.exit(1);

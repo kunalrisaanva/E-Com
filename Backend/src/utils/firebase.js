@@ -1,5 +1,6 @@
 import admin from "firebase-admin";
-import serviceAccount from "../../fir-ef23f-firebase-adminsdk-3u0vg-d46030c41e.json" with { type: "json" };
+// import serviceAccount from "../../fir-ef23f-firebase-adminsdk-3u0vg-d46030c41e.json" with { type: "json" };
+import serviceAccount from "../../fir-ef23f-firebase-adminsdk-3u0vg-af2aba3a81.json" with {type:"json"};
 import fs from "fs";
 import { v4 as uuidv4 } from "uuid"; // Importing UUID for unique filenames
 

@@ -5,11 +5,14 @@ import { createSlice } from "@reduxjs/toolkit";
 const cartSlice = createSlice({
     name: "cart",
     initialState: {
-        items: [],
+        items: [
+
+        ],
     },
     reducers: {
         addToCart: (state, action) => {
             const product = action.payload;
+            console.log("add to the cart product --",product);
             const existingItem = state.items.find((item) => item._id === product._id);
             if (existingItem) {
                 existingItem.quantity += 1;

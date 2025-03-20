@@ -1,29 +1,12 @@
-"use client"
-
+"use client";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const ProfilePage = () => {
-
   const router = useRouter();
-  const [isChecking, setIsChecking] = useState(true); 
-  // useEffect(() => {
-  //   const token = localStorage.getItem("token");
+  const [isChecking, setIsChecking] = useState(true);
 
-  //   if (!token) {
-  //     console.log("🔒 No token found, redirecting to login...");
-  //     router.replace("/login");
-  //   } else {
-  //     setIsChecking(false); // ✅ Only show page after verification
-  //   }
-  // }, []);
-
-  // if (isChecking) {
-  //   return <div className="h-screen flex items-center justify-center">Loading...</div>; // ✅ Show loading instead of profile page
-  // }
-
- 
   const userInfo = useSelector((state) => state.auth.user);
 
   const [user, setUser] = useState({
@@ -42,17 +25,19 @@ const ProfilePage = () => {
   };
 
   // iife
-  ;(() => {
+  (() => {
     useEffect(() => {
       const token = localStorage.getItem("token");
-     console.log("tokennn",token);
+      console.log("tokennn", token);
       if (!token) {
-        console.log("🔒 No token found, redirecting to login...");
-        router.push("/login"); // ✅ Redirect to login if not authenticated
+        console.log(" No token found, redirecting to login...");
+        router.push("/login");
       }
     }, []);
-  })()
- 
+  })();
+
+  // update loading state later
+  // if (loading) return <div className="h-screen flex items-center justify-center">Loading...</div>;
 
   return (
     <div className="max-w-4xl mx-auto mt-10 p-10 bg-white shadow-lg rounded-lg border border-gray-300">
@@ -64,7 +49,9 @@ const ProfilePage = () => {
       {/* Username & Email Section */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div>
-          <label className="block text-gray-700 mb-2 font-semibold">Username</label>
+          <label className="block text-gray-700 mb-2 font-semibold">
+            Username
+          </label>
           <div className="relative">
             <input
               type="text"
@@ -74,7 +61,7 @@ const ProfilePage = () => {
               disabled={!isEditing}
               className="w-full p-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#33A0FF] disabled:bg-gray-100"
             />
-            <button 
+            <button
               className="absolute right-3 top-4 text-[#33A0FF] font-semibold text-sm"
               onClick={() => setIsEditing(!isEditing)}
             >
@@ -84,7 +71,9 @@ const ProfilePage = () => {
         </div>
 
         <div>
-          <label className="block text-gray-700 mb-2 font-semibold">Email</label>
+          <label className="block text-gray-700 mb-2 font-semibold">
+            Email
+          </label>
           <div className="relative">
             <input
               type="email"
@@ -94,7 +83,7 @@ const ProfilePage = () => {
               disabled={!isEditing}
               className="w-full p-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#33A0FF] disabled:bg-gray-100"
             />
-            <button 
+            <button
               className="absolute right-3 top-4 text-[#33A0FF] font-semibold text-sm"
               onClick={() => setIsEditing(!isEditing)}
             >
@@ -107,7 +96,9 @@ const ProfilePage = () => {
       {/* Other User Information */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
         <div>
-          <label className="block text-gray-700 mb-2 font-semibold">Gender</label>
+          <label className="block text-gray-700 mb-2 font-semibold">
+            Gender
+          </label>
           <select
             name="gender"
             value={user.gender}
@@ -122,7 +113,9 @@ const ProfilePage = () => {
         </div>
 
         <div>
-          <label className="block text-gray-700 mb-2 font-semibold">Birthday</label>
+          <label className="block text-gray-700 mb-2 font-semibold">
+            Birthday
+          </label>
           <input
             type="date"
             name="birthday"
@@ -133,7 +126,9 @@ const ProfilePage = () => {
         </div>
 
         <div>
-          <label className="block text-gray-700 mb-2 font-semibold">Phone Number</label>
+          <label className="block text-gray-700 mb-2 font-semibold">
+            Phone Number
+          </label>
           <input
             type="tel"
             name="phone"
@@ -147,7 +142,9 @@ const ProfilePage = () => {
 
       {/* Password Change */}
       <div className="mt-8">
-        <label className="block text-gray-700 mb-2 font-semibold">New Password</label>
+        <label className="block text-gray-700 mb-2 font-semibold">
+          New Password
+        </label>
         <input
           type="password"
           name="password"
