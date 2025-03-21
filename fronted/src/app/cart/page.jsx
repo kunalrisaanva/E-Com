@@ -1,185 +1,151 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import UpperLine from "@/components/UpperLine";
-import DelImgae from "../../../public/images/del.png";
+import DelImage from "../../../public/images/del.png";
 import Image from "next/image";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { removeFromCart } from "../../redux/cartSlice"
-
-
+import { useSelector, useDispatch } from "react-redux";
+import { removeFromCart } from "../../redux/cartSlice";
 
 const Page = () => {
-  const [ammount, setAmmount] = useState(0);
-
+  const [amount, setAmount] = useState(1);
+  const [coupon, setCoupon] = useState("No");
   const [subtotal, setSubtotal] = useState(0);
+  const [shipping, setShipping] = useState(0);
   const dispatch = useDispatch();
 
-  // cart products
+  // Get cart items from Redux store
   const cartItems = useSelector((state) => state.cart.items);
 
-  console.log("cart itms --->",cartItems);
-  // console.log("cartItems", cartItems[0]?._id);
-
-  const removeFromCartHander = (id) => {
-
+  // Remove item from cart
+  const removeFromCartHandler = (id) => {
     dispatch(removeFromCart(id));
-  }
-
-  const minusAmmount = () => {
-    setAmmount(ammount - 1);
-    if (ammount === 0) setAmmount(0);
   };
 
+  // Decrease item quantity
+  const decreaseAmount = () => {
+    if (amount > 1) setAmount(amount - 1);
+  };
 
-  // calculation part wil be here 
-
-  /*useEffect(() => {
-    let total = cartItems.reduce((acc, item) => acc + item.productCurrentPrice, 0);
-    console.log("total ---> ",total);
+  // Calculate subtotal dynamically
+  useEffect(() => {
+    const total = cartItems.reduce((acc, item) => acc + Number(item.productCurrentPrice), 0);
     setSubtotal(total);
-  }, [cartItems]);  */
-  
-  // const calculation = () => {
-  //   let total = 0;
-  //   cartItems.map((item) => {
-  //     total += item.productCurrentPrice;
-  //   });
-  //   return total;
-  // };  
+  }, [cartItems]);
 
   return (
     <>
       <UpperLine />
 
-      <div>
-        <div className="text-[#22262A] text-[20px] font-medium flex items-center pl-[154px] pt-[46.94px]">
-          <div>
-            <span>PRODUCT</span>
-          </div>
-          <div className="pl-[605.51px] flex gap-[115px]">
-            <span>PRICE</span>
-            <span>QTY</span>
-            <span>UNIT PRICE</span>
-          </div>
+      <div className="text-[#22262A] text-[20px] font-medium flex items-center pl-[154px] pt-[46.94px]">
+        <span>PRODUCT</span>
+        <div className="pl-[605.51px] flex gap-[115px]">
+          <span>PRICE</span>
+          <span>QTY</span>
+          <span>UNIT PRICE</span>
         </div>
+      </div>
 
-        {/* line */}
+      {/* Cart Items */}
+      {cartItems.length > 0 && (
         <div className="w-[1256.11px] h-[2.13px] bg-[#F6F7F8] mt-[23px] ml-[104px]"></div>
-        {/* line end */}
+      )}
 
-        {cartItems.length === 0 ? (
-          <div className="text-3xl pl-[100px] my-4 flex justify-center">Oops! Your cart feels lonely. Add some products! 👜</div>
-        ) : (
-          cartItems.map((cartProduct, index) => (
-            <div
-              key={index}
-              className="mt-[62.63px] flex items-center text-[18px] text-darkText"
-            >
+      {cartItems.length === 0 ? (
+        <>
+          <div className="w-[1256.11px] h-[2.13px] bg-[#F6F7F8] mt-[23px] ml-[104px]"></div>
+          <div className="text-3xl pl-[100px] my-4 flex justify-center">
+            Oops! Your cart feels lonely. Add some products! 👜
+          </div>
+          <div className="w-[1256.11px] h-[2.13px] bg-[#F6F7F8] mt-[23px] ml-[104px]"></div>
+        </>
+      ) : (
+        cartItems.map((cartProduct) => (
+          <React.Fragment key={cartProduct._id}>
+            <div className="mt-[22.63px] flex items-center text-[18px] text-darkText">
               <div className="flex items-center">
                 <div className="pl-[90px]">
                   <Image
-                    src={DelImgae}
+                    src={DelImage}
                     width={23.62}
                     height={22}
-                    alt="del-image"
-                    onClick={() => removeFromCartHander(cartProduct?._id)}
+                    alt="Delete"
+                    onClick={() => removeFromCartHandler(cartProduct._id)}
                     className="cursor-pointer"
-                    id={cartItems?._id}
                   />
                 </div>
                 <div className="pl-[61.41px]">
                   <Image
                     src={cartProduct.productImageUrl}
-                    alt="product image"
+                    alt="Product"
                     width={137.85}
                     height={94}
                   />
                 </div>
-                <span className="pl-[28.7px] text-darkText text-[18px]">
-                  {cartProduct.productName}
-                </span>
-                <span className="pl-[322.38px]">
-                  ${cartProduct.productPreviousPrice}
-                </span>
+                <span className="pl-[28.7px]">{cartProduct.productName}</span>
+                <span className="pl-[322.38px]">${cartProduct.productPreviousPrice}</span>
               </div>
+
               <div>
                 <div className="bg-[#F6F7F8] w-[123.28px] h-[48.91px] flex items-center justify-center gap-8 ml-[120.68px]">
-                  <button
-                    onClick={minusAmmount}
-                    className="text-productFontColorBlue"
-                  >
-                    -
-                  </button>
-                  <span>{ammount}</span>
-                  <button
-                    onClick={() => setAmmount(ammount + 1)}
-                    className="text-productFontColorBlue"
-                  >
-                    +
-                  </button>
+                  <button onClick={decreaseAmount} className="text-productFontColorBlue">-</button>
+                  <span>{amount}</span>
+                  <button onClick={() => setAmount(amount + 1)} className="text-productFontColorBlue">+</button>
                 </div>
               </div>
-              <span className="ml-[74.08px]">
-                ${cartProduct.productCurrentPrice}
-              </span>
+
+              <span className="ml-[74.08px]">${cartProduct.productCurrentPrice}</span>
             </div>
-          ))
-        )}
 
-        {/* additional elements like lines and voucher redeem code */}
+            <div className="w-[1256.11px] h-[2.13px] bg-[#F6F7F8] mt-[23px] ml-[104px]"></div>
+          </React.Fragment>
+        ))
+      )}
 
-        <div className="w-[369px] h-[60px] border-2 border-[#F1F3F4] mt-[90px] ml-[134.48px] flex items-center rounded ">
-          <div>
+      {/* Voucher Input & Checkout Section */}
+      {cartItems.length > 0 && (
+        <div className="flex flex-row items-center w-full mt-[90px] justify-evenly gap-[260px]">
+          {/* Voucher Code */}
+          <div className="flex">
             <input
               type="text"
               placeholder="Voucher code"
-              className="text-[#262626] text-[16px] text-center "
+              className="text-[#262626] placeholder:italic text-[16px] text-center rounded w-[369px] h-[60px] border-2 border-[#F1F3F4] focus:outline-none"
             />
-          </div>
-          <div>
-            <button className="bg-[#33A0FF] w-[118px] h-[60px] ml-[118px] text-white text-[18px] font-medium">
+            <button className="bg-[#33A0FF] w-[118px] h-[60px] text-white text-[18px] font-medium transition-all duration-300 ease-in-out transform hover:bg-[#1E8AEF] hover:scale-105">
               Redeem
             </button>
           </div>
 
-           {/* calculation part */}
-
-
-           {cartItems.length !== 0 &&
-
-           <div className="text-[#262626] pl-[441px]">
-            <div className="flex gap-[255px]">
+          {/* Cart Summary */}
+          <div className="text-[#262626] text-right">
+            <div className="flex gap-[255px] justify-between">
               <span>Subtotal</span>
-              <span>{subtotal ? subtotal : 0}</span>
+              <span>${subtotal || 998}</span>
             </div>
-            <div className="flex gap-[255px] mt-[23px]">
-              <span>Shipping </span>
-              <span>$998</span>
+
+            <div className="flex gap-[255px] justify-between mt-[23px]">
+              <span>Shipping</span>
+              <span>${shipping}</span>
             </div>
-            <div className="flex gap-[255px] mt-[23px]">
+
+            <div className="flex gap-[265px] justify-between mt-[23px]">
               <span>Coupon</span>
-              <span>No</span>
+              <span>{coupon}</span>
             </div>
+
             <div className="bg-[#F6F7F8] w-[370px] h-[2px] mt-[24px]"></div>
 
-            <button className="mb-8 mt-2 w-[374px] h-[60px] bg-[#33A0FF] text-[18px] font-medium text-white py-[16px] px-[139px] " >Check out</button>
+            <div className="font-medium text-[30px] text-[#22262A] flex justify-between my-[22px]">
+              <h3>TOTAL</h3>
+              <h4>${subtotal}</h4>
+            </div>
+
+            <button className="mb-8 w-[374px] h-[60px] bg-[#33A0FF] text-[18px] font-medium text-white py-[16px]">
+              Check out
+            </button>
           </div>
-          }
-
-          {/* totoal part */}
-
-
-
-          {/* button part */}
-
-         
         </div>
-
-       
-
-       
-      </div>
+      )}
     </>
   );
 };

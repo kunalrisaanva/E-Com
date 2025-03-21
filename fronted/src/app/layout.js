@@ -11,6 +11,10 @@ import Development from "@/components/Development";
 import MobileWarning from "@/components/MobileWarning";
 import { Toaster,toast } from "sonner";
 import ForgotPassword from "./forget-password/page";
+// import '@/styles/globals.css';
+// import "@/app//
+import './globals.css';
+
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",

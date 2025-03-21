@@ -147,13 +147,13 @@ const ProductPage = () => {
           <div className="w-[499.49px] h-[2.13px] bg-[#F6F7F8] mt-[18.53px]"></div>
           <div className="pt-[17px]">
             <span className="text-[20px] font-bold text-[#40BFFF]">
-              {products?.productCurrentPrice}
+            ${products?.productCurrentPrice}
             </span>
             <span className="text-[14px] text-[#9098B1] pl-[9px]">
-              {products?.productPreviousPrice}
+            ${products?.productPreviousPrice}
             </span>
             <span className="text-[14px] font-bold pl-[8px] text-[#FB7181]">
-              {products?.productOf}
+            ${products?.productOf}
             </span>
           </div>
           <div>
@@ -401,14 +401,14 @@ const ProductPage = () => {
                 />
                 <div className="flex items-center pt-[6px] justify-center">
                   <h3 className="text-imageBgColor text-[18px] font-bold ">
-                   {products?.productCurrentPrice}
+                  ${products?.productCurrentPrice}
                   </h3>
                   <div className="flex justify-center pl-[13px] items-center">
                     <h3 className="text-textLighGrayColor text-[14px]">
-                      {relatedProduct?.productPreviousPrice}
+                    ${relatedProduct?.productPreviousPrice}
                     </h3>
                     <h3 className="text-textRedColor text-[14px] font-bold pl-[8px]">
-                      {relatedProduct?.productOf}
+                    ${relatedProduct?.productOf}
                     </h3>
                   </div>
                 </div>

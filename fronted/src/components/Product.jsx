@@ -318,7 +318,7 @@ const Product = ({ category }) => {
 
                 <div className="pl-[15.52px]">
                   <h1 className="text-[18px] font-bold text-[#223263] ">
-                    {product?.productName}
+                  {product?.productName}
                   </h1>
                   <div className="flex items-center pt-[10px]">
                     <Image
@@ -340,13 +340,13 @@ const Product = ({ category }) => {
                   {/* <div className="text-[#40BFFF]">$299,43</div> */}
                   <div className="pt-[17px]">
                     <span className="text-[20px] font-bold text-[#40BFFF]">
-                      {product?.productCurrentPrice}
+                    ${product?.productCurrentPrice}
                     </span>
                     <span className="text-[14px] text-[#9098B1] pl-[9px]">
-                      {product?.productPreviousPrice}
+                    ${product?.productPreviousPrice}
                     </span>
                     <span className="text-[14px] font-bold pl-[8px] text-[#FB7181]">
-                      {product?.productOf}
+                    ${product?.productOf}
                     </span>
                   </div>
                   {/* text product details */}
