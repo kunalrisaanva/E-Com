@@ -6,7 +6,8 @@ import fastifyJwt from "@fastify/jwt";
 import fastifyCookie from "@fastify/cookie";
 import NodeCache from "node-cache";
 import { productRoutes } from "./routes/product.routes.js";
-
+import mailer from "./plugins/mailer.js"
+import mailRoutes from "./routes/mail.js"
 
 import { registerRoutes } from "./routes/index.js";
 import fastifyMultipart from "@fastify/multipart";
@@ -29,6 +30,11 @@ fastify.register(fastifyCors, {
   allowedHeaders: ["Content-Type", "Authorization"], 
   credentials: true, 
 });
+
+
+// mailer plugin
+fastify.register(mailer);
+fastify.register(mailRoutes);
 
 //cookies
 

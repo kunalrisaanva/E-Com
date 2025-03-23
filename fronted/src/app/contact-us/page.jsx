@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { use } from "react";
 import Image from "next/image";
 import { Input } from "@/components/ui/Input.jsx";
 import { Button } from "@/components/ui/button.jsx";
@@ -8,10 +8,53 @@ import { toast } from "sonner";
 import CotactUsImage from "../../../public/images/call 1.png";
 import UpperLine from "@/components/UpperLine.jsx";
 
+import axios from "axios";
+
 const ContactUs = () => {
-  const handleSubmit = (e) => {
+
+  const [userDetails,setUserDetails] = React.useState({
+    fullName: "",
+    email: "",
+    message: "",
+  });
+
+  
+ 
+  
+
+  console.log("user--",userDetails);
+
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    toast.success("Message sent successfully!");
+
+    if (!userDetails.email || !userDetails.fullName || !userDetails.message) {
+      toast.error("Please fill all the fields");
+      return;
+    }
+
+    try {
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/send-mail`, {
+        type: "contact",  // Specify the type
+        to: userDetails.email, // Email address of the sender
+        fullName: userDetails.fullName, // Name of the sender
+        message: userDetails.message, // Message content
+      });
+
+      console.log("response coming ---->frontend=---",response);
+      if(response.status === 200) 
+      toast.success("Message sent successfully!");
+    else return;
+
+    userDetails.fullName = "";
+    userDetails.email = "";
+    userDetails.message = "";
+    setUserDetails({...userDetails});
+    } catch (error) {
+      console.error("Axios Error:", error);
+      toast.error(
+        error.response?.data?.message || "Message failed! Please try again."
+      );
+    }
   };
 
   return (
@@ -33,7 +76,7 @@ const ContactUs = () => {
       </div>
 
       {/* Right Side - Contact Form */}
-      <div className="w-full md:w-1/2 flex flex-col items-center justify-center p-10">
+      <div className="w-full md:w-1/2 flex flex-col items-center justify-center ">
         <h1 className="text-4xl font-bold text-gray-800 mb-4 text-center">
           Contact Us
         </h1>
@@ -48,8 +91,10 @@ const ContactUs = () => {
             </label>
             <Input
               type="text"
+              onChange={(e) => setUserDetails({ ...userDetails, fullName: e.target.value })} 
+              value={userDetails.fullName}
               placeholder="Enter your name"
-              className="w-full border-gray-300 focus:border-red-500"
+              className="w-full border-gray-300  focus:outline-none"
             />
           </div>
 
@@ -59,8 +104,10 @@ const ContactUs = () => {
             </label>
             <Input
               type="email"
+              onChange={(e) => setUserDetails({ ...userDetails, email: e.target.value })}
+              value={userDetails.email}
               placeholder="Enter your email"
-              className="w-full border-gray-300 focus:border-red-500"
+              className="w-full border-gray-300 focus:outline-none"
             />
           </div>
 
@@ -70,6 +117,8 @@ const ContactUs = () => {
             </label>
             <Textarea
               placeholder="Write your message here..."
+              onChange={(e) => setUserDetails({ ...userDetails, message: e.target.value })}
+              value={userDetails.message}
               className="w-full border-gray-300 focus:border-red-500"
             />
           </div>

@@ -11,9 +11,10 @@ import Development from "@/components/Development";
 import MobileWarning from "@/components/MobileWarning";
 import { Toaster,toast } from "sonner";
 import ForgotPassword from "./forget-password/page";
-// import '@/styles/globals.css';
-// import "@/app//
+import { useSearchParams } from "next/navigation";
+
 import './globals.css';
+import { useEffect } from "react";
 
 
 const geistSans = localFont({
@@ -35,9 +36,8 @@ const geistMono = localFont({
 export default function RootLayout({ children }) {
 
   const pathname = usePathname();
-
-  const hidelayout = ["/login","/register","/forget-password"].includes(pathname);
-
+  
+  const hidelayout = ["/login","/register","/forget-password","/reset-password"].includes(pathname);
 
   return (
     <html lang="en">

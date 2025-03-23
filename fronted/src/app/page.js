@@ -35,7 +35,10 @@ export default function Home() {
 
     if (localStorageProducts) {
       try {
-        setProducts(JSON.parse(localStorageProducts)); 
+        setIsLoading(true);
+        // console.log("products comes from localstore-->",localStorageProducts);
+        setProducts(JSON.parse(localStorageProducts));
+        setIsLoading(false); 
       } catch (error) {
         console.error("Error parsing localStorage data:", error);
         localStorage.removeItem("productsInLocalStorage");

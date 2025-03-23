@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken"; // ✅ Added missing import
+import jwt from "jsonwebtoken";
+import crypto from "crypto";
 
 const userSchema = new mongoose.Schema({
   username: {
@@ -48,6 +49,14 @@ const userSchema = new mongoose.Schema({
   
   googleId: {
     type:String
+  },
+
+  resetPasswordToken:{
+    type: String,
+    default: null
+  },
+  resetPasswordExpire:{
+    type: Date,
   }
 
 });
@@ -68,10 +77,24 @@ userSchema.methods.generateAccessToken = async function () {
   });
 };
 
-userSchema.methods.generateRefreshToken = async function () {
-  return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
-    expiresIn: "7d",
-  });
+// userSchema.methods.generateRefreshToken = async function () {
+//   return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
+//     expiresIn: "7d",
+//   });
+// };
+
+userSchema.methods.getResetPasswordToken = function () {
+  // Create token
+  const resetToken = crypto.randomBytes(20).toString("hex");
+
+  // Hash token and store in DB
+  this.resetPasswordToken = crypto.createHash("sha256").update(resetToken).digest("hex");
+  // const hash = crypto.createHash("sha256").update("example").digest("hex");
+  // console.log("hash token created ---->",hash);
+  // Set expire time (2 minutes from now)
+  this.resetPasswordExpire = Date.now() + 2 * 60 * 1000; // 2 minutes
+
+  return resetToken;
 };
 
 const User = mongoose.model("User", userSchema);

@@ -30,6 +30,7 @@
     "cookie-parser": "^1.4.7",
     "dotenv": "^16.4.5",
     "fastify": "^5.1.0",
+    "fastify-mailer": "^2.3.1",
     "fastify-multer": "^2.0.3",
     "fastify-passport": "^0.6.0",
     "fastify-plugin": "^5.0.1",

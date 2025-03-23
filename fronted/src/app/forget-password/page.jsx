@@ -4,16 +4,32 @@ import React, { useState } from "react";
 import rightImage from "/public/images/c392ba101244345 1.png";
 import Image from "next/image";
 import Link from "next/link";
+import axios from "axios";
+import { toast } from "sonner";
+
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
-
+  // console.log(email)
   const handleResetPassword = async (e) => {
     try {
       e.preventDefault();
-      console.log("Reset password request for:", email);
+
+      if(!email){
+        toast.error("Please enter your email");
+        return;
+      }
+
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/user/forget-password`, { email });
+      // console.log(response.data);
+      if(response.status === 200){
+        toast.success("Email sent successfully plz chek you email")
+        setEmail("")
+      }
+      // console.log("Reset password request for:", email);
     } catch (error) {
       console.error(error);
+      toast.error(error.response?.data?.message || "Failed to reset password");
     }
   };
 

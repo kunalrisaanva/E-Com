@@ -7,8 +7,8 @@ import { isValidObjectId } from "mongoose";
 import { cache } from "../app.js";
 
 const homeScreeProduct = async (_, reply) => {
-
-  const cacheKey = "allProducts", cachedProducts = cache.get(cacheKey);
+  const cacheKey = "allProducts",
+    cachedProducts = cache.get(cacheKey);
 
   if (cachedProducts) {
     return reply
@@ -143,9 +143,7 @@ const getSingleProductDetails = async (req, reply) => {
 };
 
 const productbyFilter = async (req, reply) => {
-  const { q, sort, limit, skip } = req.query,
-    limitConvertedNumber = Number(limit) || 8,
-    skipConvertedNumber = Number(skip) || 1;
+  const { q, sort, limit, skip } = req.query,limitConvertedNumber = Number(limit) || 8,skipConvertedNumber = Number(skip) || 1;
 
   // console.log("\n","catefory",q,"sort-",sort,"limit-",limit);
 

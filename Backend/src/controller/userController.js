@@ -3,6 +3,8 @@ import { successResponse } from "../utils/Response.js";
 import { errorResponse } from "../utils/Error.js";
 import { isValidObjectId } from "mongoose";
 import fastifyJwt from "@fastify/jwt";
+import fastify from "fastify";
+import crypto from "crypto"; 
 
 const getUsers = async (request, reply) => {
   //   const users = await User.find();
@@ -52,26 +54,26 @@ const signInUser = async (req, reply) => {
 
   const token = await user.generateAccessToken();
 
-  console.log("\n token --->",token);
+  console.log("\n token --->", token);
 
   reply
-  .setCookie("token",token, {
-    httpOnly: true,
-    secure: false,
-    sameSite: "strict",
-    path: "/",
-  })
-  .header("Authorization", `Bearer ${token}`)
-  .status(200)
-  .send(successResponse({ user, token }, "User logged in successfully"));
+    .setCookie("token", token, {
+      httpOnly: true,
+      secure: false,
+      sameSite: "strict",
+      path: "/",
+    })
+    .header("Authorization", `Bearer ${token}`)
+    .status(200)
+    .send(successResponse({ user, token }, "User logged in successfully"));
 };
 
 const signOutUser = async (req, rep) => {
   try {
-    rep.clearCookie("token", { path: "/" }); // ✅ Remove JWT from cookies
+    rep.clearCookie("token", { path: "/" }); 
     return rep.status(200).send({ message: "Logout successful" });
   } catch (error) {
-    console.error("❌ Logout Error:", error.message);
+    console.error(" Logout Error:", error.message);
     rep.status(500).send({ error: "Logout failed" });
   }
 };
@@ -104,6 +106,8 @@ const updaterUserDetails = async () => {
   }
 
   // todo fix this lines
+
+  // if user.username = username;
   user.username = username;
   user.email = email;
   user.mob = mob;
@@ -114,6 +118,81 @@ const updaterUserDetails = async () => {
   // validation
 };
 
+const forgotPassword = async (req, rep) => {
+  const { email } = req.body;
+
+  if (!email) {
+    throw errorResponse("Please provide an email", 400);
+  }
+
+  const userExist = await User.findOne({ email });
+
+  if (!userExist) {
+    throw errorResponse("User not found", 404);
+  }
+
+  // Generate reset token
+  const resetToken = userExist.getResetPasswordToken();
+
+  // Save user with reset token & expiry
+  await userExist.save({ validateBeforeSave: false });
+
+  try {
+    const resetLink = `${process.env.FRONTEND_URL}/reset-password?token=${resetToken}`;
+
+    await req.server.mailer.sendMail({
+      to: email,
+      subject: "Password Reset Request",
+      text: `Click the following link to reset your password: ${resetLink}`,
+      html: `<p>You requested a password reset. Click the button below:</p>
+             <p><a href="${resetLink}" style="background: red; color: white; padding: 10px; text-decoration: none;">Reset Password</a></p>
+             <p>This link will expire in <b>2 minutes</b>.</p>`,
+    });
+
+    return rep.send({ success: "Email sent successfully!", resetLink });
+  } catch (error) {
+    console.error(" Error sending email:", error);
+    return rep.code(500).send({ error: "Email sending failed" });
+  }
+};
+
+
+const resetPassword = async (req, rep) => {
+  const { token, newPassword } = req.body;
+
+  // console.log("Reset Token Received:", token);
+
+  if (!token || !newPassword) {
+    return rep.code(400).send({ error: "Invalid request" });
+  }
+
+  // Hash token to match stored hash
+  const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
+
+  const user = await User.findOne({
+    resetPasswordToken: hashedToken,
+    resetPasswordExpire: { $gt: Date.now() }, // Ensure token is not expired
+  });
+
+  if (!user) {
+    return rep.code(400).send({ error: "Invalid or expired token" });
+  }
+
+  // Update user password
+  user.password = newPassword;
+  user.resetPasswordToken = undefined; // Remove token
+  user.resetPasswordExpire = undefined;
+
+  await user.save();
+
+  return rep.send({ success: "Password reset successfully" });
+};
+
+
+
+
+
+
 export {
   getUsers,
   signUpUser,
@@ -121,4 +200,6 @@ export {
   signOutUser,
   changePassword,
   updaterUserDetails,
+  forgotPassword,
+  resetPassword
 };
