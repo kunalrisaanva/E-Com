@@ -482,7 +482,7 @@ export default function Home() {
       <div className="flex pt-[110px]   items-center justify-center">
         <div className="flex w-[635px] ">
           <input
-            className="rounded-l-md h-[64px] w-full pl-4 pr-[80px] rounded-sm border-[2px] border-[#40BFFF]"
+            className="rounded-l-md h-[64px] w-full pl-4 pr-[80px] rounded-sm border-[2px] border-[#40BFFF] focus:outline-none focus:ring-0"
             type="text"
             placeholder="Search query"
           />
