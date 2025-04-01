@@ -2,7 +2,7 @@ import { Product } from "../model/product.model.js";
 import { successResponse } from "../utils/Response.js";
 import { errorResponse } from "../utils/Error.js";
 import { upload } from "../middleware/multer.js";
-import { uploadFile } from "../utils/firebase.js";
+// import { uploadFile } from "../utils/firebase.js";
 import { isValidObjectId } from "mongoose";
 import { cache } from "../app.js";
 

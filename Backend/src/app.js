@@ -82,8 +82,9 @@
 
 // export { fastify };
 // export { cache }
+
+
 import Fastify from "fastify";
-import cookiesParser from "cookie-parser";
 import fastifyCors from "@fastify/cors";
 import fastifyOauth2 from "@fastify/oauth2";
 import fastifyJwt from "@fastify/jwt";
@@ -98,57 +99,44 @@ import fastifyMultipart from "@fastify/multipart";
 const fastify = Fastify({ logger: true });
 
 fastify.register(fastifyMultipart, { addToBody: true });
-
-console.log("Allowed CORS Origin:", process.env.FRONTEND_URL);
-
-fastify.register(fastifyCors, {
+fastify.register(fastifyCors, { 
   origin: process.env.FRONTEND_URL || "*",
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: true,
+  credentials: true 
 });
 
 // Mailer plugin
 fastify.register(mailer);
 fastify.register(mailRoutes);
-
-// Cookies
 fastify.register(fastifyCookie);
 
-// Cache instance
+// Add cache instance to Fastify
 const cache = new NodeCache({ stdTTL: 600, checkperiod: 120 });
 
 fastify.register(fastifyJwt, {
   secret: "thisismyscretmynameiskunalhahah",
-  cookie: {
-    cookieName: "token",
-    signed: false,
-  },
+  cookie: { cookieName: "token", signed: false },
 });
 
-fastify.register(fastifyOauth2, {
-  name: "googleOAuth",
-  scope: ["profile", "email"],
-  credentials: {
-    client: {
-      id: process.env.GOOGLE_CLIENT_ID,
-      secret: process.env.GOOGLE_CLIENT_SECRET,
-    },
-    auth: fastifyOauth2.GOOGLE_CONFIGURATION,
-  },
-  startRedirectPath: "/auth/google",
-  callbackUri: "http://localhost:3333/auth/google/callback",
-});
+// fastify.register(fastifyOauth2, {
+//   name: "googleOAuth",
+//   scope: ["profile", "email"],
+//   credentials: {
+//     client: {
+//       id: process.env.GOOGLE_CLIENT_ID,
+//       secret: process.env.GOOGLE_CLIENT_SECRET,
+//     },
+//     auth: fastifyOauth2.GOOGLE_CONFIGURATION,
+//   },
+//   startRedirectPath: "/auth/google",
+//   callbackUri: process.env?.CALLBACK_URL || "http://localhost:3333/auth/google/callback",
+// });
 
 // Register routes
 registerRoutes(fastify);
-
-// Declare a default route
-fastify.get("/", async function handler(request, reply) {
-  return { hello: "world" };
-});
-
+fastify.get("/", async () => ({ hello: "world" }));
 fastify.register(productRoutes, { prefix: "/api/v1" });
 
-// ✅ Export everything together
 export { fastify, cache };
+

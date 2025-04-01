@@ -55,46 +55,48 @@
 
 // for development
 
-import admin from "firebase-admin";
-import fs from "fs";
-import { v4 as uuidv4 } from "uuid";
+// import admin from "firebase-admin";
+// import fs from "fs";
+// import { v4 as uuidv4 } from "uuid";
 
-// Read Firebase credentials from the environment variable
-const serviceAccount = JSON.parse(process.env.FIREBASE_CREDENTIALS);
+// // // Read Firebase credentials from the environment variable
+// const serviceAccount = JSON?.parse(process.env?.FIREBASE_CREDENTIALS);
 
-if (!admin.apps.length) {
-  admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-    storageBucket: process.env.BUCKET_NAME,
-  });
-}
+// // console.log("FIREBASE_CREDENTIALS:", process.env.FIREBASE_CREDENTIALS);
 
-const bucket = admin.storage().bucket();
+// if (!admin.apps.length) {
+//   admin.initializeApp({
+//     credential: admin.credential.cert(serviceAccount),
+//     storageBucket: process.env?.BUCKET_NAME,
+//   });
+// }
 
-export const uploadFile = async (localFilePath, destination) => {
-  try {
-    // Generate a unique file name using UUID
-    const uniqueFilename = `${uuidv4()}-${destination}`;
+// const bucket = admin.storage().bucket();
 
-    // Upload the file to Firebase Storage
-    const [file] = await bucket.upload(localFilePath, {
-      destination: uniqueFilename,
-      metadata: {
-        cacheControl: "public, max-age=31536000",
-      },
-    });
+// export const uploadFile = async (localFilePath, destination) => {
+//   try {
+//     // Generate a unique file name using UUID
+//     const uniqueFilename = `${uuidv4()}-${destination}`;
 
-    // Make the file publicly accessible
-    await file.makePublic();
+//     // Upload the file to Firebase Storage
+//     const [file] = await bucket.upload(localFilePath, {
+//       destination: uniqueFilename,
+//       metadata: {
+//         cacheControl: "public, max-age=31536000",
+//       },
+//     });
 
-    // Delete the image from local storage after upload
-    fs.unlinkSync(localFilePath);
+//     // Make the file publicly accessible
+//     await file.makePublic();
 
-    // Construct the public URL
-    const publicUrl = `https://storage.googleapis.com/${bucket.name}/${uniqueFilename}`;
-    return publicUrl;
-  } catch (error) {
-    console.error("Error uploading file:", error);
-    throw new Error("Could not upload the file");
-  }
-};
+//     // Delete the image from local storage after upload
+//     fs.unlinkSync(localFilePath);
+
+//     // Construct the public URL
+//     const publicUrl = `https://storage.googleapis.com/${bucket.name}/${uniqueFilename}`;
+//     return publicUrl;
+//   } catch (error) {
+//     console.error("Error uploading file:", error);
+//     throw new Error("Could not upload the file");
+//   }
+// };
