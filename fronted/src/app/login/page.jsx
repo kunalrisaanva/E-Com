@@ -40,6 +40,8 @@ const Page = () => {
             router.push("/profile");
             toast.success("Login successful");
           }
+        }else{
+          router.push("/login")
         }
 
         // setIsChecking(false);

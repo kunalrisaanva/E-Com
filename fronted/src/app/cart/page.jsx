@@ -5,12 +5,17 @@ import DelImage from "../../../public/images/del.png";
 import Image from "next/image";
 import { useSelector, useDispatch } from "react-redux";
 import { removeFromCart } from "../../redux/cartSlice";
+import CloseIcon from "@mui/icons-material/Close";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { Tooltip } from "@mui/material";
+import { Stepper, Step, StepLabel } from '@mui/material';
 
 const Page = () => {
   const [amount, setAmount] = useState(1);
   const [coupon, setCoupon] = useState("No");
   const [subtotal, setSubtotal] = useState(0);
   const [shipping, setShipping] = useState(0);
+  const [isOpened, setIsOpened] = useState(true);
   const dispatch = useDispatch();
 
   // Get cart items from Redux store
@@ -20,7 +25,7 @@ const Page = () => {
   const removeFromCartHandler = (id) => {
     dispatch(removeFromCart(id));
   };
-
+  const steps = ['Step 1', 'Step 2', 'Step 3'];
   // Decrease item quantity
   const decreaseAmount = () => {
     if (amount > 1) setAmount(amount - 1);
@@ -28,7 +33,10 @@ const Page = () => {
 
   // Calculate subtotal dynamically
   useEffect(() => {
-    const total = cartItems.reduce((acc, item) => acc + Number(item.productCurrentPrice), 0);
+    const total = cartItems.reduce(
+      (acc, item) => acc + Number(item.productCurrentPrice),
+      0
+    );
     setSubtotal(total);
   }, [cartItems]);
 
@@ -36,7 +44,7 @@ const Page = () => {
     <>
       <UpperLine />
 
-      <div className="text-[#22262A] text-[20px] font-medium flex items-center pl-[154px] pt-[46.94px]">
+      <div className="text-[#22262A] text-[20px] font-medium flex items-center pl-[154px] pt-[46.94px] ">
         <span>PRODUCT</span>
         <div className="pl-[605.51px] flex gap-[115px]">
           <span>PRICE</span>
@@ -82,18 +90,32 @@ const Page = () => {
                   />
                 </div>
                 <span className="pl-[28.7px]">{cartProduct.productName}</span>
-                <span className="pl-[322.38px]">${cartProduct.productPreviousPrice}</span>
+                <span className="pl-[322.38px]">
+                  ${cartProduct.productPreviousPrice}
+                </span>
               </div>
 
               <div>
                 <div className="bg-[#F6F7F8] w-[123.28px] h-[48.91px] flex items-center justify-center gap-8 ml-[120.68px]">
-                  <button onClick={decreaseAmount} className="text-productFontColorBlue">-</button>
+                  <button
+                    onClick={decreaseAmount}
+                    className="text-productFontColorBlue"
+                  >
+                    -
+                  </button>
                   <span>{amount}</span>
-                  <button onClick={() => setAmount(amount + 1)} className="text-productFontColorBlue">+</button>
+                  <button
+                    onClick={() => setAmount(amount + 1)}
+                    className="text-productFontColorBlue"
+                  >
+                    +
+                  </button>
                 </div>
               </div>
 
-              <span className="ml-[74.08px]">${cartProduct.productCurrentPrice}</span>
+              <span className="ml-[74.08px]">
+                ${cartProduct.productCurrentPrice}
+              </span>
             </div>
 
             <div className="w-[1256.11px] h-[2.13px] bg-[#F6F7F8] mt-[23px] ml-[104px]"></div>
@@ -144,6 +166,61 @@ const Page = () => {
               Check out
             </button>
           </div>
+        </div>
+      )}
+
+      {isOpened === true && (
+        <div
+          // id="popupBackground"
+          className=" text-2xl text-black text-center h-[792.84px] bg-red-50  w-[1021.5px] flex flex-col mx-auto           "
+        >
+
+          {/* MUI icons  */}
+          <div className="flex justify-between items-center px-5 py-8">
+            <Tooltip title="Go-Back">
+            
+
+              <ArrowBackIcon className="text-productFontColorBlue cursor-pointer" sx={{ height:"25px",width:"25px" }}/>
+            
+            </Tooltip>
+
+            <Tooltip title="Close">
+            
+
+            <CloseIcon
+                onClick={() => setIsOpened(false)}
+                className="text-productFontColorBlue cursor-pointer"
+                titleAccess="close"
+                sx={{fontSize:25}}
+
+              />
+
+             
+            </Tooltip>
+          </div>
+          {/* heading */}
+          <h1 className="text-productFontColorBlue text-[32px] font-semibold text-center">Make Payment</h1>
+          {/*  setpper of payment */}
+
+            <div className="flex flex-row itmes-center justify-center  mt-[43px]">
+              <div className="bg-[#40BFFF] text-white text-[18px] font-bold w-[36px] h-[36px] rounded-full
+              flex items-center justify-center">1</div>
+              {/* connecting lines */}
+              <div className="bg-[#DFDEDE] w-[3rem] h-[3px] flex flex-row justify-center items-center mt-4">
+
+              </div>
+
+
+              <div className="bg-[#40BFFF] text-white text-[18px] font-bold w-[36px] h-[36px] rounded-full
+              flex items-center justify-center">2</div>
+               {/* connecting lines */}
+               <div className="bg-[#DFDEDE] w-[3rem] h-[3px] mt-4">
+
+</div>
+              <div className="bg-[#DFDEDE] text-white text-[18px] font-bold w-[36px] h-[36px] rounded-full
+              flex items-center justify-center">3</div>
+            
+            </div>
         </div>
       )}
     </>

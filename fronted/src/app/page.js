@@ -48,7 +48,14 @@ export default function Home() {
 
     (async () => {
       try {
-        setIsLoading(true);
+
+        // if(localStorageProducts){
+
+        //   setIsLoading(false);
+
+        // }
+
+        setIsLoading(true)
 
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/products/home-screen/products`
@@ -85,6 +92,7 @@ export default function Home() {
     setVisible((prev) => prev - 8);
   };
 
+// if(isLoading === true) return <p className="text-center text-gray-400">Loading</p>
 
   return (
     <>
@@ -184,7 +192,8 @@ export default function Home() {
   )}
 
   {/* Loading Message */}
-  {isLoading && <p className="text-gray-500">Loading Products...</p>}
+  {/* {isLoading && <p className="text-gray-500">Loading Products...</p>} */}
+
 
   {/* No Products Message */}
   {!isLoading && filteredProducts?.length === 0 ? (
