@@ -20,34 +20,34 @@ const LoginForm = () => {
 
   console.log("Login page -- token coming form backend side send --+>", tokenup);
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const response = await axios.get("http://localhost:3333/auth/me", {
-          headers: {
-            Authorization: `Bearer ${tokenup}`,
-          },
-        });
+  // useEffect(() => {
+  //   const fetchUser = async () => {
+  //     try {
+  //       const response = await axios.get("http://localhost:3333/auth/me", {
+  //         headers: {
+  //           Authorization: `Bearer ${tokenup}`,
+  //         },
+  //       });
 
-        console.log("🔥 User Data: __->", response.status);
+  //       console.log("🔥 User Data: __->", response.status);
 
-        if (response.status === 200) {
-          if (response.data?.user) {
-            dispatch(loginSuccess(response?.data?.user));
-            router.push("/profile");
-            toast.success("Login successful");
-          }
-        } else {
-          router.push("/login");
-        }
-      } catch (error) {
-        console.error("🔥 Error fetching user data:", error);
-        router.push("/login");
-      }
-    };
+  //       if (response.status === 200) {
+  //         if (response.data?.user) {
+  //           dispatch(loginSuccess(response?.data?.user));
+  //           router.push("/profile");
+  //           toast.success("Login successful");
+  //         }
+  //       } else {
+  //         router.push("/login");
+  //       }
+  //     } catch (error) {
+  //       console.error("🔥 Error fetching user data:", error);
+  //       router.push("/login");
+  //     }
+  //   };
 
-    fetchUser();
-  }, [tokenup, router]);
+  //   fetchUser();
+  // }, [tokenup, router]);
 
   const [userDetails, setUserDetails] = useState({
     email: "",
@@ -63,15 +63,18 @@ const LoginForm = () => {
         { withCredentials: true } 
       );
 
+      console.log("login response --->",response.data.data.token);
+
       const { data } = response;
       if (response.status === 200) {
         toast.success("Login successful");
+        localStorage.setItem("token",response?.data?.data?.token)
         dispatch(loginSuccess(data?.data?.user));
         router.push("/profile"); 
       }
     } catch (error) {
-      console.error("Login Error:", error);
-      toast.error("Login failed! Please try again.");
+      console.error("Login Error:", error.Ax);
+      toast.error(error.response.data?.message || "Something went wrong!");
     }
   };
 
