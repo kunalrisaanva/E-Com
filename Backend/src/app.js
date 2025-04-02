@@ -99,8 +99,9 @@ import fastifyMultipart from "@fastify/multipart";
 const fastify = Fastify({ logger: true });
 
 fastify.register(fastifyMultipart, { addToBody: true });
+console.log("cors origin URL:",process.env.FRONTEND_URL);
 fastify.register(fastifyCors, { 
-  origin: process.env.FRONTEND_URL || "*",
+  origin:"*",
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true 
@@ -119,19 +120,19 @@ fastify.register(fastifyJwt, {
   cookie: { cookieName: "token", signed: false },
 });
 
-// fastify.register(fastifyOauth2, {
-//   name: "googleOAuth",
-//   scope: ["profile", "email"],
-//   credentials: {
-//     client: {
-//       id: process.env.GOOGLE_CLIENT_ID,
-//       secret: process.env.GOOGLE_CLIENT_SECRET,
-//     },
-//     auth: fastifyOauth2.GOOGLE_CONFIGURATION,
-//   },
-//   startRedirectPath: "/auth/google",
-//   callbackUri: process.env?.CALLBACK_URL || "http://localhost:3333/auth/google/callback",
-// });
+fastify.register(fastifyOauth2, {
+  name: "googleOAuth",
+  scope: ["profile", "email"],
+  credentials: {
+    client: {
+      id: process.env.GOOGLE_CLIENT_ID,
+      secret: process.env.GOOGLE_CLIENT_SECRET,
+    },
+    auth: fastifyOauth2.GOOGLE_CONFIGURATION,
+  },
+  startRedirectPath: "/auth/google",
+  callbackUri: process.env?.CALLBACK_URL || "http://localhost:3333/auth/google/callback",
+});
 
 // Register routes
 registerRoutes(fastify);
