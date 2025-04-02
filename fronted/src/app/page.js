@@ -67,6 +67,7 @@ export default function Home() {
         // localStorage.setItem("productsInLocalStorage",JSON.stringify(data?.data));
       } catch (error) {
         setError(true);
+        setIsLoading(false)
       }
     })();
   }, []);
@@ -192,13 +193,14 @@ export default function Home() {
   )}
 
   {/* Loading Message */}
-  {/* {isLoading && <p className="text-gray-500">Loading Products...</p>} */}
+  {isLoading && <p className="text-gray-500">Loading Products...</p>}
 
 
   {/* No Products Message */}
   {!isLoading && filteredProducts?.length === 0 ? (
     <p className="text-black">No products available</p>
   ) : (
+    
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-6 ">
       {filteredProducts?.slice(0, visible).map((product, index) => (
       
