@@ -29,10 +29,11 @@ const Product = ({ category }) => {
 
   
   
-  const localShowItmsType = localStorage.getItem("showItemsType");
+  // const localShowItmsType = localStorage.getItem("showItemsType");
   
-  const [showItemsType, setShowItemsType] = useState(localShowItmsType || "grid");  
-  localStorage.setItem("showItemsType", showItemsType);
+  // const [showItemsType, setShowItemsType] = useState(localShowItmsType || "grid");  
+  const [showItemsType, setShowItemsType] = useState("grid");  
+  // localStorage.setItem("showItemsType", showItemsType);
 
 
     // State for sorting and show count
@@ -303,7 +304,7 @@ const Product = ({ category }) => {
 
           {isLoading &&  <p> Loading ... </p>}
           { products.length === 0 && isLoading === false && <p> No Products available</p>}
-          {localShowItmsType === "list" ? (
+          {showItemsType === "list" ? (
             // <p className="text=black">No products available</p>
             products?.slice(0, 4).map((product, index) => (
               <div className="pt-[20px] flex" key={index}>
