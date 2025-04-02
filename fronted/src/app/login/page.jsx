@@ -63,7 +63,7 @@ const LoginForm = () => {
         { withCredentials: true } 
       );
 
-      console.log("login response --->",response.data.data.token);
+      // console.log("login response --->",response);
 
       const { data } = response;
       if (response.status === 200) {
