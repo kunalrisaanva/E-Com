@@ -12,10 +12,10 @@ const Page = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const searchParams = useSearchParams();
-  const token = searchParams.get("token");
   const router = useRouter();
-
+  
   useEffect(() => {
+    const token = searchParams.get("token");
     if (!token) {
       toast.error("Invalid or expired link!");
       router.push("/");
