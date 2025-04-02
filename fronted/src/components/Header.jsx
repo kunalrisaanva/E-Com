@@ -30,7 +30,7 @@ const Header = () => {
   const handleLogout = async () => {
     try {
       await axios.post(
-        "http://localhost:3333/api/v1/user/logout",
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/user/logout`,
         {},
         {
           withCredentials: true,
