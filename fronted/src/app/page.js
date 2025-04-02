@@ -64,7 +64,7 @@ export default function Home() {
         // console.log(data);
         setProducts(data?.data);
         setIsLoading(false);
-        localStorage.setItem("productsInLocalStorage",JSON.stringify(data?.data));
+        // localStorage.setItem("productsInLocalStorage",JSON.stringify(data?.data));
       } catch (error) {
         setError(true);
       }

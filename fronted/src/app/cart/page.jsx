@@ -15,7 +15,7 @@ const Page = () => {
   const [coupon, setCoupon] = useState("No");
   const [subtotal, setSubtotal] = useState(0);
   const [shipping, setShipping] = useState(0);
-  const [isOpened, setIsOpened] = useState(true);
+  const [isOpened, setIsOpened] = useState(false);
   const dispatch = useDispatch();
 
   // Get cart items from Redux store
@@ -169,7 +169,7 @@ const Page = () => {
         </div>
       )}
 
-      {isOpened === true && (
+      {isOpened  && (
         <div
           // id="popupBackground"
           className=" text-2xl text-black text-center h-[792.84px] bg-red-50  w-[1021.5px] flex flex-col mx-auto           "
