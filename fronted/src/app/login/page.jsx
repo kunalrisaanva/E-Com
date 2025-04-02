@@ -36,7 +36,7 @@ const Page = () => {
         if (response.status === 200) {
           if (response.data?.user) {
             dispatch(loginSuccess(response?.data?.user));
-            localStorage.setItem("token", tokenup);
+            // localStorage.setItem("token", tokenup);
             router.push("/profile");
             toast.success("Login successful");
           }
@@ -75,7 +75,7 @@ const Page = () => {
         dispatch(loginSuccess(data?.data?.user));
 
         if (data.data?.token) {
-          localStorage.setItem("token", data.data?.token);
+          // localStorage.setItem("token", data.data?.token);
         }
 
         router.push("/profile"); 

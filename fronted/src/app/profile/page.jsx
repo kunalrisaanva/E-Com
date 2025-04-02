@@ -27,7 +27,8 @@ const ProfilePage = () => {
   // iife
   (() => {
     useEffect(() => {
-      const token = localStorage.getItem("token");
+      const token =  "token will come here im testing error "
+      // localStorage.getItem("token") // c
       console.log("tokennn", token);
       if (!token) {
         console.log(" No token found, redirecting to login...");
