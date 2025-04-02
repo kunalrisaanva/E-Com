@@ -1,26 +1,25 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import rightImage from "/public/images/c392ba101244345 1.png";
+import React, { useEffect, useState, Suspense } from "react";
 import Image from "next/image";
 import axios from "axios";
 import { toast } from "sonner";
 import { useSearchParams, useRouter } from "next/navigation";
+import rightImage from "/public/images/c392ba101244345 1.png";
 
-const Page = () => {
+const ResetPasswordForm = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-
   const searchParams = useSearchParams();
   const router = useRouter();
-  
+
   useEffect(() => {
     const token = searchParams.get("token");
     if (!token) {
       toast.error("Invalid or expired link!");
       router.push("/");
     }
-  }, [token, router]);
+  }, [searchParams, router]);
 
   const handleResetPassword = async (e) => {
     e.preventDefault();
@@ -35,16 +34,18 @@ const Page = () => {
       return;
     }
 
+    const token = searchParams.get("token");
+
     try {
-      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/user/reset-password`, {
-        token,
-        newPassword: password,
-      });
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/user/reset-password`,
+        { token, newPassword: password }
+      );
 
       if (response.status === 200) {
-          setPassword("");
-          setConfirmPassword("");
-          toast.success("Password changed successfully!");
+        setPassword("");
+        setConfirmPassword("");
+        toast.success("Password changed successfully!");
         router.push("/login");
       }
     } catch (error) {
@@ -67,7 +68,9 @@ const Page = () => {
 
           <form onSubmit={handleResetPassword} className="mt-6 space-y-4">
             <div>
-              <label className="text-[14px] font-medium text-gray-700">New Password</label>
+              <label className="text-[14px] font-medium text-gray-700">
+                New Password
+              </label>
               <input
                 type="password"
                 placeholder="Enter new password"
@@ -78,7 +81,9 @@ const Page = () => {
             </div>
 
             <div>
-              <label className="text-[14px] font-medium text-gray-700">Confirm Password</label>
+              <label className="text-[14px] font-medium text-gray-700">
+                Confirm Password
+              </label>
               <input
                 type="password"
                 placeholder="Confirm new password"
@@ -99,11 +104,18 @@ const Page = () => {
       </div>
 
       {/* Right Side - Image */}
-       <div className="relative h-screen w-1/2">
-              <Image src={rightImage} alt="Background" layout="fill" objectFit="fit" priority />
-            </div>
+      <div className="relative h-screen w-1/2">
+        <Image src={rightImage} alt="Background" fill objectFit="cover" priority />
+      </div>
     </div>
   );
 };
+
+// **Wrap the component in Suspense to fix the error**
+const Page = () => (
+  <Suspense fallback={<div className="h-screen flex justify-center items-center">Loading...</div>}>
+    <ResetPasswordForm />
+  </Suspense>
+);
 
 export default Page;

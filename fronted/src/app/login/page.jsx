@@ -1,7 +1,6 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import rightImage from "/public/images/c392ba101244345 1.png";
-import googleImage from "/public/images/google-logo-9808.png";
+
+import React, { useEffect, useState, Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import axios from "axios";
@@ -9,18 +8,17 @@ import { toast } from "sonner";
 import { useRouter, useSearchParams } from "next/navigation";
 import { loginSuccess } from "@/redux/authSlice";
 import { useDispatch } from "react-redux";
+import rightImage from "/public/images/c392ba101244345 1.png";
+import googleImage from "/public/images/google-logo-9808.png";
 import { BackgroundLinesDemo } from "@/components/Background";
 
-
-
-const Page = () => {
+const LoginForm = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const searchParams = useSearchParams(); 
   const tokenup = searchParams.get("token"); 
 
-  console.log("Login page -- token coming form backend side send --+>",tokenup);
-  
+  console.log("Login page -- token coming form backend side send --+>", tokenup);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -30,21 +28,18 @@ const Page = () => {
             Authorization: `Bearer ${tokenup}`,
           },
         });
-      
+
         console.log("🔥 User Data: __->", response.status);
 
         if (response.status === 200) {
           if (response.data?.user) {
             dispatch(loginSuccess(response?.data?.user));
-            // localStorage.setItem("token", tokenup);
             router.push("/profile");
             toast.success("Login successful");
           }
-        }else{
-          router.push("/login")
+        } else {
+          router.push("/login");
         }
-
-        // setIsChecking(false);
       } catch (error) {
         console.error("🔥 Error fetching user data:", error);
         router.push("/login");
@@ -53,7 +48,6 @@ const Page = () => {
 
     fetchUser();
   }, [tokenup, router]);
-
 
   const [userDetails, setUserDetails] = useState({
     email: "",
@@ -73,11 +67,6 @@ const Page = () => {
       if (response.status === 200) {
         toast.success("Login successful");
         dispatch(loginSuccess(data?.data?.user));
-
-        if (data.data?.token) {
-          // localStorage.setItem("token", data.data?.token);
-        }
-
         router.push("/profile"); 
       }
     } catch (error) {
@@ -86,23 +75,18 @@ const Page = () => {
     }
   };
 
-
   const handleGoogleLogin = () => {
     window.location.href = "http://localhost:3333/auth/google";
   };
- 
 
   return (
     <div className="h-screen flex bg-gray-100">
-      {/* {  Left Side } */}
+      {/* Left Side */}
       <div className="relative w-1/2 flex flex-col justify-center items-center p-6 bg-white shadow-lg rounded-lg overflow-hidden">
-        
-       
         <div className="absolute inset-0 flex justify-center items-center">
           <BackgroundLinesDemo className="w-full h-full opacity-30" />
         </div>
 
-      
         <div className="w-[350px] relative z-10">
           <h4 className="text-[34px] text-gray-800 font-semibold text-center">Welcome Back</h4>
           <p className="text-gray-500 text-[14px] text-center mt-2">
@@ -161,7 +145,6 @@ const Page = () => {
             </div>
           </div>
 
-          
           <button
             onClick={handleGoogleLogin}
             className="bg-gray-100 hover:bg-gray-200 text-black font-medium rounded-md h-[45px] w-full mt-3 flex items-center justify-center transition-all"
@@ -189,12 +172,19 @@ const Page = () => {
         </div>
       </div>
 
-      {/*  Right Side - Image */}
+      {/* Right Side - Image */}
       <div className="relative h-screen w-1/2">
         <Image src={rightImage} alt="Background" layout="fill" objectFit="fit" priority />
       </div>
     </div>
   );
 };
+
+// **Wrap in Suspense to Fix the Error**
+const Page = () => (
+  <Suspense fallback={<div className="h-screen flex justify-center items-center">Loading...</div>}>
+    <LoginForm />
+  </Suspense>
+);
 
 export default Page;
