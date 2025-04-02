@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-import { connectDb } from "./db/connectDb.js";
+import {connectDb} from "./db/connectDb.js"
 import { fastify } from "./app.js";
 
 // Load environment variables

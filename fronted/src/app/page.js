@@ -31,19 +31,19 @@ export default function Home() {
 
   useEffect(() => {
 
-    const localStorageProducts = localStorage.getItem("productsInLocalStorage")
+    // const localStorageProducts = localStorage.getItem("productsInLocalStorage")
 
-    if (localStorageProducts) {
-      try {
-        setIsLoading(true);
-        // console.log("products comes from localstore-->",localStorageProducts);
-        setProducts(JSON.parse(localStorageProducts));
-        setIsLoading(false); 
-      } catch (error) {
-        console.error("Error parsing localStorage data:", error);
-        localStorage.removeItem("productsInLocalStorage");
-      }
-    }
+    // if (localStorageProducts) {
+    //   try {
+    //     setIsLoading(true);
+    //     // console.log("products comes from localstore-->",localStorageProducts);
+    //     setProducts(JSON.parse(localStorageProducts));
+    //     setIsLoading(false); 
+    //   } catch (error) {
+    //     console.error("Error parsing localStorage data:", error);
+    //     localStorage.removeItem("productsInLocalStorage");
+    //   }
+    // }
 
 
     (async () => {
